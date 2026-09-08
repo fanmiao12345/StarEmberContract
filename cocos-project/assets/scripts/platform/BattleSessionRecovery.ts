@@ -1,0 +1,1 @@
+import {GameContext} from '../app/GameContext';export class BattleSessionRecovery{static hasRecoverable(){const s=GameContext.state.activeBattleSession;return !!s&&['waiting','running'].includes(s.status)}static async resume(){if(!this.hasRecoverable())return null;return GameContext.api.battleSessionResume()}}

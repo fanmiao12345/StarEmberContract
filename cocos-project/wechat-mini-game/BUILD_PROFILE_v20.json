@@ -1,0 +1,16 @@
+{
+  "platform":"wechatgame",
+  "orientation":"portrait",
+  "debug":false,
+  "sourceMaps":false,
+  "startScene":"Splash",
+  "designResolution":{"width":750,"height":1624},
+  "separateEngine":true,
+  "mainBundleCompressionType":"mini-game-subpackage",
+  "assetBundles":[
+    {"name":"characters","compressionType":"mini-game-subpackage","priority":"after-home"},
+    {"name":"battle-fx","compressionType":"mini-game-subpackage","priority":"before-first-battle"}
+  ],
+  "remoteBundles":["voice"],
+  "releaseVersion":"2.0.0"
+}

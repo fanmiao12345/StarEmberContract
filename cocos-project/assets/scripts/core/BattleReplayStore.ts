@@ -1,0 +1,1 @@
+export interface BattleReplay{id:string;stage:number;win:boolean;createdAt:string;timeline:any[];log:string[];autoStrategy?:string}export class BattleReplayStore{static recent(state:any):BattleReplay[]{return Array.isArray(state?.battleReplays)?state.battleReplays.slice(0,5):[]}static find(state:any,id:string){return this.recent(state).find(x=>x.id===id)||null}}

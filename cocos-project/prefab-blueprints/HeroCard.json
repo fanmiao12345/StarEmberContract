@@ -1,0 +1,4 @@
+{
+  "script": "ui/HeroCardView.ts",
+  "purpose": "角色卡面，列表/阵容共用"
+}

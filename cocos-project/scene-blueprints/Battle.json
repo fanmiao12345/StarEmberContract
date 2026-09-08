@@ -1,0 +1,26 @@
+{
+  "controller": "BattleSceneController",
+  "root": [
+    "Canvas",
+    "SafeAreaRoot",
+    "TopCurrencyBar",
+    "Content",
+    "BottomNav"
+  ],
+  "content": [
+    "BattleArena",
+    "EnemySlots",
+    "SkillBanner",
+    "AllySlots",
+    "BattleControls"
+  ],
+  "version": "1.4",
+  "features": [
+    "BattleStrategyPanel",
+    "BattleSessionDriver",
+    "LiveSkillCommandPanel",
+    "BattleSessionRecovery",
+    "BattleResultPanel",
+    "BossIntro"
+  ]
+}

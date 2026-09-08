@@ -1,0 +1,2 @@
+import {_decorator,Component,director} from 'cc';import {CloudBaseGameApi} from '../adapters/CloudBaseGameApi';import {GameContext} from '../app/GameContext';const{ccclass}=_decorator;
+@ccclass('BootController') export class BootController extends Component{async start(){try{const api=new CloudBaseGameApi();const loaded=await api.load();GameContext.install(api,loaded.state);director.loadScene('Home')}catch(e){console.error('Boot failed',e)}}}

@@ -1,0 +1,38 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert');
+const appEl={innerHTML:''};
+global.window=global;
+global.localStorage={_m:new Map(),getItem(k){return this._m.get(k)||null},setItem(k,v){this._m.set(k,v)},removeItem(k){this._m.delete(k)}};
+global.document={getElementById(id){return id==='app'?appEl:null},querySelectorAll(){return[]},querySelector(){return null},createElement(){return{className:'',textContent:'',remove(){}}},body:{appendChild(){}}};
+global.confirm=()=>false;global.navigator={};global.location={protocol:'file:'};
+global.StarEmberCloud={configured:()=>false,meta:()=>({}),loadPlayer:async()=>({}),gacha:async()=>({}),limitedGacha:async()=>({})};
+window.StarEmberCloud=global.StarEmberCloud;window.StarEmberAssets={heroPortrait:(id)=>`assets/characters/${id}.jpg`,skill:(id)=>`assets/ui/skills/${id}.svg`,status:(id)=>`assets/ui/status/${id}.svg`,boss:(s)=>`assets/ui/bosses/stage-${s}.svg`,bg:(id)=>`assets/ui/backgrounds/${id}.svg`};
+vm.runInThisContext(fs.readFileSync('web/game-data.js','utf8'),{filename:'game-data.js'});
+vm.runInThisContext(fs.readFileSync('web/app.js','utf8'),{filename:'app.js'});
+assert.ok(appEl.innerHTML.includes('v09-home-stage'),'home visual stage should render');
+assert.ok(appEl.innerHTML.includes('STAR EMBER CONTRACT'),'brand should render');
+assert.ok(appEl.innerHTML.includes('v09-quick-grid'),'quick entry grid should render');
+assert.ok(appEl.innerHTML.includes('v09-nav'),'nav should render');
+assert.ok(appEl.innerHTML.includes('v10-boot'),'boot overlay should render');
+assert.ok(appEl.innerHTML.includes('v11-orbit-field'),'dynamic star orbit should render');
+assert.ok(appEl.innerHTML.includes('七曜登录契约'),'seven-day login panel should render');
+assert.ok(appEl.innerHTML.includes('v11-login-track'),'login reward track should render');
+vm.runInThisContext('state.stage=5;bossIntroOpen=true;render();');
+assert.ok(appEl.innerHTML.includes('v11-boss-intro'),'boss intro should render on boss stage');
+vm.runInThisContext('state.stage=1;storyOpen=true;storyIndex=0;render();');
+assert.ok(appEl.innerHTML.includes('v12-story-scene'),'story dialogue should render');
+vm.runInThisContext('storyOpen=false;lastBattle={win:true,stage:1,rewards:{coin:390,tickets:1},drops:[],formationPower:1000,timeline:[]};resultOpen=true;render();');
+assert.ok(appEl.innerHTML.includes('v12-result-card'),'battle result should render');
+vm.runInThisContext("resultOpen=false;tab='gacha';render();");
+assert.ok(appEl.innerHTML.includes('首次常驻十连必得 SSR')&&appEl.innerHTML.includes('v12-newbie-badge'),'newbie gacha label should render');
+vm.runInThisContext("ui.tutorialDone=true;ui.firstContractDone=true;tab='heroes';render();");
+assert.ok(appEl.innerHTML.includes('角色档案'),'archive entry should render');
+vm.runInThisContext("archiveHeroId='h004';archiveOpen=true;render();");assert.ok(appEl.innerHTML.includes('v13-archive'),'archive overlay should render');
+vm.runInThisContext("archiveOpen=false;tab='explore';ui.skillMode='manual';ui.manualSkills=['h004'];render();");assert.ok(appEl.innerHTML.includes('v13-strategy')&&appEl.innerHTML.includes('手动技能'),'battle strategy should render');
+vm.runInThisContext("ui.skillMode='manual';liveSession={id:'bs-test14',status:'waiting',round:3,pending:{heroId:'h004',heroName:'青禾',skill:'春息'},allies:[{id:'h004',name:'青禾',hp:1000,maxHp:1200,shield:0}],enemies:[{id:'e1',name:'裂境体',hp:800,maxHp:1000,shield:0}],log:['✦ 青禾「春息」充能完成'],timeline:[]};battleLog=liveSession.log;tab='explore';render();");assert.ok(appEl.innerHTML.includes('v14-live-session')&&appEl.innerHTML.includes('SKILL READY'),'v1.4 live battle command panel should render');
+assert.ok(appEl.innerHTML.includes('v15-skill-dock'),'v1.5 five-hero skill dock should render');assert.ok(appEl.innerHTML.includes('v15-energy-ring'),'v1.5 energy ring should render');assert.ok(appEl.innerHTML.includes('v16-strategy'),'v1.6 strategy panel should render');assert.ok(appEl.innerHTML.includes('BATTLE ARCHIVE'),'v1.6 replay panel should render');
+assert.ok(appEl.innerHTML.includes('v17-formation-stage')||appEl.innerHTML.includes('BATTLE REPORT'),'v1.8 UI markers should render');
+console.log('v2.0 UI smoke test passed');
+
+vm.runInThisContext("liveSession=null;tab='event';render();");assert.ok(appEl.innerHTML.includes('星港夜航'));vm.runInThisContext("tab='heroes';selectedHeroId='h004';render();");assert.ok(appEl.innerHTML.includes('角色天赋'));vm.runInThisContext("tab='formation';render();");assert.ok(appEl.innerHTML.includes('阵容预设'));console.log('v2.0 UI feature smoke passed');
+
+vm.runInThisContext("tab='home';render();");assert.ok(appEl.innerHTML.includes('v20-home-stage'),'v2.0 visual home should render');vm.runInThisContext("tab='heroes';selectedHeroId='h004';render();");assert.ok(appEl.innerHTML.includes('v20-skill-icon'),'v2.0 skill art should render');console.log('v2.0 visual UI passed');

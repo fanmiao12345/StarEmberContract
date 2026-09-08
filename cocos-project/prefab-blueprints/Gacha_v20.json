@@ -1,0 +1,1 @@
+{"name":"GachaV20","design":"750x1624","nodes":["GachaKeyArt","OrbitFx","FeaturedHero","PityMeter","SingleButton","TenButton","BottomNav"],"assets":["release-cover-v20","gacha-orbit","hero-full","rarity-frames"],"runtime":["GachaSceneController","GachaFxDirector","ReleaseCandidateAssembler"]}

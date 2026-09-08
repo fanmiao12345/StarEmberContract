@@ -1,0 +1,15 @@
+{
+  "controller": "HomeSceneController",
+  "root": [
+    "Canvas",
+    "SafeAreaRoot",
+    "TopCurrencyBar",
+    "Content",
+    "BottomNav"
+  ],
+  "content": [
+    "HeroBackdrop",
+    "ChapterCard",
+    "QuickEntries"
+  ]
+}

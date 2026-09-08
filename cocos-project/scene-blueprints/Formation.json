@@ -1,0 +1,15 @@
+{
+  "controller": "FormationSceneController",
+  "root": [
+    "Canvas",
+    "SafeAreaRoot",
+    "TopCurrencyBar",
+    "Content",
+    "BottomNav"
+  ],
+  "content": [
+    "FormationField",
+    "HeroSlots",
+    "ResonanceSummary"
+  ]
+}

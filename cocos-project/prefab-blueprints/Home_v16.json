@@ -1,0 +1,16 @@
+{
+  "name": "HomeV16Assembly",
+  "root": "SafeAreaRoot",
+  "children": [
+    "HomeBackgroundMotion",
+    "TopCurrencyBar",
+    "HeroShowcase",
+    "QuickActions",
+    "BottomNav"
+  ],
+  "notes": [
+    "750x1624 portrait",
+    "character art remote-ready",
+    "safe-area anchored"
+  ]
+}

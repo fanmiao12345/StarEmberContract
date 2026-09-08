@@ -1,0 +1,2 @@
+import {Node,tween,Vec3} from 'cc';import {UiFactory} from '../ui/UiFactory';export class ComboSignatureFx{static play(parent:Node,name:string){const n=UiFactory.panel('ComboSignatureFx',650,180);n.addChild(UiFactory.label(`✦ LINK ART ✦
+${name}`,34,'#f6e28f',610,100));n.setScale(new Vec3(.65,.65,1));parent.addChild(n);tween(n).to(.22,{scale:new Vec3(1.08,1.08,1)}).to(.16,{scale:new Vec3(1,1,1)}).delay(.9).call(()=>n.destroy()).start();return n}}

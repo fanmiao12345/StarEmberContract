@@ -1,0 +1,1 @@
+export type WechatBuildConfig={appid:string;orientation:'portrait';separateEngine:boolean;subpackages:boolean};export function validateWechatBuild(c:WechatBuildConfig){const issues:string[]=[];if(!c.appid||c.appid.includes('YOUR_'))issues.push('AppID 未配置');if(c.orientation!=='portrait')issues.push('星烬契约要求竖屏');return{ok:issues.length===0,issues};}

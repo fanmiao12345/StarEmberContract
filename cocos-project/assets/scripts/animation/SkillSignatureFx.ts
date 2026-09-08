@@ -1,0 +1,1 @@
+import {Node,Graphics,Color} from 'cc';export class SkillSignatureFx{static flash(parent:Node,accent=new Color(200,170,245,210)){const n=new Node('SkillSignatureFx'),g=n.addComponent(Graphics);g.strokeColor=accent;g.lineWidth=3;g.circle(0,0,96);g.stroke();g.circle(0,0,54);g.stroke();parent.addChild(n);setTimeout(()=>n.destroy(),520)}}

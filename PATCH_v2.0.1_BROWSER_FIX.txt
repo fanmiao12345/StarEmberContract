@@ -1,0 +1,1 @@
+Browser hotfix: rename global function top() to renderTop() in web/app.js to avoid collision with window.top. UTF-8 preserved.

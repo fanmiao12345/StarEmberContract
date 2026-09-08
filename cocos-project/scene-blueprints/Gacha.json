@@ -1,0 +1,16 @@
+{
+  "controller": "GachaSceneController",
+  "root": [
+    "Canvas",
+    "SafeAreaRoot",
+    "TopCurrencyBar",
+    "Content",
+    "BottomNav"
+  ],
+  "content": [
+    "LimitedBanner",
+    "StarOrb",
+    "PullButtons",
+    "ResultOverlay"
+  ]
+}

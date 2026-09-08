@@ -1,0 +1,1 @@
+import {UiFactory} from './UiFactory';import {AssetLoader} from '../assets/AssetLoader';export class StatusIconView{static build(id:string,label:string){const n=UiFactory.panel('StatusIcon',92,38,undefined,18);const t=UiFactory.label(label,16,undefined,80,30);t.setPosition(-36,0);n.addChild(t);(n as any).assetKey=AssetLoader.status(id);return n}}

@@ -1,0 +1,22 @@
+{
+  "platform": "wechatgame",
+  "orientation": "portrait",
+  "debug": false,
+  "sourceMaps": false,
+  "startScene": "Splash",
+  "separateEngine": true,
+  "mainBundleCompressionType": "mini-game-subpackage",
+  "assetBundles": [
+    {
+      "name": "characters",
+      "compressionType": "mini-game-subpackage"
+    },
+    {
+      "name": "battle-fx",
+      "compressionType": "mini-game-subpackage"
+    }
+  ],
+  "remoteBundles": [
+    "voice"
+  ]
+}

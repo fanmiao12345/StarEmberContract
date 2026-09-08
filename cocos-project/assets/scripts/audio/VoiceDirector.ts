@@ -1,0 +1,1 @@
+export type VoiceType='acquire'|'skill'|'victory';export class VoiceDirector{private static enabled=true;static setEnabled(v:boolean){this.enabled=v}static async play(heroId:string,type:VoiceType){if(!this.enabled)return;console.log(`[Voice] ${heroId}/${type}`);/* production: load resources/voice/<heroId>/<type> and play through AudioSource */}}

@@ -1,0 +1,11 @@
+{
+  "name": "wechat-v1",
+  "platform": "wechatgame",
+  "orientation": "portrait",
+  "designResolution": {
+    "width": 750,
+    "height": 1624
+  },
+  "remoteAssets": true,
+  "notes": "模板字段；实际构建配置请由 Cocos Creator 编辑器生成并以编辑器输出为准。"
+}

@@ -1,0 +1,2 @@
+export type BattleFxEvent={type:'attack'|'skill'|'damage'|'heal'|'shield'|'stun'|'victory'|'defeat';actorId?:string;targetId?:string;value?:number;skill?:string};
+export class BattleFxBus{private static listeners:Array<(e:BattleFxEvent)=>void>=[];static on(fn:(e:BattleFxEvent)=>void){this.listeners.push(fn);return()=>{this.listeners=this.listeners.filter(x=>x!==fn)}}static emit(e:BattleFxEvent){for(const fn of this.listeners)fn(e)}static clear(){this.listeners=[]}}

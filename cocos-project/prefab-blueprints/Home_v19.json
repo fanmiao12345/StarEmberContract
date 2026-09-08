@@ -1,0 +1,17 @@
+{
+  "version": 19,
+  "root": "HomeRoot",
+  "children": [
+    "BackgroundNebula",
+    "TopCurrencyBar",
+    "HeroStage",
+    "MainMissionCard",
+    "QuickActions",
+    "BottomNav"
+  ],
+  "resources": [
+    "ui/backgrounds/home-nebula",
+    "characters",
+    "ui/skills"
+  ]
+}

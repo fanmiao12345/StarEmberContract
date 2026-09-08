@@ -1,0 +1,4 @@
+{
+  "script": "ui/TopCurrencyBar.ts",
+  "purpose": "顶部货币与品牌栏"
+}

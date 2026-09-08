@@ -1,0 +1,2 @@
+import {Node,tween,Vec3} from 'cc';import {UiFactory} from './UiFactory';export class BreakBurstWindow{static show(parent:Node,bossName:string){const n=UiFactory.panel('BreakBurstWindow',520,92);n.addChild(UiFactory.label(`BREAK WINDOW · ${bossName}
+受到伤害 +35%`,22,'#ffe9a8',480,56));parent.addChild(n);n.setScale(new Vec3(.9,.9,1));tween(n).to(.2,{scale:new Vec3(1.05,1.05,1)}).to(.18,{scale:new Vec3(1,1,1)}).delay(.8).call(()=>n.destroy()).start();return n}}

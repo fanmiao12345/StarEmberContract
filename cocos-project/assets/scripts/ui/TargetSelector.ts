@@ -1,0 +1,1 @@
+import {Node} from 'cc';import {UiFactory} from './UiFactory';export class TargetSelector{static create(targets:any[],onSelect:(id:string)=>void){const root=new Node('TargetSelector');targets.slice(0,5).forEach((t:any,i:number)=>{const b=UiFactory.button(t.name,105,46,()=>onSelect(t.id));b.setPosition(-220+i*110,0);root.addChild(b)});return root}}

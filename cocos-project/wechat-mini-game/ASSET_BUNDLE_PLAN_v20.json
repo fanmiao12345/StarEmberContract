@@ -1,0 +1,6 @@
+{
+  "version":"2.0.0",
+  "main":{"scenes":["Splash","Login","Home"],"critical":["h001","home-main-v20","ui-core"]},
+  "subpackages":{"characters":{"heroes":["h001","h002","h003","h004","h005","h006","h007","h008","h009","h010","h011","h012","h013","h014","h015"]},"battle-fx":{"bossStages":[5,10,15,20,25,30],"contains":["skill-icons","status-icons","boss-splashes","battle-background"]}},
+  "remote":{"voice":{"strategy":"cdn","fallback":"browser-tts/dev-only"}}
+}

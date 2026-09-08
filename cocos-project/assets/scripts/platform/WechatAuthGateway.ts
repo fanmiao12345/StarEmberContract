@@ -1,0 +1,1 @@
+export class WechatAuthGateway{static available(){return !!(globalThis as any).wx}static async login(){const wx=(globalThis as any).wx;if(!wx)return{mode:'guest'};return new Promise((resolve,reject)=>wx.login({success:(r:any)=>resolve({mode:'wechat',code:r.code}),fail:reject}))}}

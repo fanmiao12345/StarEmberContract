@@ -1,0 +1,2 @@
+const game=require('./lib/game');const c=require('./lib/cloud');
+exports.main=async()=>{try{const{db,auth}=c.init();const ctx=await c.playerContext(db,auth);const got=await db.collection('event_leaderboard').orderBy('bestDamage','desc').limit(20).get();const leaderboard=(got?.data||[]).map((x,i)=>({rank:i+1,name:x.name||'引星者',damage:Number(x.bestDamage)||0,isSelf:x.playerKey===ctx.playerKey}));return c.ok({leaderboard});}catch(e){return c.fail(e)}};

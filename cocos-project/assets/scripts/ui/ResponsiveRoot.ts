@@ -1,0 +1,2 @@
+import {_decorator,Component,UITransform,view,Vec3} from 'cc';import {Design} from './Theme';const{ccclass}=_decorator;
+@ccclass('ResponsiveRoot') export class ResponsiveRoot extends Component{start(){this.apply()}apply(){const v=view.getVisibleSize();const t=this.node.getComponent(UITransform)||this.node.addComponent(UITransform);t.setContentSize(v.width,v.height);const scale=Math.min(v.width/Design.width,v.height/Design.height);this.node.setScale(new Vec3(Math.max(.78,scale),Math.max(.78,scale),1))}}

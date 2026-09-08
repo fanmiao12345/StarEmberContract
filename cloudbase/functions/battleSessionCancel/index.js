@@ -1,0 +1,2 @@
+const game=require('./lib/game'); const c=require('./lib/cloud');
+exports.main=async(event={})=>{try{const requestId=String(event.requestId||'').slice(0,80);if(!requestId)throw game.codeError('REQUEST_ID_REQUIRED');const sessionId=String(event.sessionId||'');const {db,auth}=c.init();const ctx=await c.playerContext(db,auth);const out=await c.optimisticMutate(db,ctx.playerKey,requestId,'battleSessionCancel',state=>game.cancelBattleSession(state,sessionId));return c.ok({state:game.publicState(out.state),result:out.result,idempotent:out.idempotent});}catch(e){return c.fail(e)}};

@@ -1,0 +1,1 @@
+import {Node,Vec3,tween} from 'cc';export class GachaReveal{static play(card:Node,onDone?:()=>void){card.setScale(.62,.62,1);tween(card).to(.42,{scale:new Vec3(1.05,1.05,1)}).to(.14,{scale:new Vec3(1,1,1)}).call(()=>onDone?.()).start()}}

@@ -1,0 +1,4 @@
+{
+  "script": "ui/UiFactory.ts",
+  "purpose": "统一按钮与面板视觉"
+}

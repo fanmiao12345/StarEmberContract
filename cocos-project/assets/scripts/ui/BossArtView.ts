@@ -1,0 +1,1 @@
+import {UiFactory} from './UiFactory';import {AssetLoader} from '../assets/AssetLoader';export class BossArtView{static build(stage:number){const n=UiFactory.panel('BossArt',170,170,undefined,32);const l=UiFactory.label('BOSS',20,undefined,120,32);l.setPosition(-54,-62);n.addChild(l);(n as any).assetKey=AssetLoader.boss(stage);return n}}

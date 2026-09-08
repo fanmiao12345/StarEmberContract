@@ -1,0 +1,1 @@
+{"name":"BattleV20","design":"750x1624","nodes":["BossSplash","BossPhaseHeader","BossBreakGauge","EnemyFormation","AllyFormation","HeroSkillBar","LiveSkillCommandPanel","ComboSignatureFx","BattleStatsPanel","BattleResultPanel"],"assets":["boss-splash","battle-grid","skill-icons","status-icons"],"runtime":["BattleSceneController","BattleSessionDriver","ReleaseCandidateAssembler"]}

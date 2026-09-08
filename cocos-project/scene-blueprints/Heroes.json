@@ -1,0 +1,14 @@
+{
+  "controller": "HeroesSceneController",
+  "root": [
+    "Canvas",
+    "SafeAreaRoot",
+    "TopCurrencyBar",
+    "Content",
+    "BottomNav"
+  ],
+  "content": [
+    "HeroDetail",
+    "RosterGrid"
+  ]
+}

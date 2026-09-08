@@ -1,0 +1,1 @@
+import {Node} from 'cc';export class EnergyRing{static percent(unit:any){return Math.max(0,Math.min(100,Number(unit?.energy)||0))}static ready(unit:any){return this.percent(unit)>=100}static apply(node:Node,unit:any){node.name=`Energy-${this.percent(unit)}${this.ready(unit)?'-READY':''}`}}

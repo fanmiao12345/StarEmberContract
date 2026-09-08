@@ -1,0 +1,1 @@
+export class StatusBadgeView{static labels(unit:any){const out:string[]=[];if(unit?.stun)out.push('眩晕');if(unit?.silence)out.push('沉默');if(unit?.taunt)out.push('嘲讽');if(unit?.slow)out.push('减速');if(unit?.shield)out.push('护盾');return out}}

@@ -1,0 +1,16 @@
+{
+  "version": 19,
+  "root": "GachaRoot",
+  "children": [
+    "GachaOrbitBackground",
+    "PoolBanner",
+    "PityBar",
+    "SummonButtons",
+    "RevealLayer"
+  ],
+  "resources": [
+    "ui/backgrounds/gacha-orbit",
+    "characters",
+    "ui/frames"
+  ]
+}

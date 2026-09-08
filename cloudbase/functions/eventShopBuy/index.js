@@ -1,0 +1,2 @@
+const game=require('./lib/game');const c=require('./lib/cloud');
+exports.main=async(event={})=>{try{const id=String(event.id||''),requestId=String(event.requestId||'').slice(0,80);if(!requestId)throw game.codeError('REQUEST_ID_REQUIRED');const{db,auth}=c.init();const ctx=await c.playerContext(db,auth);const out=await c.optimisticMutate(db,ctx.playerKey,requestId,`eventShop:${id}`,state=>game.eventShopBuy(state,id));return c.ok({state:game.publicState(out.state),purchase:out.result,idempotent:out.idempotent});}catch(e){return c.fail(e)}};

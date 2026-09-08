@@ -1,0 +1,125 @@
+{
+  "version": "v19",
+  "design": {
+    "width": 750,
+    "height": 1624,
+    "theme": "astral-night"
+  },
+  "backgrounds": {
+    "home-nebula": "ui/backgrounds/home-nebula",
+    "gacha-orbit": "ui/backgrounds/gacha-orbit",
+    "battle-grid": "ui/backgrounds/battle-grid",
+    "event-night": "ui/backgrounds/event-night"
+  },
+  "heroes": {
+    "h001": {
+      "portrait": "characters/h001",
+      "full": "characters/h001_full",
+      "skill": "ui/skills/h001"
+    },
+    "h002": {
+      "portrait": "characters/h002",
+      "full": "characters/h002",
+      "skill": "ui/skills/h002"
+    },
+    "h003": {
+      "portrait": "characters/h003",
+      "full": "characters/h003",
+      "skill": "ui/skills/h003"
+    },
+    "h004": {
+      "portrait": "characters/h004",
+      "full": "characters/h004",
+      "skill": "ui/skills/h004"
+    },
+    "h005": {
+      "portrait": "characters/h005",
+      "full": "characters/h005",
+      "skill": "ui/skills/h005"
+    },
+    "h006": {
+      "portrait": "characters/h006",
+      "full": "characters/h006",
+      "skill": "ui/skills/h006"
+    },
+    "h007": {
+      "portrait": "characters/h007",
+      "full": "characters/h007",
+      "skill": "ui/skills/h007"
+    },
+    "h008": {
+      "portrait": "characters/h008",
+      "full": "characters/h008",
+      "skill": "ui/skills/h008"
+    },
+    "h009": {
+      "portrait": "characters/h009",
+      "full": "characters/h009",
+      "skill": "ui/skills/h009"
+    },
+    "h010": {
+      "portrait": "characters/h010",
+      "full": "characters/h010",
+      "skill": "ui/skills/h010"
+    },
+    "h011": {
+      "portrait": "characters/h011",
+      "full": "characters/h011",
+      "skill": "ui/skills/h011"
+    },
+    "h012": {
+      "portrait": "characters/h012",
+      "full": "characters/h012",
+      "skill": "ui/skills/h012"
+    },
+    "h013": {
+      "portrait": "characters/h013",
+      "full": "characters/h013",
+      "skill": "ui/skills/h013"
+    },
+    "h014": {
+      "portrait": "characters/h014",
+      "full": "characters/h014",
+      "skill": "ui/skills/h014"
+    },
+    "h015": {
+      "portrait": "characters/h015",
+      "full": "characters/h015",
+      "skill": "ui/skills/h015"
+    }
+  },
+  "status": {
+    "stun": "ui/status/stun",
+    "silence": "ui/status/silence",
+    "taunt": "ui/status/taunt",
+    "shield": "ui/status/shield",
+    "cleanse": "ui/status/cleanse",
+    "break": "ui/status/break",
+    "buff": "ui/status/buff",
+    "heal": "ui/status/heal"
+  },
+  "bosses": {
+    "5": "ui/bosses/stage-5",
+    "10": "ui/bosses/stage-10",
+    "15": "ui/bosses/stage-15",
+    "20": "ui/bosses/stage-20",
+    "25": "ui/bosses/stage-25",
+    "30": "ui/bosses/stage-30"
+  },
+  "frames": {
+    "R": "ui/frames/R",
+    "SR": "ui/frames/SR",
+    "SSR": "ui/frames/SSR"
+  },
+  "remoteBundles": {
+    "characters": "characters-v1",
+    "voice": "voice-v1",
+    "bosses": "bosses-v1"
+  },
+  "critical": [
+    "assets/ui/backgrounds/home-nebula.svg",
+    "assets/ui/backgrounds/battle-grid.svg",
+    "assets/ui/skills/h001.svg",
+    "assets/characters/h001.jpg"
+  ]
+}

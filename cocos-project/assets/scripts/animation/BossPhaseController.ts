@@ -1,0 +1,1 @@
+import {Node} from 'cc';import {SkillBanner} from './SkillBanner';export class BossPhaseController{private phase=1;constructor(private host:Node){}accept(session:any){const p=Number(session?.boss?.phase||session?.enemies?.find((x:any)=>x.isBoss)?.phase||1);if(p>this.phase){this.phase=p;SkillBanner.play(this.host,`BOSS PHASE ${p}/3`,session?.boss?.namePhase||'裂境阶段转换')}}}

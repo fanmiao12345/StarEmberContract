@@ -1,0 +1,33 @@
+{
+  "name": "Battle_v18",
+  "designResolution": [
+    750,
+    1624
+  ],
+  "root": "BattleRoot",
+  "children": [
+    "BossPhaseHeader",
+    "BossBreakGauge",
+    "BreakBurstWindow",
+    "EnemyBackRow",
+    "EnemyFrontRow",
+    "AllyBackRow",
+    "AllyFrontRow",
+    "HeroSkillBar",
+    "ClassCounterBadge",
+    "LiveSkillCommandPanel",
+    "ComboSignatureFx",
+    "BattlePlaybackControls",
+    "BattleStatsPanel",
+    "BattleResultPanel"
+  ],
+  "runtime": [
+    "BattlePrefabAssembler",
+    "BattleSessionDriver",
+    "BattleMotionFx",
+    "BossPhaseController",
+    "BreakBurstWindow",
+    "ComboSignatureFx",
+    "BattleStatsPanel"
+  ]
+}

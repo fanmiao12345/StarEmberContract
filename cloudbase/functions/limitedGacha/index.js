@@ -1,0 +1,2 @@
+const game=require('./lib/game'); const c=require('./lib/cloud');
+exports.main=async(event={})=>{try{const count=Number(event.count),requestId=String(event.requestId||'').slice(0,80);if(!requestId)throw game.codeError('REQUEST_ID_REQUIRED');const {db,auth}=c.init();const ctx=await c.playerContext(db,auth);const out=await c.optimisticMutate(db,ctx.playerKey,requestId,'limitedGacha',state=>game.pullLimited(state,count));return c.ok({state:game.publicState(out.state),results:out.result,idempotent:out.idempotent});}catch(e){return c.fail(e)}};

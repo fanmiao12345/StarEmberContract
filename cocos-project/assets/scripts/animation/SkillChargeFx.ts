@@ -1,0 +1,1 @@
+import {Node,tween,Vec3} from 'cc';export class SkillChargeFx{static pulse(node:Node,ready=false){node.setScale(new Vec3(1,1,1));if(!ready)return;tween(node).repeatForever(tween(node).to(.45,{scale:new Vec3(1.08,1.08,1)}).to(.45,{scale:new Vec3(1,1,1)})).start()}}

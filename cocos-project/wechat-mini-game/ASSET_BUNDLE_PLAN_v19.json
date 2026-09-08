@@ -1,0 +1,23 @@
+{
+  "main": [
+    "Splash",
+    "Login",
+    "Home critical UI",
+    "h001 starter portrait"
+  ],
+  "subpackages": {
+    "characters": [
+      "h001-h015 full/card art"
+    ],
+    "battle-fx": [
+      "skill icons",
+      "status icons",
+      "boss emblems",
+      "battle backgrounds"
+    ]
+  },
+  "remote": [
+    "voice lines",
+    "future HD cutscenes"
+  ]
+}

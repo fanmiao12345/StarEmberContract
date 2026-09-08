@@ -1,0 +1,14 @@
+{
+  "platform": "wechatgame",
+  "orientation": "portrait",
+  "startScene": "Splash",
+  "separateEngine": true,
+  "debug": false,
+  "md5Cache": true,
+  "assetBundles": {
+    "characters": "subpackage",
+    "voice": "remote-ready",
+    "story": "main"
+  },
+  "notes": "Use Creator 3.8 Build panel; fill AppID in editor; this file is a project handoff profile, not an editor-generated build record."
+}

@@ -1,0 +1,22 @@
+{
+  "name": "Astral Night",
+  "colors": {
+    "violet": "#8f6ee8",
+    "gold": "#e8ca77",
+    "blue": "#6eb9ff",
+    "cyan": "#79e8e2",
+    "red": "#ff7188",
+    "green": "#77e4a4",
+    "ink": "#0a1021",
+    "white": "#eef2ff"
+  },
+  "rarity": {
+    "R": "#7f8ca8",
+    "SR": "#b894ff",
+    "SSR": "#f2d27c"
+  },
+  "motion": {
+    "reduceMotionSupported": true,
+    "defaultFxQuality": "high"
+  }
+}

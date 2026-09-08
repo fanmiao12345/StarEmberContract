@@ -1,0 +1,1 @@
+import {Node,tween,Vec3} from 'cc';export class GachaFxDirector{static playOrbit(node:Node){node.setScale(.82,.82,1);tween(node).to(.32,{angle:18}).to(.42,{angle:0}).start()}static playReveal(node:Node){node.setScale(.45,.45,1);tween(node).to(.28,{position:new Vec3(node.position.x,node.position.y+18,0)}).to(.18,{position:node.position}).start()}}

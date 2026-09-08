@@ -1,0 +1,2 @@
+import {Node,tween,Vec3} from 'cc';import {UiFactory} from '../ui/UiFactory';import {Theme} from '../ui/Theme';
+export class SkillBanner{static play(parent:Node,actor:string,skill:string){const n=UiFactory.panel('SkillBanner',600,86);const l=UiFactory.label(`${actor} · ${skill}`,25,Theme.text,540,50);l.setPosition(-270,0);n.addChild(l);n.setPosition(0,50);n.setScale(0.92,0.92,1);parent.addChild(n);tween(n).to(.15,{scale:new Vec3(1,1,1)}).delay(.55).to(.18,{scale:new Vec3(.94,.94,1)}).call(()=>{n.active=false}).start()}}

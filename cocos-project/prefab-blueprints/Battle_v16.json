@@ -1,0 +1,25 @@
+{
+  "name": "BattleV16Assembly",
+  "root": "SafeAreaRoot",
+  "children": [
+    "BossPhaseHeader",
+    "EnemyFormation",
+    "AllyFormation",
+    "HeroSkillBar",
+    "LiveSkillCommandPanel",
+    "BattlePlaybackControls",
+    "BattleResultPanel"
+  ],
+  "runtimeComponents": [
+    "BattleSessionDriver",
+    "BattleMotionFx",
+    "BossPhaseController",
+    "SkillChargeFx",
+    "StatusBadgeView"
+  ],
+  "notes": [
+    "manual uses server session",
+    "auto uses strategy",
+    "replay never grants rewards"
+  ]
+}

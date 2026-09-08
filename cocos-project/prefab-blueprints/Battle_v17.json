@@ -1,0 +1,32 @@
+{
+  "name": "Battle_v17",
+  "designResolution": [
+    750,
+    1624
+  ],
+  "root": "BattleRoot",
+  "children": [
+    "BossPhaseHeader",
+    "BossBreakGauge",
+    "EnemyBackRow",
+    "EnemyFrontRow",
+    "AllyBackRow",
+    "AllyFrontRow",
+    "HeroSkillBar",
+    "LiveSkillCommandPanel",
+    "ComboBanner",
+    "BattlePlaybackControls",
+    "BattleStatsPanel",
+    "BattleResultPanel"
+  ],
+  "runtime": [
+    "BattleSessionDriver",
+    "BattleMotionFx",
+    "BossPhaseController",
+    "BossBreakGauge",
+    "ComboBanner",
+    "BattleStatsPanel",
+    "SkillChargeFx",
+    "StatusBadgeView"
+  ]
+}

@@ -1,0 +1,1 @@
+{"name":"HomeV20","design":"750x1624","nodes":["TopCurrencyBar","ReleaseStamp","KeyArt","ChapterCard","QuickActions","BottomNav"],"assets":["release/home-main-v20","characters/lead-full"],"runtime":["HomeSceneController","ReleaseCandidateAssembler"]}

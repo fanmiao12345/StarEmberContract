@@ -1,0 +1,1 @@
+import {Node} from 'cc';import {UiFactory} from './UiFactory';export class ClassCounterBadge{static create(name:string,strong=false,weak=false){const n=UiFactory.panel('ClassCounterBadge',150,42);const l=UiFactory.label(`${strong?'▲ ':weak?'▼ ':''}${name}`,14,strong?'#ffe39a':weak?'#ffaaa8':'#cbd5f5',135,26);l.setPosition(-65,-2);n.addChild(l);return n}}

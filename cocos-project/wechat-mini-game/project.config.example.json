@@ -1,0 +1,11 @@
+{
+  "appid": "YOUR_WECHAT_MINIGAME_APPID",
+  "projectname": "StarEmberContract",
+  "compileType": "game",
+  "libVersion": "latest",
+  "setting": {
+    "es6": true,
+    "minified": true,
+    "urlCheck": true
+  }
+}

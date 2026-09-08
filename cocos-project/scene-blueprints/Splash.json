@@ -1,0 +1,14 @@
+{
+  "scene": "Splash",
+  "controller": "SplashSceneController",
+  "designResolution": [
+    750,
+    1624
+  ],
+  "nodes": [
+    "BrandMark",
+    "Title",
+    "Subtitle",
+    "LoadingLine"
+  ]
+}

@@ -1,0 +1,1 @@
+Cocos Creator 3.8.x / WeChat Mini Game / Portrait。v1.8 增加运行时 Home/Battle Prefab Assembler；角色高清立绘继续建议 Asset Bundle / Remote Ready。

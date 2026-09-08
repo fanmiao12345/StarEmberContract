@@ -1,0 +1,4 @@
+{
+  "script": "animation/SkillBanner.ts",
+  "purpose": "技能释放横幅"
+}

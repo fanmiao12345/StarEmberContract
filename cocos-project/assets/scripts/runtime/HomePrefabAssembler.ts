@@ -1,0 +1,1 @@
+import {Node} from 'cc';import {UiFactory} from '../ui/UiFactory';export class HomePrefabAssembler{static build(){const root=UiFactory.panel('HomeRoot',720,1450);const hero=UiFactory.panel('HeroStage',690,760);hero.setPosition(0,235);root.addChild(hero);const quick=UiFactory.panel('QuickActions',690,330);quick.setPosition(0,-360);root.addChild(quick);return root}}

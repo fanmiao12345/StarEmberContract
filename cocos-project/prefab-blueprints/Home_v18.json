@@ -1,0 +1,21 @@
+{
+  "name": "Home_v18",
+  "designResolution": [
+    750,
+    1624
+  ],
+  "root": "HomeRoot",
+  "children": [
+    "DynamicBackground",
+    "HeroStage",
+    "ChapterCard",
+    "QuickActions",
+    "LoginRewardPanel",
+    "BottomNav"
+  ],
+  "runtime": [
+    "HomePrefabAssembler",
+    "HomeSceneController",
+    "HomeBackgroundMotion"
+  ]
+}

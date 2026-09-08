@@ -1,0 +1,1 @@
+Cocos Creator 3.8.x / WeChat Mini Game / Portrait。v17 Battle Prefab 增加前后排、Boss破韧、连携与统计组件；高清角色资产继续使用 Asset Bundle / Remote Ready。

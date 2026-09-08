@@ -1,0 +1,2 @@
+import {Node} from 'cc';import {UiFactory} from './UiFactory';export class TalentTreePanel{static create(nodes:any[],owned:string[],points:number,onUnlock:(id:string)=>void){const root=UiFactory.panel('TalentTreePanel',620,270);root.addChild(UiFactory.label(`STAR TRACE · 星痕点 ${points}`,20,'#eadc91',560,30));nodes.slice(0,3).forEach((n:any,i:number)=>{const ok=owned.includes(n.id),b=UiFactory.button(`${ok?'✦':'◇'} ${n.name}
+${n.desc}`,180,120,()=>!ok&&onUnlock(n.id),false);b.setPosition(-205+i*205,-70);root.addChild(b)});return root}}

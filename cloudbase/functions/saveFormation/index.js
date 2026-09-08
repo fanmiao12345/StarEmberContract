@@ -1,0 +1,2 @@
+const game=require('./lib/game'); const c=require('./lib/cloud');
+exports.main=async(event={})=>{try{const formation=event.formation,rows=event.rows||null,requestId=String(event.requestId||'').slice(0,80);if(!requestId)throw game.codeError('REQUEST_ID_REQUIRED');const {db,auth}=c.init();const ctx=await c.playerContext(db,auth);const out=await c.optimisticMutate(db,ctx.playerKey,requestId,'formation',state=>game.setFormation(state,formation,rows));return c.ok({state:game.publicState(out.state),formation:out.result,idempotent:out.idempotent});}catch(e){return c.fail(e)}};

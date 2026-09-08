@@ -1,0 +1,13 @@
+{
+  "name": "Formation_v17",
+  "children": [
+    "BackRow",
+    "FrontRow",
+    "FormationRowPanel",
+    "FactionResonance"
+  ],
+  "runtime": [
+    "FormationSceneController",
+    "FormationRowPanel"
+  ]
+}
