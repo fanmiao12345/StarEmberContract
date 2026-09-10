@@ -1,93 +1,33 @@
-# 星烬契约 Web / MiniGame v2.0 · Release Candidate
+# 星烬契约 · Web/MiniGame v2.2.0 UI Fidelity & Interaction · Current Snapshot
 
-原创竖屏卡牌 RPG。v2.0 不再扩张大量玩法系统，而是把 v1.9 的完整玩法收口成**可部署、可远程试玩、可继续迁移微信小游戏**的正式试玩候选版。
+这是在 v2.1.7 Cache-Safe Release 基础上的完整移动端界面重构版本。
 
-## v2.0 重点
-- `SAVE_VERSION = 20`，旧 v1.x 存档自动迁移。
-- `CONFIG_VERSION = 2026.09.v20`。
-- `PWA cache = star-ember-v20`。
-- 新增 `asset-manifest.v20.json`，统一管理正式试玩资源。
-- 15 名角色全部拥有 `portrait / full / skill` 三层资源位。
-- 6 个章节 Boss 增加独立 Splash 资源，不再只有徽记。
-- 新增首页主视觉 `home-main-v20.jpg`、发布封面 `release-cover-v20.jpg` 和资源总览 `visual-board-v20.jpg`。
-- 首页、Boss 入场、角色详情、抽卡演出均通过资源清单加载，资源加载完成后自动刷新 UI。
-- Cocos 增加 v2.0 ReleaseConfig / BuildInfo / ReleaseAssetPreloader / ReleaseCandidateAssembler。
-- 新增 Home / Battle / Gacha v20 Prefab 蓝图。
-- 微信小游戏新增 `BUILD_PROFILE_v20.json` 与 `ASSET_BUNDLE_PLAN_v20.json`。
-- Web 新增可执行发布前检查、构建目录和 CloudBase 静态托管部署脚本。
+## 版本重点
+- 桌面与手机统一采用 460px 以内的手机游戏布局。
+- 首页保持大厅式设计。
+- 探索拆分为主线 / 资源裂境 / 扫荡记录三个模式。
+- 契灵养成拆分为属性 / 升级 / 天赋 / 装备 / 羁绊。
+- 编队、契约、活动、事务所统一移动端信息层级。
+- 保留 v2.1.5 的玩法与经济修复。
+- SAVE_VERSION 仍为 20，旧存档直接兼容。
+- CloudBase 游戏逻辑未变化，本版本只需重新部署 Web 静态资源。
 
-## 试玩
-直接打开：
-
-```text
-web/index.html
-```
-
-正式资源预览：
-
-```text
-web/release-preview-v20.html
-```
-
-资源总览图：
-
-```text
-web/assets/release/visual-board-v20.jpg
-```
-
-## 验证
-
-```bash
-npm run check
-npm test
-npm run release:check
-npm run release:build
-cd cocos-project
-npx tsc --noEmit --skipLibCheck
-```
-
-`npm run release:build` 会生成：
-
-```text
-dist-web-v20/
-```
-
-这是用于 HTTPS 静态托管的发布目录。
-
-## CloudBase Web 发布
-配置环境变量：
-
-```text
-CLOUDBASE_ENV_ID
-```
-
-Linux/macOS：
-
-```bash
-deployment/deploy-web-cloudbase-v20.sh
-```
-
-Windows PowerShell：
-
+## 测试
 ```powershell
-deployment/deploy-web-cloudbase-v20.ps1
+npm test
+npm run check
+npm run release:build
 ```
 
-发布脚本会先进行 v2.0 资源/版本完整性检查，然后构建 `dist-web-v20/`，最后执行静态托管部署。
-
-## 微信小游戏
-参考：
-
-```text
-cocos-project/wechat-mini-game/BUILD_PROFILE_v20.json
-cocos-project/wechat-mini-game/ASSET_BUNDLE_PLAN_v20.json
-cocos-project/wechat-mini-game/README_v20.md
+## CloudBase 部署
+```powershell
+$env:CLOUDBASE_ENV_ID="star-ember-d2grc7dhvba07314f"
+.\deployment\deploy-web-cloudbase-v20.ps1
 ```
 
-实际发布仍需要账号侧真实参数：
-- 微信小游戏 AppID
-- CloudBase ENV ID
-- 正式 CDN / 语音资源地址（可后置）
+## 线上版本验证
+部署完成后访问：
 
-## v2.0 美术说明
-本版本使用此前确定的《星烬契约》原创概念美术方向，并将现有概念素材整理为一致的试玩资源层。它们已经可以用于内部/远程试玩；正式商业发行前仍建议为 15 名角色与 6 个 Boss 逐一制作独立高分辨率终稿及动画资源。
+`/release-probe-2.2.0.json`
+
+正式构建使用内容哈希 JS/CSS，不依赖旧 `app.js/styles.css` URL。

@@ -1,21 +1,69 @@
 {
-  "name": "星烬契约 v2.0",
+  "id": "./",
+  "name": "星烬契约",
   "short_name": "星烬契约",
-  "start_url": "./index.html",
+  "description": "原创竖屏卡牌 RPG：契灵收集、阵容编成、裂境战斗与限时活动。",
+  "start_url": "./index.html?source=pwa",
+  "scope": "./",
   "display": "standalone",
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ],
   "background_color": "#050812",
   "theme_color": "#090d19",
   "orientation": "portrait",
+  "categories": [
+    "games",
+    "entertainment"
+  ],
   "icons": [
     {
       "src": "./assets/icons/icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "./assets/icons/icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "契约",
+      "short_name": "契约",
+      "url": "./index.html?source=pwa&tab=gacha",
+      "icons": [
+        {
+          "src": "./assets/icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "阵容",
+      "short_name": "阵容",
+      "url": "./index.html?source=pwa&tab=formation",
+      "icons": [
+        {
+          "src": "./assets/icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "探索",
+      "short_name": "探索",
+      "url": "./index.html?source=pwa&tab=explore",
+      "icons": [
+        {
+          "src": "./assets/icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     }
   ]
 }

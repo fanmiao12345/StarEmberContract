@@ -1,5 +1,15 @@
 {
-  "version": "2.0.0",
-  "channel": "playtest",
-  "builtAt": "2026-09-08T10:54:04.497Z"
+  "version": "2.2.0",
+  "configVersion": "2026.09.v21.5",
+  "channel": "release-preview",
+  "builtAt": "2026-09-10T02:51:26.244Z",
+  "cacheStrategy": "content-hash",
+  "assets": {
+    "styles.css": "styles.ae3e4d1aef.css",
+    "asset-loader.js": "asset-loader.78c53591d4.js",
+    "game-data.js": "game-data.037c0e247e.js",
+    "cloud-config.js": "cloud-config.8869d4112d.js",
+    "cloud-bridge.js": "cloud-bridge.5424307ad7.js",
+    "app.js": "app.e66183e0be.js"
+  }
 }

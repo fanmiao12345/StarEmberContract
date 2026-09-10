@@ -1,18 +1,20 @@
 window.StarEmberCloud = (()=>{
-  let app=null,auth=null,ready=false,identity='',meta={identityKind:'guest',linked:false};
+  let app=null,auth=null,ready=false,ensurePromise=null,identity='',meta={identityKind:'guest',linked:false};
   const cfg=()=>window.STAR_EMBER_CLOUD_CONFIG||{};
-  function loadScript(src){return new Promise((resolve,reject)=>{if(window.cloudbase)return resolve();const s=document.createElement('script');s.src=src;s.onload=resolve;s.onerror=()=>reject(new Error('CLOUDBASE_SDK_LOAD_FAILED'));document.head.appendChild(s)})}
+  function loadScript(src){return new Promise((resolve,reject)=>{if(window.cloudbase)return resolve();const existing=document.querySelector?.('script[data-star-ember-cloudbase]');if(existing){existing.addEventListener?.('load',resolve,{once:true});existing.addEventListener?.('error',()=>reject(new Error('CLOUDBASE_SDK_LOAD_FAILED')),{once:true});return}const s=document.createElement('script');s.src=src;s.dataset.starEmberCloudbase='1';s.onload=resolve;s.onerror=()=>reject(new Error('CLOUDBASE_SDK_LOAD_FAILED'));document.head.appendChild(s)})}
   async function ensure(){
-    const c=cfg();if(!c.enabled||!c.env)throw new Error('CLOUD_NOT_CONFIGURED');
-    await loadScript(c.sdkUrl);const opts={env:c.env,region:c.region||'ap-shanghai'};if(c.accessKey)opts.accessKey=c.accessKey;
-    app=window.cloudbase.init(opts);auth=typeof app.auth==='function'?app.auth():app.auth;
-    let session=null;if(auth?.getSession){try{const r=await auth.getSession();session=r?.data?.session||r?.session||null}catch{}}
-    if(!session){if(!auth?.signInAnonymously)throw new Error('ANONYMOUS_AUTH_UNAVAILABLE');const r=await auth.signInAnonymously();if(r?.error)throw new Error(r.error.message||'ANONYMOUS_LOGIN_FAILED')}
-    if(auth?.getSession){try{const r=await auth.getSession();identity=r?.data?.user?.id||r?.data?.session?.sub||''}catch{}}
-    ready=true;
+    if(ready)return;if(ensurePromise)return ensurePromise;
+    ensurePromise=(async()=>{const c=cfg();if(!c.enabled||!c.env)throw new Error('CLOUD_NOT_CONFIGURED');
+      await loadScript(c.sdkUrl);const opts={env:c.env,region:c.region||'ap-shanghai'};if(c.accessKey)opts.accessKey=c.accessKey;
+      app=window.cloudbase.init(opts);auth=typeof app.auth==='function'?app.auth():app.auth;
+      let session=null;if(auth?.getSession){try{const r=await auth.getSession();session=r?.data?.session||r?.session||null}catch{}}
+      if(!session){if(!auth?.signInAnonymously)throw new Error('ANONYMOUS_AUTH_UNAVAILABLE');const r=await auth.signInAnonymously();if(r?.error)throw new Error(r.error.message||'ANONYMOUS_LOGIN_FAILED')}
+      if(auth?.getSession){try{const r=await auth.getSession();identity=r?.data?.user?.id||r?.data?.session?.sub||''}catch{}}
+      ready=true;
+    })();try{return await ensurePromise}finally{ensurePromise=null}
   }
   function unwrap(raw){let r=raw?.result??raw?.data?.result??raw?.data??raw;if(typeof r==='string'){try{r=JSON.parse(r)}catch{}}return r}
-  async function call(name,data={}){if(!ready)await ensure();const raw=await app.callFunction({name,data,parse:true});const r=unwrap(raw);if(!r?.ok){const e=new Error(r?.code||'CLOUD_FUNCTION_FAILED');e.code=r?.code;e.detail=r;throw e}return r.data}
+  async function call(name,data={}){if(typeof navigator!=='undefined'&&navigator.onLine===false){const e=new Error('NETWORK_OFFLINE');e.code='NETWORK_OFFLINE';throw e}if(!ready)await ensure();let raw;try{raw=await app.callFunction({name,data,parse:true})}catch(err){const offline=typeof navigator!=='undefined'&&navigator.onLine===false,e=new Error(offline?'NETWORK_OFFLINE':'NETWORK_UNSTABLE');e.code=offline?'NETWORK_OFFLINE':'NETWORK_UNSTABLE';e.cause=err;throw e}const r=unwrap(raw);if(!r?.ok){const e=new Error(r?.code||'CLOUD_FUNCTION_FAILED');e.code=r?.code;e.detail=r;throw e}return r.data}
   function absorb(data){if(data?.identityKind)meta.identityKind=data.identityKind;if(typeof data?.linked==='boolean')meta.linked=data.linked;return data}
   async function connect(){await ensure();return absorb(await call('bootstrapPlayer'))}
   return {

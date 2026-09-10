@@ -1,0 +1,1 @@
+v2.1.1: one-screen mobile lobby, ten-pull summary, battle settlement, growth/reward feedback, badge acknowledgement, duplicate-click guard. SAVE_VERSION remains 20.

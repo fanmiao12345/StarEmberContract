@@ -1,11 +1,12 @@
 {
   "name": "star-ember-contract-web-minigame",
-  "version": "2.0.0",
+  "version": "2.2.0",
   "private": true,
   "scripts": {
     "check": "node deployment/check-all.mjs",
-    "test": "node tests/core.test.js && node tests/ui-smoke.test.js && node tests/release-assets.test.js",
+    "test": "node tests/core.test.js && node tests/stability.test.js && node tests/gameplay.test.js && node tests/ui-smoke.test.js && node tests/release-assets.test.js",
     "release:check": "node deployment/release-v20.mjs",
-    "release:build": "node deployment/build-web-v20.mjs"
+    "release:build": "node deployment/build-web-v20.mjs",
+    "cloud:sync": "node deployment/sync-cloud-libs.mjs"
   }
 }

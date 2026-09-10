@@ -1,0 +1,9 @@
+v2.0.9 Release Readiness
+
+- Returning-player welcome path after 12h away, with pending rewards / activity / battle resume shortcuts.
+- Progressive critical asset preload and weak-network reduced preload.
+- PWA install prompt, iOS add-to-home guidance, richer manifest shortcuts and standalone meta.
+- CloudBase auto-restore after a successful connection, foreground/network recovery refresh.
+- Offline/weak-network protection UI and client-side network error mapping.
+- Service worker v9 adds timeout network-first and stale-while-revalidate static assets.
+- SAVE_VERSION remains 20; no database or cloud-function protocol change.

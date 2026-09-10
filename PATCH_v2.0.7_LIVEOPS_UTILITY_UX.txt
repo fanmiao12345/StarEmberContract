@@ -1,0 +1,7 @@
+v2.0.7 LiveOps / Utility UX
+- Activity center split into Eclipse / Raid / Night Voyage / Bond tabs.
+- Shop rebuilt as compact daily supply station; removed developer art-direction card from player UI.
+- Star Office split into Today / Goals / Mail / Account tabs with claimable badges.
+- More-system sheet shows pending rewards and remaining event attempts.
+- Production version metadata and release-info generation corrected.
+- PWA cache bumped to star-ember-v20-mobile7.

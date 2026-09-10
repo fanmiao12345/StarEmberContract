@@ -1,0 +1,7 @@
+v2.1.0 Release Polish
+- Final mobile lobby hierarchy and chapter progress.
+- Richer gacha reveal presentation + reduced-motion/simple reveal option.
+- Haptic/audio/screen battle feedback.
+- Lazy image decoding, idle secondary preload, content-visibility optimization.
+- Release metadata and prototype wording cleanup.
+- SAVE_VERSION stays 20; no backend protocol change.

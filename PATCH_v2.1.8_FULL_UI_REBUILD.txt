@@ -1,0 +1,7 @@
+v2.1.8 Full Mobile UI Rebuild
+- true 460px phone-first shell on desktop/mobile
+- explore: campaign/resource/archive focused tabs
+- hero growth: overview/growth/talent/gear/bond focused tabs
+- formation, gacha, event and office mobile layout polish
+- CloudBase/gameplay/save rules unchanged
+- content-hashed release assets + v218 service worker cache

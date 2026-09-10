@@ -133,10 +133,10 @@
     "30": "assets/bosses/stage-30.jpg"
   },
   "release": {
-    "version": "2.0.0",
-    "channel": "playtest",
+    "version": "2.2.0",
+    "channel": "release-preview",
     "cover": "assets/release/release-cover-v20.jpg",
     "visualBoard": "assets/release/visual-board-v20.jpg",
-    "minimumClient": "2.0.0"
+    "minimumClient": "2.1.6"
   }
 }

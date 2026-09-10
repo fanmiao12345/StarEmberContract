@@ -15,21 +15,18 @@ function identity(auth){
   const key = crypto.createHash('sha256').update(String(raw)).digest('hex');
   return {key, kind:info?.openId?'wechat':'uid'};
 }
+function rowsOf(got){return Array.isArray(got?.data)?got.data:(got?.data?[got.data]:[])}
+async function findById(db,collection,id){const got=await db.collection(collection).where({_id:id}).get();return rowsOf(got)[0]||null;}
+function updatedCount(res){return Number(res?.updated ?? res?.stats?.updated ?? res?.matched ?? 0)||0;}
 async function resolvePlayerKey(db,identityKey,kind='uid'){
-  const ref=db.collection('identity_links').doc(identityKey);
-  try{
-    const got=await ref.get(); const data=Array.isArray(got?.data)?got.data[0]:got?.data;
-    if(data?.playerKey) return {playerKey:data.playerKey,kind:data.kind||kind,linked:true};
-  }catch{}
+  const ref=db.collection('identity_links').doc(identityKey),data=await findById(db,'identity_links',identityKey);
+  if(data?.playerKey) return {playerKey:data.playerKey,kind:data.kind||kind,linked:true};
   await ref.set({playerKey:identityKey,kind,createdAt:game.nowIso(),updatedAt:game.nowIso()});
   return {playerKey:identityKey,kind,linked:false};
 }
 async function getOrCreate(db,key){
-  const ref=db.collection('players').doc(key);
-  try{
-    const got=await ref.get(); const data=Array.isArray(got?.data)?got.data[0]:got?.data;
-    if(data) return game.migrate(data,key);
-  }catch(e){}
+  const ref=db.collection('players').doc(key),data=await findById(db,'players',key);
+  if(data) return game.migrate(data,key);
   const state=game.newPlayer(key); await ref.set({...state}); return state;
 }
 async function playerContext(db,auth){
@@ -58,15 +55,18 @@ async function createLinkCode(db,playerKey){
 }
 async function redeemLinkCode(db,identityKey,kind,code){
   const normalized=String(code||'').trim().toUpperCase(); if(!/^[0-9A-Z]{6}$/.test(normalized)) throw game.codeError('INVALID_LINK_CODE');
-  const got=await db.collection('link_codes').doc(normalized).get(); const data=Array.isArray(got?.data)?got.data[0]:got?.data;
+  const data=await findById(db,'link_codes',normalized);
   if(!data||data.used) throw game.codeError('INVALID_LINK_CODE'); if(Number(data.expiresAt)<Date.now()) throw game.codeError('LINK_CODE_EXPIRED');
   const existing=await resolvePlayerKey(db,identityKey,kind);
   if(existing.playerKey!==identityKey && existing.playerKey!==data.playerKey) throw game.codeError('IDENTITY_ALREADY_LINKED');
   if(existing.playerKey===identityKey && identityKey!==data.playerKey){
     const current=await getOrCreate(db,identityKey); if(!game.isPristine(current)) throw game.codeError('LINK_WOULD_REPLACE_PROGRESS');
   }
-  await db.collection('identity_links').doc(identityKey).set({playerKey:data.playerKey,kind,linkedAt:game.nowIso(),updatedAt:game.nowIso()});
-  await db.collection('link_codes').doc(normalized).update({used:true,usedBy:identityKey,usedAt:game.nowIso()});
+  const usedAt=game.nowIso(),claim=await db.collection('link_codes').where({_id:normalized,used:false}).update({used:true,usedBy:identityKey,usedAt});
+  if(updatedCount(claim)<=0) throw game.codeError('INVALID_LINK_CODE');
+  try{
+    await db.collection('identity_links').doc(identityKey).set({playerKey:data.playerKey,kind,linkedAt:usedAt,updatedAt:usedAt});
+  }catch(e){try{await db.collection('link_codes').where({_id:normalized,usedBy:identityKey,usedAt}).update({used:false,usedBy:null,usedAt:null})}catch{}throw e}
   const state=await getOrCreate(db,data.playerKey); state.profile ||= {displayName:'引星者'}; state.profile.linked=true;
   const payload={...state,updatedAt:game.nowIso()}; delete payload._id; await db.collection('players').doc(data.playerKey).update(payload);
   return state;

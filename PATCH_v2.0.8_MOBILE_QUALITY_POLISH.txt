@@ -1,0 +1,11 @@
+v2.0.8 Mobile Quality Polish
+
+- Home lobby status dock for rewards, event attempts and cloud-save state.
+- Notification badges on More dock and primary mobile navigation.
+- Compact busy/loading card and typed toast feedback.
+- Page transition and tactile button feedback with reduced-motion support.
+- Cloud-save nudge limited to Home so gameplay pages stay focused.
+- Unified empty states and modal polish.
+- Dedicated phone tuning for <=360px, 361-400px and 401-450px widths.
+- CONFIG_VERSION 2026.09.v20.8; PWA cache star-ember-v20-mobile8.
+- SAVE_VERSION stays 20; backend contract unchanged.
