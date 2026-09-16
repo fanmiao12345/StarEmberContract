@@ -32,7 +32,7 @@ assert.ok(appEl.innerHTML.includes('v15-skill-dock'),'v1.5 five-hero skill dock 
 assert.ok(appEl.innerHTML.includes('m205-battle-focus'),'active battle should use the v2.0.5 focused battle surface');
 console.log('v2.0 UI smoke test passed');
 
-vm.runInThisContext("liveSession=null;tab='event';render();");assert.ok(appEl.innerHTML.includes('星港夜航'));vm.runInThisContext("tab='heroes';selectedHeroId='h004';heroViewMode='talent';render();");assert.ok(appEl.innerHTML.includes('TALENT CONSTELLATION')&&appEl.innerHTML.includes('角色天赋')); vm.runInThisContext("tab='formation';render();");assert.ok(appEl.innerHTML.includes('阵容预设'));assert.ok(appEl.innerHTML.includes('mf203-formation-stage')&&appEl.innerHTML.includes('候选契灵')&&appEl.innerHTML.includes('星轨界线'),'v2.0.3 mobile formation should render');console.log('v2.0 UI feature smoke passed');
+vm.runInThisContext("liveSession=null;tab='event';render();");assert.ok(appEl.innerHTML.includes('星港夜航'));vm.runInThisContext("tab='heroes';selectedHeroId='h004';heroViewMode='talent';render();");assert.ok(appEl.innerHTML.includes('TALENT CONSTELLATION')&&appEl.innerHTML.includes('角色天赋')); vm.runInThisContext("tab='formation';render();");assert.ok(appEl.innerHTML.includes('阵容预设'));assert.ok(appEl.innerHTML.includes('m221-formation-stage')&&appEl.innerHTML.includes('选择契灵')&&appEl.innerHTML.includes('五人星轨编成'),'v2.2.1 five-slot mobile formation should render');console.log('v2.0 UI feature smoke passed');
 
 vm.runInThisContext("tab='home';render();");assert.ok(appEl.innerHTML.includes('v216-lobby'),'v2.1.8 visual home should render');vm.runInThisContext("tab='heroes';selectedHeroId='h004';heroViewMode='overview';render();");assert.ok(appEl.innerHTML.includes('v20-skill-icon'),'v2.0 skill art should render');console.log('v2.0 visual UI passed');
 
@@ -122,7 +122,7 @@ assert.ok(appEl.innerHTML.includes('v216-star-route')&&appEl.innerHTML.includes(
 vm.runInThisContext("lastGacha=[{hero:STAR_EMBER_GAME.byId('h001'),featured:true,duplicate:false,fragmentsGained:0},{hero:STAR_EMBER_GAME.byId('h004'),featured:false,duplicate:true,fragmentsGained:10}];revealOpen=true;revealIndex=0;render();");
 assert.ok(appEl.innerHTML.includes('m210-reveal-progress')&&appEl.innerHTML.includes('跳过全部'),'v2.1.0 contract reveal presentation should render');
 vm.runInThisContext("revealOpen=false;settingsOpen=true;render();");
-assert.ok(appEl.innerHTML.includes('触感反馈')&&appEl.innerHTML.includes('契约演出')&&appEl.innerHTML.includes('v2.2.0'),'v2.1.0 feedback settings should render');
+assert.ok(appEl.innerHTML.includes('触感反馈')&&appEl.innerHTML.includes('契约演出')&&appEl.innerHTML.includes('v2.2.3'),'v2.1.0 feedback settings should render');
 console.log('v2.1.0 release polish regression passed');
 
 
@@ -191,5 +191,5 @@ vm.runInThisContext("tab='event';render();");assert.ok(appEl.innerHTML.includes(
 vm.runInThisContext("tab='hub';render();");assert.ok(appEl.innerHTML.includes('v218-office-screen'),'v2.1.8 office shell should render');
 console.log('v2.1.8 mobile UI redesign regression passed');
 
-// v2.2.0 modal/nav hardening coverage
-vm.runInThisContext("tab='home';moreOpen=true;render();");assert.ok(appEl.innerHTML.includes('m204-more-layer'),'v2.2.0 modal quick sheet should render');vm.runInThisContext("moreOpen=false;settingsOpen=false;tab='home';render();");assert.ok(appEl.innerHTML.includes('v218-nav'),'v2.2.0 primary page nav should return after modal closes');console.log('v2.2.0 modal/nav hardening regression passed');
+// v2.2.1 modal/nav hardening coverage
+vm.runInThisContext("tab='home';moreOpen=true;render();");assert.ok(appEl.innerHTML.includes('m204-more-layer'),'v2.2.1 modal quick sheet should render');vm.runInThisContext("moreOpen=false;settingsOpen=false;tab='home';render();");assert.ok(appEl.innerHTML.includes('v218-nav'),'v2.2.1 primary page nav should return after modal closes');console.log('v2.2.1 modal/nav hardening regression passed');

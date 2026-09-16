@@ -545,7 +545,7 @@ html.m210-fx-hit:after,html.m210-fx-critical:after,html.m210-fx-heal:after,html.
 /* v2.1.1 play-session polish: one-screen lobby / result summaries / safe interaction */
 .m211-reward-fx,.m211-growth-fx{position:fixed;left:50%;top:max(74px,calc(env(safe-area-inset-top) + 60px));transform:translateX(-50%);z-index:88;width:min(420px,calc(100vw - 28px));display:flex;align-items:center;gap:12px;padding:13px 15px;border:1px solid rgba(239,215,146,.38);border-radius:18px;background:linear-gradient(135deg,rgba(24,20,48,.96),rgba(10,20,36,.97));box-shadow:0 18px 60px rgba(0,0,0,.42),0 0 28px rgba(228,198,119,.08);pointer-events:none;animation:m211FeedbackIn .32s cubic-bezier(.2,.9,.2,1) both}.m211-reward-star{width:42px;height:42px;min-width:42px;display:grid;place-items:center;border-radius:50%;font-size:22px;color:#ffedae;background:radial-gradient(circle,#715b2d,#31274d 58%,#15162d);box-shadow:0 0 30px rgba(247,213,121,.24);animation:m211RewardSpin 1.4s ease-in-out infinite}.m211-reward-fx h3,.m211-growth-fx h3{margin:2px 0 4px;font-size:14px}.m211-reward-fx>div:last-child,.m211-growth-fx>div:last-child{min-width:0;flex:1}.m211-reward-fx>div>small,.m211-growth-fx>div>small{font-size:9px;color:#94a2bb}.m211-reward-items{display:flex;gap:5px;overflow:hidden}.m211-reward-items span{display:inline-flex;align-items:center;gap:3px;white-space:nowrap;padding:4px 6px;border-radius:999px;background:rgba(255,255,255,.06);font-size:8px}.m211-reward-items i{font-style:normal;color:#f4d884}.m211-reward-items em{font-style:normal;color:#9ff0c3}.m211-growth-art{width:48px;height:54px;min-width:48px;border-radius:13px;overflow:hidden}.m211-growth-art .hero-portrait.result{width:100%;height:100%;border-radius:0}.m211-growth-shift{display:flex;align-items:center;gap:7px;margin:5px 0}.m211-growth-shift span{color:#9aa5bd}.m211-growth-shift b{color:#e9cf7e}.m211-growth-shift strong{color:#fff2b1;font-size:16px}@keyframes m211FeedbackIn{from{opacity:0;transform:translate(-50%,-12px) scale(.94)}to{opacity:1;transform:translate(-50%,0) scale(1)}}@keyframes m211RewardSpin{50%{transform:rotate(18deg) scale(1.08)}}
 
-.m211-gacha-summary-layer{z-index:82;background:radial-gradient(circle at 50% 22%,rgba(137,91,211,.20),rgba(4,7,17,.93) 58%)}.m211-gacha-summary{width:min(680px,calc(100vw - 28px));max-height:min(820px,92dvh);overflow:auto;padding:20px;border:1px solid rgba(224,196,130,.34);border-radius:25px;background:linear-gradient(180deg,rgba(18,20,43,.98),rgba(8,12,27,.99));box-shadow:0 28px 90px rgba(0,0,0,.55)}.m211-summary-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.m211-summary-head h2{margin:4px 0;font-size:26px}.m211-summary-head p{margin:0;color:#98a5bd;font-size:10px}.m211-summary-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:14px 0}.m211-summary-stats span{padding:9px;text-align:center;border:1px solid rgba(255,255,255,.07);border-radius:12px;background:rgba(255,255,255,.035)}.m211-summary-stats small,.m211-summary-stats b{display:block}.m211-summary-stats small{font-size:8px;color:#8d98af}.m211-summary-stats b{font-size:18px;color:#f1df9d;margin-top:2px}.m211-ten-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}.m211-ten-card{position:relative;min-width:0;padding:0 0 8px;overflow:hidden;border:1px solid rgba(255,255,255,.09);border-radius:13px;background:#0d1326;text-align:center}.m211-ten-card.featured{box-shadow:0 0 0 1px #e8ca77,0 0 24px rgba(232,202,119,.13)}.m211-ten-card .hero-portrait.result{width:100%;height:105px;border-radius:0}.m211-ten-card>i{position:absolute;left:5px;top:5px;width:18px;height:18px;border-radius:50%;display:grid;place-items:center;background:rgba(4,7,18,.78);font-size:7px;font-style:normal}.m211-ten-card>span,.m211-ten-card>strong,.m211-ten-card>small{display:block;padding:0 3px}.m211-ten-card>span{font-size:7px;margin-top:5px}.m211-ten-card>strong{font-size:10px;margin:2px 0}.m211-ten-card>small{font-size:7px;color:#8795ad;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.m211-summary-actions{display:grid;grid-template-columns:.8fr .8fr 1.25fr;gap:8px;margin-top:15px}.m211-summary-actions .btn small{display:block;font-size:7px;opacity:.7}
+.m211-gacha-summary-layer{background:radial-gradient(circle at 50% 22%,rgba(137,91,211,.20),rgba(4,7,17,.93) 58%)}.m211-gacha-summary{width:min(680px,calc(100vw - 28px));max-height:min(820px,92dvh);overflow:auto;padding:20px;border:1px solid rgba(224,196,130,.34);border-radius:25px;background:linear-gradient(180deg,rgba(18,20,43,.98),rgba(8,12,27,.99));box-shadow:0 28px 90px rgba(0,0,0,.55)}.m211-summary-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.m211-summary-head h2{margin:4px 0;font-size:26px}.m211-summary-head p{margin:0;color:#98a5bd;font-size:10px}.m211-summary-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:14px 0}.m211-summary-stats span{padding:9px;text-align:center;border:1px solid rgba(255,255,255,.07);border-radius:12px;background:rgba(255,255,255,.035)}.m211-summary-stats small,.m211-summary-stats b{display:block}.m211-summary-stats small{font-size:8px;color:#8d98af}.m211-summary-stats b{font-size:18px;color:#f1df9d;margin-top:2px}.m211-ten-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}.m211-ten-card{position:relative;min-width:0;padding:0 0 8px;overflow:hidden;border:1px solid rgba(255,255,255,.09);border-radius:13px;background:#0d1326;text-align:center}.m211-ten-card.featured{box-shadow:0 0 0 1px #e8ca77,0 0 24px rgba(232,202,119,.13)}.m211-ten-card .hero-portrait.result{width:100%;height:105px;border-radius:0}.m211-ten-card>i{position:absolute;left:5px;top:5px;width:18px;height:18px;border-radius:50%;display:grid;place-items:center;background:rgba(4,7,18,.78);font-size:7px;font-style:normal}.m211-ten-card>span,.m211-ten-card>strong,.m211-ten-card>small{display:block;padding:0 3px}.m211-ten-card>span{font-size:7px;margin-top:5px}.m211-ten-card>strong{font-size:10px;margin:2px 0}.m211-ten-card>small{font-size:7px;color:#8795ad;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.m211-summary-actions{display:grid;grid-template-columns:.8fr .8fr 1.25fr;gap:8px;margin-top:15px}.m211-summary-actions .btn small{display:block;font-size:7px;opacity:.7}
 
 .m211-result-layer{background:radial-gradient(circle at 50% 12%,rgba(129,101,198,.18),rgba(4,7,17,.91) 60%)}.m211-result-card{position:relative;width:min(560px,calc(100vw - 28px));max-height:92dvh;overflow:auto;text-align:left;padding:24px;border-radius:26px}.m211-result-card>.v12-result-emblem,.m211-result-card>.kicker,.m211-result-card>h2,.m211-result-card>p{text-align:center}.m211-result-card h2{font-size:31px;margin:5px 0}.m211-result-card>p{font-size:10px;color:#9aa8be}.m211-result-shine{position:absolute;left:20%;right:20%;top:-55px;height:130px;border-radius:50%;background:radial-gradient(circle,rgba(241,211,126,.25),transparent 68%);pointer-events:none}.m211-result-overview{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:14px 0}.m211-result-overview span{padding:10px 7px;border:1px solid rgba(255,255,255,.07);border-radius:13px;background:rgba(255,255,255,.035);text-align:center}.m211-result-overview small,.m211-result-overview b{display:block}.m211-result-overview small{font-size:7px;color:#8d99b1}.m211-result-overview b{font-size:12px;margin-top:3px}.m211-result-overview .mvp b{color:#f4de91}.m211-result-loot{margin:10px 0;padding:12px;border:1px solid rgba(231,202,119,.15);border-radius:15px;background:rgba(70,54,25,.09)}.m211-loot-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}.m211-loot-title span{font-size:8px;color:#988f78}.m211-result-card .v12-result-loot{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.m211-result-card .v12-result-loot>div{min-width:0;padding:9px}.m211-result-card .v12-result-loot strong{white-space:normal;overflow-wrap:anywhere}.m211-result-tip{display:flex!important;flex-direction:column;gap:5px}.m211-result-tip b{color:#f1d790}.m211-result-tip span{font-size:9px;color:#98a5bd}.m211-result-stats{margin:10px 0;border-top:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07)}.m211-result-stats summary{padding:10px 0;cursor:pointer;font-size:9px;color:#b9c3d7}.m211-result-stats>div{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:6px;padding:7px 0;border-top:1px solid rgba(255,255,255,.045);font-size:8px}.m211-result-stats span{text-align:right;color:#929eb5}.m211-result-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:13px}.m211-result-actions .wide{grid-column:1/-1;margin:0}
 
@@ -674,5 +674,1258 @@ body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;back
 /* Desktop should still preview as an actual phone game */
 @media(min-width:700px){.v218-app{border-left:1px solid rgba(215,224,245,.09);border-right:1px solid rgba(215,224,245,.09)}.v218-nav{border-left:1px solid rgba(215,224,245,.09)!important;border-right:1px solid rgba(215,224,245,.09)!important}.toast{max-width:420px}}
 @media(max-width:390px){:root{--v218-phone:100%}.v218-app{padding-left:7px!important;padding-right:7px!important}.v218-segment{top:106px}.v218-subpage-head{top:47px!important}.v218-explore-copy h2{font-size:21px}.v218-hero-tabs button span{font-size:7px}.v218-formation-screen .mf203-roster-grid,.v218-formation-screen .hero-grid{grid-template-columns:repeat(2,1fr)!important}}
-\n/* v2.2.0 current snapshot: modal + mobile interaction hardening */\n:root{--v220-nav-h:calc(72px + env(safe-area-inset-bottom));--v220-overlay:9000;--v220-modal:9100;--v220-toast:9200}\nbody.modal-open{overflow:hidden;overscroll-behavior:none}\n.toast{pointer-events:none!important;z-index:var(--v220-toast)!important}\n.m204-more-layer{z-index:var(--v220-modal)!important;overscroll-behavior:contain}\n.v10-modal-layer,.m211-gacha-summary-layer,.v11-story-layer,.v11-boss-layer,.v12-result-layer,.v13-first-layer,.m209-return-layer,.m210-pwa-layer{z-index:var(--v220-modal)!important;overscroll-behavior:contain}\n.v10-modal-layer{align-items:center!important;padding:max(8px,env(safe-area-inset-top)) 10px max(8px,env(safe-area-inset-bottom))!important}\n.v10-settings,.v10-tutorial,.v13-first-card,.v12-result-card,.v11-boss-intro{max-height:calc(100dvh - max(16px,env(safe-area-inset-top)) - max(16px,env(safe-area-inset-bottom)))!important;overflow:auto!important;overscroll-behavior:contain!important}\n.m204-more-sheet{max-height:calc(100dvh - max(16px,env(safe-area-inset-top)) - max(16px,env(safe-area-inset-bottom)))!important;overflow:auto!important}\n.v218-app{padding-bottom:calc(var(--v220-nav-h) + 14px)!important}\n.v218-app .v216-lobby{min-height:auto!important;padding-bottom:8px!important}\n.v218-app .v216-star-route,.v218-app .v216-progress-cards{position:relative!important;left:auto!important;right:auto!important;bottom:auto!important;margin:8px 9px 0!important}\n.v218-app .v216-progress-cards{display:grid!important;grid-template-columns:1fr 1fr!important}\n.v218-app .v216-quick-rail{z-index:6!important}\n.v218-app .v216-hero-art,.v218-app .v216-lobby:before,.v218-app .v216-lobby:after{pointer-events:none!important}\n[data-action],[data-tab]{touch-action:manipulation}\n@media(max-width:390px){.v218-app{padding-bottom:calc(var(--v220-nav-h) + 18px)!important}.v218-app .v216-progress-cards{grid-template-columns:1fr!important}.m204-more-grid{grid-template-columns:1fr!important}.m204-more-actions{grid-template-columns:1fr!important}}\n@media(max-height:520px){.v10-modal-layer{align-items:stretch!important}.v10-settings,.v10-tutorial,.v13-first-card,.v12-result-card,.v11-boss-intro{width:min(680px,96vw)!important;max-width:680px!important;margin:auto!important;max-height:calc(100dvh - 12px)!important;padding:14px 16px!important}.m204-more-layer{align-items:stretch!important}.m204-more-sheet{margin:auto!important;max-height:calc(100dvh - 12px)!important}}\n
+
+/* v2.2.0 current snapshot: modal + mobile interaction hardening */
+:root{--v220-nav-h:calc(72px + env(safe-area-inset-bottom));--v220-overlay:9000;--v220-modal:9100;--v220-toast:9200}
+body.modal-open{overflow:hidden;overscroll-behavior:none}
+.toast{pointer-events:none!important;z-index:var(--v220-toast)!important}
+.m204-more-layer{z-index:var(--v220-modal)!important;overscroll-behavior:contain}
+.v10-modal-layer,.m211-gacha-summary-layer,.v11-story-layer,.v11-boss-layer,.v12-result-layer,.v13-first-layer,.m209-return-layer,.m210-pwa-layer{z-index:var(--v220-modal)!important;overscroll-behavior:contain}
+.v10-modal-layer{align-items:center!important;padding:max(8px,env(safe-area-inset-top)) 10px max(8px,env(safe-area-inset-bottom))!important}
+.v10-settings,.v10-tutorial,.v13-first-card,.v12-result-card,.v11-boss-intro{max-height:calc(100dvh - max(16px,env(safe-area-inset-top)) - max(16px,env(safe-area-inset-bottom)))!important;overflow:auto!important;overscroll-behavior:contain!important}
+.m204-more-sheet{max-height:calc(100dvh - max(16px,env(safe-area-inset-top)) - max(16px,env(safe-area-inset-bottom)))!important;overflow:auto!important}
+.v218-app{padding-bottom:calc(var(--v220-nav-h) + 14px)!important}
+.v218-app .v216-lobby{min-height:auto!important;padding-bottom:8px!important}
+.v218-app .v216-star-route,.v218-app .v216-progress-cards{position:relative!important;left:auto!important;right:auto!important;bottom:auto!important;margin:8px 9px 0!important}
+.v218-app .v216-progress-cards{display:grid!important;grid-template-columns:1fr 1fr!important}
+.v218-app .v216-quick-rail{z-index:6!important}
+.v218-app .v216-hero-art,.v218-app .v216-lobby:before,.v218-app .v216-lobby:after{pointer-events:none!important}
+[data-action],[data-tab]{touch-action:manipulation}
+@media(max-width:390px){.v218-app{padding-bottom:calc(var(--v220-nav-h) + 18px)!important}.v218-app .v216-progress-cards{grid-template-columns:1fr!important}.m204-more-grid{grid-template-columns:1fr!important}.m204-more-actions{grid-template-columns:1fr!important}}
+@media(max-height:520px){.v10-modal-layer{align-items:stretch!important}.v10-settings,.v10-tutorial,.v13-first-card,.v12-result-card,.v11-boss-intro{width:min(680px,96vw)!important;max-width:680px!important;margin:auto!important;max-height:calc(100dvh - 12px)!important;padding:14px 16px!important}.m204-more-layer{align-items:stretch!important}.m204-more-sheet{margin:auto!important;max-height:calc(100dvh - 12px)!important}}
+
 body.modal-open .v218-nav{pointer-events:none!important;visibility:hidden!important}
+
+/* v2.2.1 report-driven P0 feedback + touch hardening */
+.v218-app button,.nav button,.v10-modal-layer button,.m204-more-layer button{min-height:44px}
+.v10-close,.m205-icon-btn,.v216-topbar button,.m204-subpage-head button{min-width:44px!important;min-height:44px!important}
+.text-btn{min-height:44px;padding:8px 10px!important}
+.m221-sweep-result{position:relative;width:min(560px,calc(100vw - 24px));max-height:calc(100dvh - 20px);overflow:auto}
+.m221-sweep-loot{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:14px 0}
+.m221-sweep-loot span{display:grid;grid-template-columns:30px 1fr auto;align-items:center;gap:8px;padding:10px;border:1px solid rgba(255,255,255,.08);border-radius:12px;background:rgba(255,255,255,.035)}
+.m221-sweep-loot i{font-style:normal;font-size:20px}.m221-sweep-loot b{font-size:12px}.m221-sweep-loot strong{color:#f6c453}.m221-sweep-drops{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 14px}.m221-sweep-drops span{padding:6px 8px;border-radius:9px;background:rgba(181,138,230,.12);font-size:10px}
+@media(max-width:390px){.m221-sweep-loot{grid-template-columns:1fr}}
+
+/* v2.2.1 compact five-slot formation */
+.m221-formation-stage{position:relative;padding:14px;border:1px solid rgba(255,255,255,.08);border-radius:20px;background:linear-gradient(180deg,rgba(18,24,46,.94),rgba(7,11,24,.97));overflow:hidden}
+.m221-formation-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.m221-formation-head h2{margin:3px 0 4px;font-size:20px}.m221-formation-head p{margin:0;color:#8f9bb2;font-size:11px;line-height:1.5}.m221-team-power{text-align:right;min-width:95px}.m221-team-power small,.m221-team-power span{display:block;color:#8996ad;font-size:9px}.m221-team-power strong{display:block;color:#f6c453;font-size:20px;margin:2px 0}
+.m221-team-slots{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;margin:14px 0}.m221-team-slot{min-width:0;padding:7px 5px 6px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(255,255,255,.035);text-align:center}.m221-team-slot.front{background:linear-gradient(180deg,rgba(246,196,83,.08),rgba(255,255,255,.025))}.m221-team-slot.back{background:linear-gradient(180deg,rgba(151,111,224,.10),rgba(255,255,255,.025))}.m221-slot-art{position:relative;height:82px;border-radius:10px;overflow:hidden}.m221-slot-art .hero-portrait{width:100%;height:100%}.m221-slot-art i{position:absolute;left:4px;top:4px;width:20px;height:20px;display:grid;place-items:center;border-radius:50%;background:rgba(5,8,18,.78);font-style:normal;font-size:9px}.m221-team-slot>strong,.m221-team-slot>span,.m221-team-slot>small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.m221-team-slot>strong{font-size:11px;margin-top:5px}.m221-team-slot>span{font-size:8px;color:#d4c6ef}.m221-team-slot>small{font-size:8px;color:#8794aa;margin:2px 0 5px}.m221-team-slot .btn{width:100%;padding-inline:3px;font-size:8px}.m221-team-slot.empty{display:flex;min-height:135px;flex-direction:column;justify-content:center}.m221-slot-empty b{display:block;font-size:24px;color:#64728c}.m221-slot-empty span{font-size:9px}.m221-team-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.m221-team-meta span{padding:8px;border-radius:10px;background:rgba(255,255,255,.035);text-align:center}.m221-team-meta small,.m221-team-meta b{display:block}.m221-team-meta small{font-size:8px;color:#7f8ca3}.m221-team-meta b{font-size:10px;margin-top:2px}.m221-resonance{display:flex;gap:8px;align-items:center;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.06);font-size:9px}.m221-resonance>div{display:flex;gap:5px;flex-wrap:wrap}.m221-resonance span{padding:4px 6px;border-radius:8px;background:rgba(255,255,255,.035)}
+.v218-formation-screen .v09-roster-grid{max-height:min(42dvh,420px);overflow:auto;overscroll-behavior:contain;padding-right:3px}.v218-formation-screen .v18-presets{margin-bottom:calc(84px + env(safe-area-inset-bottom))}
+@media(max-width:390px){.m221-formation-stage{padding:10px}.m221-formation-head p{display:none}.m221-team-slots{gap:4px}.m221-slot-art{height:70px}.m221-team-slot{padding:5px 3px}.m221-team-slot .btn{font-size:7px}.m221-team-meta{gap:4px}.v218-formation-screen .v09-roster-grid{max-height:36dvh}}
+
+/* v2.2.1 report-driven readability and growth guidance */
+.m221-level-panel{display:grid;gap:12px;padding:14px;border:1px solid rgba(246,196,83,.2);background:linear-gradient(145deg,rgba(20,30,54,.94),rgba(10,16,31,.96));border-radius:18px;margin-bottom:12px}
+.m221-level-shift{display:flex;align-items:center;justify-content:center;gap:14px;font-size:20px}.m221-level-shift i{font-style:normal;color:#8fa5c7}.m221-level-shift strong{color:#f6c453;font-size:24px}
+.m221-level-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.m221-level-stats span{display:grid;grid-template-columns:1fr auto auto auto;gap:6px;align-items:center;padding:9px 10px;border-radius:12px;background:rgba(255,255,255,.045)}.m221-level-stats small{color:#9eb0cf}.m221-level-stats i{font-style:normal;color:#697b9d}.m221-level-stats em{font-style:normal;color:#73d9a0;font-size:11px}.m221-level-cost{display:flex;justify-content:space-between;gap:12px;color:#aebddd}.m221-level-cost b{color:#f3f6ff}.m221-resource-route{width:100%}.m221-level-cap{text-align:center;font-size:24px;font-weight:800;color:#f6c453}.m221-level-cap small{display:block;margin-top:5px;font-size:12px;font-weight:500;color:#94a6c5}
+.v216-resource-pop.m221-resource-pop{grid-template-columns:1fr!important;gap:7px!important;min-width:min(340px,calc(100vw - 24px))}.m221-resource-pop>div{display:grid!important;grid-template-columns:34px 1fr auto 44px!important;align-items:center!important;gap:8px!important;text-align:left!important;padding:8px!important}.m221-resource-pop>div>i{display:grid;place-items:center;width:32px;height:32px;border-radius:10px;background:rgba(246,196,83,.1);font-style:normal}.m221-resource-pop>div>span{display:grid!important;gap:1px!important}.m221-resource-pop>div small{white-space:normal!important;color:#8294b5!important;font-size:10px!important}.m221-resource-pop>div>b{font-size:13px}.m221-resource-pop>div>button{min-width:44px!important;min-height:44px!important;padding:0!important;border-radius:12px!important}
+.toast.m208-toast{white-space:normal!important;overflow:visible!important;text-overflow:clip!important;max-width:min(92vw,440px)!important;line-height:1.4;pointer-events:none!important}.m204-subpage-head p,.m212-journey-main small{white-space:normal!important;overflow:visible!important;text-overflow:clip!important;max-width:none!important}
+@media(max-width:380px){.m221-level-stats{grid-template-columns:1fr}.m221-level-panel{padding:11px}.m221-level-shift{font-size:18px}.m221-level-shift strong{font-size:21px}}
+.m221-update-bar{position:fixed;z-index:9300;left:max(10px,env(safe-area-inset-left));right:max(10px,env(safe-area-inset-right));bottom:calc(82px + env(safe-area-inset-bottom));display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;padding:10px 12px;border:1px solid rgba(246,196,83,.35);border-radius:16px;background:rgba(10,17,32,.97);box-shadow:0 12px 36px rgba(0,0,0,.45);max-width:620px;margin:auto}.m221-update-bar div{display:grid;gap:2px}.m221-update-bar b{color:#f6c453}.m221-update-bar small{color:#9eb0cf}@media(max-width:520px){.m221-update-bar{grid-template-columns:1fr auto}.m221-update-bar .btn.ghost{grid-column:1/-1;width:100%}}
+.m221-stage-panel{display:grid;gap:12px}.m221-stage-list{display:grid;gap:7px}.m221-stage-row{display:grid;grid-template-columns:52px 1fr 34px;align-items:center;gap:10px;width:100%;min-height:62px;padding:8px 10px;border:1px solid rgba(132,155,195,.16);border-radius:14px;background:rgba(10,18,34,.66);text-align:left;color:inherit}.m221-stage-row.current{border-color:rgba(246,196,83,.58);background:linear-gradient(100deg,rgba(246,196,83,.12),rgba(38,39,76,.78));box-shadow:inset 3px 0 #f6c453}.m221-stage-row.cleared{opacity:.82}.m221-stage-row.locked{opacity:.45}.m221-stage-index{display:grid;place-items:center;min-height:40px;border-radius:11px;background:rgba(255,255,255,.055);font-weight:800;color:#f6c453}.m221-stage-copy{display:grid;gap:3px}.m221-stage-copy b{font-size:13px}.m221-stage-copy small{font-size:10px;color:#8fa3c5}.m221-stage-row em{font-style:normal;text-align:center}.m221-stage-detail{display:grid;gap:10px;padding:13px;border-radius:16px;border:1px solid rgba(246,196,83,.18);background:rgba(13,21,39,.82)}.m221-stage-detail h4{margin:2px 0;font-size:17px}.m221-stage-detail>div:first-child>span{font-size:10px;color:#f6c453}.m221-stage-detail small{color:#8fa3c5}.m221-power-compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.m221-power-compare span{padding:8px 9px;border-radius:10px;background:rgba(255,255,255,.045);font-size:10px;color:#91a4c5}.m221-power-compare b{display:block;margin-top:2px;color:#f3f6ff;font-size:13px}.m221-stage-reward{display:grid;gap:3px;padding:9px 10px;border-radius:11px;background:rgba(72,101,151,.09)}.m221-stage-reward b{font-size:11px;color:#f6c453}.m221-stage-reward span{font-size:10px;color:#9badcb}.m221-chapter-all{margin-top:10px}.m221-chapter-all>summary{min-height:44px;display:flex;align-items:center;cursor:pointer;color:#9fb2d1;font-size:11px}@media(max-width:370px){.m221-stage-row{grid-template-columns:46px 1fr 28px;padding-inline:7px}.m221-power-compare{grid-template-columns:1fr}}
+/* Keep primary-page content fully reachable above fixed navigation. */
+.m208-page-home,.m208-page-explore,.m208-page-formation,.m208-page-event,.m208-page-hub{padding-bottom:calc(106px + env(safe-area-inset-bottom))!important}.m208-page-event .v218-page-stack>:last-child,.m208-page-hub .v218-page-stack>:last-child{margin-bottom:14px}
+/* medium FX is intentionally lighter than high rather than visually identical */
+.fx-medium .portrait-aura,.fx-medium .portrait-halo{opacity:.55!important}.fx-medium .m211-result-shine,.fx-medium .v10-boot-stars{opacity:.45!important}.fx-medium *{animation-duration:calc(var(--fx-duration,1s) * .75)}
+.m221-boss-unit-art{width:58px;height:58px;border-radius:16px;overflow:hidden;display:grid;place-items:center;background:radial-gradient(circle,rgba(246,196,83,.2),rgba(25,18,43,.9));border:1px solid rgba(246,196,83,.3)}.m221-boss-unit-art .v19-boss-emblem{width:100%;height:100%;object-fit:cover}
+
+/* =========================================================
+   v2.2.2 FIX #1 —「发现新版本」横幅遮挡主操作区
+   原实现：position:fixed + bottom:82px + z-index:9300，
+          恰好浮在屏幕下半部的按钮区上，活动页「挑战」、
+          编队页候选契灵、首页星轨卡都被盖住甚至点不到。
+   改为：随内容置于顶栏下方的普通文档流横幅，不遮挡任何按钮。
+   ========================================================= */
+.m221-update-bar{position:relative!important;z-index:auto!important;left:auto!important;right:auto!important;bottom:auto!important;top:auto!important;
+  max-width:none!important;margin:0 0 8px!important;padding:8px 10px!important;
+  grid-template-columns:minmax(0,1fr) auto auto!important;gap:7px!important;align-items:center!important;
+  border-radius:13px!important;border:1px solid rgba(246,196,83,.3)!important;background:rgba(14,21,38,.96)!important}
+.m221-update-bar .m221-update-label{display:grid;gap:1px;min-width:0}
+.m221-update-bar .m221-update-label b{font-size:11px;color:#f6c453;line-height:1.25}
+.m221-update-bar .m221-update-label small{font-size:8px;color:#9eb0cf;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.m221-update-bar .btn{min-height:30px!important;min-width:0!important;padding:0 11px!important;font-size:11px!important;white-space:nowrap}
+@media(max-width:700px){
+  .m221-update-bar{margin:0 0 7px!important;padding:7px 9px!important;gap:6px!important}
+  .m221-update-bar .m221-update-label b{font-size:10px}
+  .m221-update-bar .m221-update-label small{font-size:7px}
+  .m221-update-bar .btn{padding:0 9px!important;font-size:10px!important;min-height:28px!important}
+}
+/* v2.2.2 FIX #1b：把更新横幅压成单行，避免占用过多首屏高度 */
+.m221-update-bar{grid-template-columns:minmax(0,1fr) auto auto!important;padding:7px 9px!important}
+.m221-update-bar .m221-update-label{display:flex!important;flex-wrap:wrap;align-items:baseline;gap:5px;min-width:0}
+.m221-update-bar .m221-update-label b{font-size:11px}
+.m221-update-bar .m221-update-label small{font-size:8px}
+@media(max-width:700px){
+  .m221-update-bar{display:grid!important;grid-template-columns:minmax(0,1fr) auto auto!important;padding:6px 8px!important;gap:6px!important;margin:0 0 6px!important}
+  .m221-update-bar .m221-update-label{display:block!important}
+  .m221-update-bar .m221-update-label b{font-size:10px;display:block}
+  .m221-update-bar .m221-update-label small{font-size:7px;display:block;margin-top:1px}
+  .m221-update-bar .btn{min-height:30px!important;padding:0 10px!important;font-size:10px!important}
+}
+/* v2.2.2 FIX #1c：单行紧凑条 —— 文案一行、按钮 30px、总高约 44px */
+.m221-update-bar,
+#app .m221-update-bar{display:flex!important;flex-wrap:nowrap!important;align-items:center!important;gap:7px!important;
+  min-height:0!important;max-height:none!important;padding:6px 9px!important;margin:0 0 6px!important;border-radius:12px!important}
+.m221-update-bar .m221-update-label,
+#app .m221-update-bar .m221-update-label{display:flex!important;flex:1 1 auto!important;min-width:0!important;align-items:baseline!important;gap:6px!important;overflow:hidden!important}
+.m221-update-bar .m221-update-label b{flex:0 0 auto!important;font-size:11px!important;line-height:1.2!important}
+.m221-update-bar .m221-update-label small{flex:0 1 auto!important;font-size:8px!important;line-height:1.2!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+.m221-update-bar .btn,
+#app .m221-update-bar .btn{flex:0 0 auto!important;width:auto!important;min-width:0!important;min-height:30px!important;height:30px!important;
+  padding:0 11px!important;font-size:10px!important;line-height:30px!important;border-radius:9px!important}
+@media(max-width:700px){
+  .m221-update-bar,#app .m221-update-bar{padding:5px 8px!important;gap:6px!important}
+  .m221-update-bar .m221-update-label g{display:none}
+  .m221-update-bar .m221-update-label b{font-size:10px!important}
+  .m221-update-bar .m221-update-label small{font-size:7px!important}
+  .m221-update-bar .btn,#app .m221-update-bar .btn{height:28px!important;min-height:28px!important;line-height:28px!important;padding:0 9px!important;font-size:10px!important}
+}
+/* =========================================================
+   v2.2.2 FIX #2 — 顶栏按设计图(1)补齐：三资源常显 + 各带「＋」
+   原实现：≤700px 隐藏 ◎契灵印，≤390px 再隐藏 ◈烬币，玩家常看不到
+          自己的货币；且三个资源共用一个「＋」。
+   ========================================================= */
+/* 删除「隐藏资源」的旧规则，改为紧凑排列保证三项都可见 */
+.v216-resource-drawer .v216-res.ticket,
+.v216-resource-drawer .v216-res.coin{display:flex!important}
+.v216-topbar{grid-template-columns:minmax(0,auto) minmax(0,1fr) auto!important;gap:5px!important;align-items:center!important}
+.v216-topbar .v216-player{min-width:0!important}
+.v216-topbar .v216-resource-drawer{min-width:0!important;display:flex;justify-content:flex-end}
+.v216-resource-drawer summary{display:flex!important;flex-wrap:nowrap!important;justify-content:flex-end;gap:3px!important;min-width:0;max-width:100%;overflow:hidden}
+.v216-resource-drawer summary>em{display:none!important}
+.v216-res{position:relative;display:flex!important;align-items:center;gap:2px;padding:4px 3px 4px 5px!important;
+  min-height:26px;flex:0 0 auto;border-radius:999px;border:1px solid rgba(170,184,214,.12);background:rgba(22,31,51,.8)}
+.v216-res i{font-size:10px;font-style:normal;line-height:1}
+.v216-res b{font-size:9px!important;line-height:1;letter-spacing:.1px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.v216-res.crystal i{color:#a8cbff}.v216-res.coin i{color:#f0ce78}.v216-res.ticket i{color:#c7b5ff}
+.v216-res-plus{width:15px;height:15px;min-width:15px!important;min-height:15px!important;flex:0 0 auto;display:grid;place-items:center;
+  border:0;border-radius:50%;background:rgba(232,199,124,.16);color:#f0d795;font:700 10px/1 sans-serif;font-style:normal;cursor:pointer;padding:0}
+.v216-res-plus:active{transform:scale(.9);background:rgba(232,199,124,.32)}
+/* 玩家信息：窄屏收紧但不隐藏 */
+.v216-player{gap:6px!important}
+.v216-player-avatar{width:30px!important;height:30px!important}
+.v216-player strong{font-size:12px}
+.v216-player small{font-size:8px}
+@media(max-width:700px){
+  .v216-topbar>.v216-player{max-width:80px!important}
+  .v216-player small{max-width:66px}
+  .v216-res{padding:3px 3px 3px 5px!important;min-height:24px}
+  .v216-res b{font-size:9px!important}
+  .v216-res-plus{width:14px;height:14px;min-width:14px!important;min-height:14px!important;font-size:9px}
+  .v216-top-actions{gap:3px!important}
+  .v216-top-actions button{width:30px!important;height:30px!important;min-width:30px!important;min-height:30px!important;font-size:13px!important}
+}
+@media(max-width:360px){
+  .v216-topbar>.v216-player{max-width:44px!important}
+  .v216-player>div:last-child{display:none}
+}
+/* 资源总览面板：每行 = 图标 + 名称/说明 + 获取按钮 */
+.v216-resource-pop{position:absolute;right:0;top:calc(100% + 8px);z-index:120;width:min(88vw,290px);padding:8px!important;
+  display:grid!important;grid-template-columns:1fr!important;gap:3px!important;border:1px solid rgba(192,204,234,.16);border-radius:14px;
+  background:rgba(9,14,27,.99);box-shadow:0 22px 65px rgba(0,0,0,.6)}
+.v216-resource-pop>div{display:grid!important;grid-template-columns:18px minmax(0,1fr) 28px;align-items:center;gap:7px;padding:6px 7px!important;border-radius:10px}
+.v216-resource-pop>div>i{font-size:13px;font-style:normal;color:#cbd7ef;text-align:center}
+.v216-resource-pop>div>span{min-width:0;display:block!important}
+.v216-resource-pop b{display:block;font-size:11px!important;color:#eaf0fc}
+.v216-resource-pop small{display:block;margin-top:1px;font-size:8px!important;color:#8391aa;white-space:normal;line-height:1.3}
+.v216-resource-pop>div>button{width:28px!important;height:28px!important;min-width:28px!important;min-height:28px!important;display:grid;place-items:center;
+  border:0;border-radius:8px;background:rgba(255,255,255,.07);color:#f0d795;font-size:13px;cursor:pointer}
+/* v2.2.2 FIX #2b：顶栏极限收紧 + 资源面板贴右不溢出 */
+.v216-topbar{gap:4px!important}
+.v216-res{padding:3px 2px 3px 4px!important;gap:1px!important;min-height:24px!important;border-radius:8px!important}
+.v216-res i{font-size:10px!important}
+.v216-res b{font-size:9px!important;letter-spacing:0!important}
+.v216-res-plus{width:13px!important;height:13px!important;min-width:13px!important;min-height:13px!important;font-size:9px!important}
+.v216-resource-drawer summary{gap:2px!important}
+.v216-player{gap:5px!important}
+.v216-player-avatar{width:28px!important;height:28px!important}
+.v216-player strong{font-size:11px!important}
+.v216-player small{font-size:7px!important}
+.v216-top-actions{gap:2px!important}
+.v216-top-actions button{width:29px!important;height:29px!important;min-width:29px!important;min-height:29px!important;font-size:12px!important;border-radius:9px!important}
+/* 资源总览面板：相对定位基准放在顶栏，右侧贴齐，永不出屏 */
+.v216-resource-drawer{position:static!important}
+.v216-topbar{position:relative}
+.v216-resource-pop{position:absolute!important;right:9px!important;left:auto!important;top:calc(100% + 6px)!important;width:min(94vw,300px)!important;max-width:calc(100vw - 18px)!important}
+@media(max-width:700px){
+  .v216-topbar>.v216-player{max-width:72px!important}
+  .v216-player small{max-width:58px!important}
+}
+@media(max-width:400px){
+  .v216-topbar>.v216-player{max-width:34px!important}
+  .v216-player>div:last-child{display:none!important}
+  .v216-res b{font-size:8.5px!important}
+}
+/* =========================================================
+   v2.2.2 FIX #3 — 首页重排（对齐设计图 01）
+   ①「每日任务 / 本周进度」移入「今日星轨」卡片内部
+   ② 恢复底部三个大厅入口（事务所 / 限时活动 / 云存档）
+   ③ 消除立绘下方大片空白
+   ④ 右侧竖排快捷栏不与星轨卡重叠
+   ========================================================= */
+/* 卡片内的两栏进度（设计图(1)-05 卡片底部） */
+.v216-star-route .v216-progress-cards{
+  position:static!important;left:auto!important;right:auto!important;bottom:auto!important;z-index:auto!important;
+  display:grid!important;grid-template-columns:1fr 1fr!important;gap:7px!important;
+  margin:10px 0 0!important;padding-top:9px!important;border-top:1px solid rgba(185,198,232,.14)!important}
+.v216-star-route .v216-progress-cards>button{position:relative!important;min-height:56px!important;padding:8px!important;
+  display:grid!important;grid-template-columns:26px minmax(0,1fr)!important;align-items:center!important;gap:7px!important;
+  text-align:left;border:1px solid rgba(178,192,224,.14)!important;border-radius:13px!important;
+  background:linear-gradient(145deg,rgba(26,36,60,.9),rgba(13,20,36,.9))!important;color:#eaf0fc;cursor:pointer}
+.v216-star-route .v216-progress-cards>button>span{width:26px!important;height:26px!important;display:grid;place-items:center;
+  border-radius:9px;background:rgba(232,199,124,.1);color:#efd48c;font-size:13px}
+.v216-star-route .v216-progress-cards small{display:block;font-size:8px!important;color:#8c99b0}
+.v216-star-route .v216-progress-cards b{display:block;margin-top:1px;font-size:12px!important}
+.v216-star-route .v216-progress-cards div>i{display:block;position:relative;height:4px;margin-top:5px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden}
+.v216-star-route .v216-progress-cards div>i::after{content:'';display:block;width:var(--p,0%);height:100%;border-radius:99px;background:linear-gradient(90deg,#9983d8,#e4c87e)}
+.v216-star-route .v216-progress-cards em{position:absolute!important;right:7px!important;top:6px!important;padding:1px 5px;border-radius:99px;
+  background:rgba(220,91,104,.92);color:#fff;font:700 7px/1.5 sans-serif;font-style:normal}
+.v216-star-route .v216-progress-cards>button:nth-child(2)>span{background:rgba(167,139,250,.14);color:#c9b6ff}
+.v216-star-route .v216-progress-cards>button:nth-child(2) div>i::after{background:linear-gradient(90deg,#a78bfa,#c9b6ff)}
+
+@media(max-width:700px){
+  /* ① 一屏构图：大厅铺满，星轨卡与停靠栏都在卡片内固定 */
+  .v218-app .v216-lobby{min-height:calc(100dvh - 196px)!important;padding-bottom:0!important}
+  .v218-app .v216-star-route{position:absolute!important;left:9px!important;right:64px!important;bottom:80px!important;top:auto!important;margin:0!important;padding:11px!important}
+  /* ② 大厅三入口 */
+  .v218-app .m208-lobby-dock{position:absolute!important;left:9px!important;right:9px!important;bottom:8px!important;margin:0!important;z-index:6;
+    display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important}
+  .v218-app .m208-lobby-dock button{min-height:54px!important;padding:8px!important;grid-template-columns:24px minmax(0,1fr)!important;column-gap:6px!important;border-radius:12px!important}
+  .v218-app .m208-lobby-dock button>b{width:24px!important;height:24px!important;font-size:13px!important}
+  .v218-app .m208-lobby-dock button>span{font-size:8px!important}
+  .v218-app .m208-lobby-dock button>em{font-size:6px!important}
+  /* ④ 立绘收窄，避免与卡片、快捷栏打架 */
+  .v218-app .v216-hero-art{height:52%!important;width:106%!important;right:-26%!important}
+  .v218-app .v216-quick-rail{top:88px!important;right:6px!important;padding:3px!important;gap:5px!important}
+  .v218-app .v216-quick-rail button{width:40px!important;min-height:44px!important}
+  .v218-app .v216-quick-rail span{font-size:7px!important}
+  .v218-app .v216-quick-rail b{font-size:14px!important}
+  /* 卡片文案收紧，给两栏进度留空间 */
+  .v218-app .v216-route-title small{display:none!important}
+  .v218-app .v216-chapter-line{margin:6px 0 8px!important}
+}
+/* v2.2.2 FIX #3b：停靠栏抬到导航之上 + 消除多余滚动 */
+@media(max-width:700px){
+  .v218-app .v216-lobby{min-height:calc(100dvh - var(--v220-nav-h,72px) - 62px)!important}
+  .v218-app .m208-lobby-dock{bottom:calc(var(--v220-nav-h,72px) - 62px + 8px)!important}
+}
+/* 全局底部留白（FIX #4）：保证导航不压住任何页面最后一段内容 */
+main.app.v218-app{padding-bottom:calc(var(--v220-nav-h,72px) + 26px)!important}
+@media(max-width:700px){
+  main.app.v218-app{padding-bottom:calc(var(--v220-nav-h,72px) + 30px)!important}
+  main.app.v218-app:has(.v216-lobby){padding-bottom:8px!important}
+}
+/* v2.2.2 FIX #3c：停靠栏必须落在导航之上；大厅高度按实际起始偏移换算 */
+@media(max-width:700px){
+  .v218-app .v216-lobby{min-height:calc(100dvh - 127px)!important}
+  .v218-app .m208-lobby-dock{bottom:calc(var(--v220-nav-h,72px) + 6px)!important}
+  .v218-app .v216-star-route{bottom:calc(var(--v220-nav-h,72px) + 62px)!important}
+}
+/* v2.2.2 FIX #3d：最终对齐 —— 停靠栏底部与导航顶部之间留 8px */
+@media(max-width:700px){
+  .v218-app .v216-lobby{min-height:calc(100dvh - 135px)!important}
+  .v218-app .m208-lobby-dock{bottom:calc(var(--v220-nav-h,72px) - 2px)!important}
+  .v218-app .v216-star-route{bottom:calc(var(--v220-nav-h,72px) + 54px)!important}
+}
+/* v2.2.2 FIX #3e：停靠栏最终抬升到导航之上（+12px 呼吸位） */
+@media(max-width:700px){
+  .v218-app .m208-lobby-dock{bottom:calc(var(--v220-nav-h,72px) + 12px)!important}
+  .v218-app .v216-star-route{bottom:calc(var(--v220-nav-h,72px) + 78px)!important}
+  .v218-app .v216-lobby{min-height:calc(100dvh - 145px)!important}
+}
+/* =========================================================
+   v2.2.2 FIX #5 — 设计图(4)-02 契灵详情：属性区补齐 6 项
+   （生命 / 攻击 / 防御 / 速度 / 暴击率 / 暴击伤害）
+   说明：暴击率与暴击伤害取自战斗引擎里的实际常量
+        （普攻 rng()<0.12、技能 rng()<0.16；倍率 1.65 / 1.5），
+        并非新增属性。若日后在 game-data.js 调整，请同步更新这里的显示。
+   ========================================================= */
+.v09-stat-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important}
+.v09-stat-grid span{padding:8px 7px!important;border-radius:9px!important;min-width:0}
+.v09-stat-grid small{font-size:8px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.v09-stat-grid b{font-size:13px!important;font-variant-numeric:tabular-nums}
+/* 后两项（暴击类）用强调色，和基础属性区分 */
+.v09-stat-grid span:nth-child(5) b{color:#f0ce78}
+.v09-stat-grid span:nth-child(6) b{color:#f0ce78}
+@media(max-width:390px){
+  .v09-stat-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:5px!important}
+  .v09-stat-grid span{padding:7px 6px!important}
+  .v09-stat-grid b{font-size:12px!important}
+}
+/* =========================================================
+   v2.2.2 FIX #6 — 设计图(5) 契约召唤：概率公示表 + 召唤二次确认
+   ========================================================= */
+/* 概率公示表（分档 + 百分比 + 条形图） */
+.m222-rate-table{display:grid;gap:6px;margin:9px 0 7px}
+.m222-rate-row{display:grid;grid-template-columns:42px minmax(0,1fr) 46px;grid-template-rows:auto auto;align-items:center;gap:2px 8px;
+  padding:7px 9px;border:1px solid rgba(178,192,224,.13);border-radius:11px;background:rgba(255,255,255,.03)}
+.m222-rate-row>b{grid-row:1/3;font-size:12px;text-align:center}
+.m222-rate-row>strong{grid-row:1/3;font-size:13px;text-align:right;font-variant-numeric:tabular-nums;color:#eaf0fc}
+.m222-rate-row>small{font-size:8px;color:#8391aa;line-height:1.3}
+.m222-rate-bar{height:5px;border-radius:99px;background:rgba(255,255,255,.09);overflow:hidden}
+.m222-rate-bar>i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#8f7bd8,#e4c87e)}
+.m222-rate-row:nth-child(2) .m222-rate-bar>i{background:linear-gradient(90deg,#6f86c9,#a9c2f0)}
+.m222-rate-row:nth-child(3) .m222-rate-bar>i{background:linear-gradient(90deg,#6b7787,#9aa7ba)}
+/* 保底进度行 */
+.m222-pity-note{display:flex;align-items:baseline;gap:8px;padding:7px 9px;border-radius:11px;
+  border:1px solid rgba(232,199,124,.22);background:rgba(232,199,124,.06)}
+.m222-pity-note>span{font-size:9px;color:#9eb0cf}
+.m222-pity-note>b{font-size:13px;color:#f0d795;font-variant-numeric:tabular-nums}
+.m222-pity-note>em{margin-left:auto;font-style:normal;font-size:9px;color:#c9b6ff}
+.m222-rate-rule{margin:7px 0 0;font-size:9px;line-height:1.65;color:#8391aa}
+/* 召唤二次确认弹窗（替代浏览器原生 confirm） */
+.m222-confirm-layer{z-index:9500}
+.m222-confirm-card{width:min(92vw,340px);padding:18px;border-radius:20px;border:1px solid rgba(215,194,139,.28);
+  background:linear-gradient(160deg,rgba(24,32,55,.99),rgba(10,15,29,.99));box-shadow:0 26px 80px rgba(0,0,0,.6);text-align:center}
+.m222-confirm-card .kicker{font-size:8px;letter-spacing:2px;color:#a99dc2}
+.m222-confirm-card h2{margin:5px 0 7px;font-size:20px;color:#f6f2fb}
+.m222-confirm-card>p{margin:0 0 12px;font-size:11px;line-height:1.6;color:#c3cbdd}
+.m222-confirm-card>p b{color:#f0d795}
+.m222-confirm-rows{display:grid;gap:5px;margin-bottom:14px;text-align:left}
+.m222-confirm-rows>div{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 10px;
+  border-radius:10px;background:rgba(255,255,255,.04);font-size:10px;color:#9eb0cf}
+.m222-confirm-rows>div>b{font-size:12px;color:#eaf0fc;font-variant-numeric:tabular-nums}
+.m222-confirm-card .btnrow{display:grid;grid-template-columns:1fr 1.4fr;gap:8px}
+.m222-confirm-card .btnrow .btn{width:100%;min-height:42px}
+/* =========================================================
+   v2.2.2 FIX #7 — 设计图(7) 事务所：邮件分类 / 成就进度环 / 公告页 / 活跃度
+   ========================================================= */
+/* 事务所分页支持第 5 项 */
+.m207-office-tabs{grid-template-columns:repeat(5,minmax(0,1fr))!important}
+/* —— 邮件分类标签 —— */
+.m222-mail-cats{display:flex;gap:5px;overflow-x:auto;padding:2px 1px 8px;scrollbar-width:none}
+.m222-mail-cats::-webkit-scrollbar{display:none}
+.m222-mail-cats button{flex:0 0 auto;display:inline-flex;align-items:center;gap:4px;min-height:30px;padding:0 11px;
+  border:1px solid rgba(178,192,224,.16);border-radius:999px;background:rgba(255,255,255,.04);color:#9eb0cf;font-size:10px;cursor:pointer}
+.m222-mail-cats button.active{background:linear-gradient(135deg,rgba(232,199,124,.22),rgba(232,199,124,.08));border-color:rgba(232,199,124,.45);color:#f3e0a8}
+.m222-mail-cats button em{font-style:normal;font-size:9px;opacity:.85}
+/* —— 邮件行 —— */
+.mail-card{display:grid!important;grid-template-columns:30px minmax(0,1fr) auto!important;align-items:start!important;gap:9px!important}
+.mail-icon{width:30px;height:30px;display:grid;place-items:center;border-radius:10px;background:rgba(232,199,124,.1);color:#efd48c;font-size:14px}
+.mail-card.claimed .mail-icon{background:rgba(255,255,255,.05);color:#7f8ca5}
+.mail-body{min-width:0}
+.mail-body strong,.mail-body span,.mail-body small{display:block}
+.mail-body span{margin:2px 0 4px;font-size:9px;line-height:1.5;color:#9eb0cf}
+/* —— 邮件底部批量操作 —— */
+.m222-mail-actions{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;padding-top:9px;border-top:1px solid rgba(185,198,232,.12)}
+.m222-mail-actions>span{font-size:9px;color:#9eb0cf}
+/* —— 成就进度环 —— */
+.m222-ach-head{display:grid;grid-template-columns:74px minmax(0,1fr);align-items:center;gap:12px;margin:4px 0 10px;
+  padding:11px;border:1px solid rgba(178,192,224,.14);border-radius:14px;background:linear-gradient(145deg,rgba(26,36,60,.85),rgba(13,20,36,.85))}
+.m222-ach-ring{position:relative;width:74px;height:74px;border-radius:50%;
+  background:conic-gradient(#e8c77c calc(var(--p,0)*1%),rgba(255,255,255,.09) 0);display:grid;place-items:center}
+.m222-ach-ring::after{content:'';position:absolute;inset:7px;border-radius:50%;background:#0b1220}
+.m222-ach-ring>span{position:relative;z-index:1;text-align:center;line-height:1.1}
+.m222-ach-ring b{display:block;font-size:17px;color:#f0d795;font-variant-numeric:tabular-nums}
+.m222-ach-ring small{font-size:8px;color:#8391aa}
+.m222-ach-meta{min-width:0}
+.m222-ach-meta strong{display:block;font-size:12px;color:#eaf0fc}
+.m222-ach-meta span{display:block;margin-top:3px;font-size:9px;color:#9eb0cf}
+.m222-ach-meta em{display:block;margin-top:4px;font-style:normal;font-size:9px;color:#f0d795}
+.m222-ach-cats{display:flex;gap:5px;overflow-x:auto;padding:0 1px 8px;scrollbar-width:none}
+.m222-ach-cats::-webkit-scrollbar{display:none}
+.m222-ach-cats button{flex:0 0 auto;display:inline-flex;align-items:center;gap:4px;min-height:28px;padding:0 10px;
+  border:1px solid rgba(178,192,224,.16);border-radius:999px;background:rgba(255,255,255,.04);color:#9eb0cf;font-size:9px;cursor:pointer}
+.m222-ach-cats button.active{background:linear-gradient(135deg,rgba(232,199,124,.22),rgba(232,199,124,.08));border-color:rgba(232,199,124,.45);color:#f3e0a8}
+.m222-ach-cats button em{font-style:normal;font-size:8px;opacity:.85}
+/* —— 每日活跃度 —— */
+.m222-active-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:9px;margin:4px 0 9px}
+.m222-active-bar{height:6px;border-radius:99px;background:rgba(255,255,255,.09);overflow:hidden}
+.m222-active-bar>i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#9983d8,#e4c87e);transition:width .25s ease}
+.m222-active-row>span{font-size:9px;color:#9eb0cf;white-space:nowrap}
+.m222-active-row>span b{color:#f0d795;font-size:11px}
+/* —— 公告页 —— */
+.m222-notice-panel .m222-notice{display:grid;grid-template-columns:38px minmax(0,1fr) auto;gap:10px;align-items:start;
+  padding:11px;margin-bottom:8px;border:1px solid rgba(178,192,224,.13);border-radius:13px;background:rgba(255,255,255,.028)}
+.m222-notice.hot{border-color:rgba(232,199,124,.34);background:linear-gradient(145deg,rgba(232,199,124,.09),rgba(232,199,124,.02))}
+.m222-notice-tag{width:38px;height:38px;display:grid;place-items:center;border-radius:11px;background:rgba(167,139,250,.14);
+  color:#c9b6ff;font-size:9px;font-weight:800;text-align:center;line-height:1.15}
+.m222-notice.hot .m222-notice-tag{background:rgba(232,199,124,.16);color:#f0d795}
+.m222-notice>div:nth-child(2){min-width:0}
+.m222-notice strong{display:block;font-size:12px;color:#eaf0fc;line-height:1.35}
+.m222-notice span{display:block;margin-top:3px;font-size:9px;line-height:1.55;color:#9eb0cf}
+.m222-notice>small{font-size:8px;color:#7f8ca5;white-space:nowrap;padding-top:2px}
+@media(max-width:390px){
+  .m222-ach-head{grid-template-columns:64px minmax(0,1fr);gap:10px;padding:10px}
+  .m222-ach-ring{width:64px;height:64px}
+  .m222-ach-ring b{font-size:15px}
+  .m222-notice-panel .m222-notice{grid-template-columns:32px minmax(0,1fr);gap:8px}
+  .m222-notice-tag{width:32px;height:32px;font-size:8px}
+  .m222-notice>small{grid-column:2}
+}
+/* =========================================================
+   v2.2.2 FIX #8 — 设计图(3) 编队：队伍标签条 / 共鸣进度条 / 快速编队+保存队伍 / 出战准备
+   ========================================================= */
+/* 队伍预设标签条（对齐设计图「队伍1~4」） */
+.m222-team-tabs{display:flex;gap:6px;overflow-x:auto;padding:0 0 9px;scrollbar-width:none}
+.m222-team-tabs::-webkit-scrollbar{display:none}
+.m222-team-tabs button{flex:1 1 0;min-width:74px;min-height:40px;display:grid;gap:1px;justify-items:center;align-content:center;
+  border:1px solid rgba(178,192,224,.15);border-radius:12px;background:rgba(255,255,255,.035);color:#9eb0cf;cursor:pointer}
+.m222-team-tabs button b{font-size:11px;font-weight:800}
+.m222-team-tabs button small{font-size:8px;opacity:.85}
+.m222-team-tabs button.active{border-color:rgba(232,199,124,.5);background:linear-gradient(145deg,rgba(232,199,124,.2),rgba(232,199,124,.05));color:#f3e0a8}
+/* 快速编队 / 保存队伍 双按钮 */
+.m222-team-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:9px 0}
+.m222-team-actions .btn{width:100%;min-height:40px;display:inline-flex;align-items:center;justify-content:center;gap:5px}
+.m222-team-actions .btn b{font-size:12px}
+/* 阵营共鸣进度条 */
+.m222-resonance{padding:10px;border:1px solid rgba(178,192,224,.13);border-radius:13px;background:rgba(255,255,255,.028);margin-bottom:9px}
+.m222-res-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:8px}
+.m222-res-head>b{font-size:11px;color:#eaf0fc}
+.m222-res-head>span{font-size:8px;color:#8391aa}
+.m222-res-row{display:grid;grid-template-columns:74px minmax(0,1fr) auto;align-items:center;gap:8px;margin-bottom:7px}
+.m222-res-row:last-child{margin-bottom:0}
+.m222-res-name{display:inline-flex;align-items:center;gap:5px;font-size:9px;color:#9eb0cf;white-space:nowrap}
+.m222-res-row.on .m222-res-name{color:#eaf0fc}
+.m222-res-bar{position:relative;height:7px;border-radius:99px;background:rgba(255,255,255,.09);overflow:hidden}
+.m222-res-bar>i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#6b7787,#9aa7ba);transition:width .25s ease}
+.m222-res-row.on .m222-res-bar>i{background:linear-gradient(90deg,#9983d8,#e4c87e)}
+.m222-res-bar>em{position:absolute;top:-2px;bottom:-2px;width:1px;background:rgba(255,255,255,.35)}
+.m222-res-row>small{font-size:8px;color:#8391aa;white-space:nowrap;max-width:118px;overflow:hidden;text-overflow:ellipsis}
+.m222-res-row.on>small{color:#f0d795}
+/* 出战准备（推荐战力对比） */
+.m222-deploy{padding:10px;border:1px solid rgba(178,192,224,.13);border-radius:13px;background:rgba(255,255,255,.028)}
+.m222-deploy.ok{border-color:rgba(120,200,150,.3);background:linear-gradient(145deg,rgba(120,200,150,.09),rgba(120,200,150,.02))}
+.m222-deploy.low{border-color:rgba(220,120,120,.3);background:linear-gradient(145deg,rgba(220,120,120,.09),rgba(220,120,120,.02))}
+.m222-deploy-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:7px}
+.m222-deploy-head>span{font-size:10px;color:#9eb0cf}
+.m222-deploy-head>b{font-size:10px}
+.m222-deploy.ok .m222-deploy-head>b{color:#8fd8a8}
+.m222-deploy.low .m222-deploy-head>b{color:#e79a9a}
+.m222-deploy-bar{height:7px;border-radius:99px;background:rgba(255,255,255,.09);overflow:hidden;margin-bottom:7px}
+.m222-deploy-bar>i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#9983d8,#e4c87e)}
+.m222-deploy.ok .m222-deploy-bar>i{background:linear-gradient(90deg,#5fae7c,#9ee0b4)}
+.m222-deploy.low .m222-deploy-bar>i{background:linear-gradient(90deg,#b06a6a,#e79a9a)}
+.m222-deploy-nums{display:flex;justify-content:space-between;gap:8px;font-size:9px;color:#8391aa}
+.m222-deploy-nums b{color:#eaf0fc;font-variant-numeric:tabular-nums}
+@media(max-width:390px){
+  .m222-res-row{grid-template-columns:66px minmax(0,1fr) auto;gap:6px}
+  .m222-res-row>small{max-width:92px}
+  .m222-team-tabs button{min-width:66px}
+}
+/* v2.2.2 FIX #8b：编队页紧凑化（缩短滚动长度，信息不变） */
+.m221-formation-stage{padding:10px!important}
+.m221-formation-head p{display:none!important}
+.m221-formation-head{margin-bottom:7px!important}
+.m221-formation-head h2{font-size:19px!important;margin:3px 0 0!important}
+.m221-team-slots{gap:6px!important;margin:7px 0!important}
+.m221-team-slot{padding:7px!important;gap:4px!important}
+.m221-team-slot strong{font-size:11px!important}
+.m221-team-slot span,.m221-team-slot small{font-size:8px!important;line-height:1.3}
+.m221-team-slot .btn{min-height:30px!important;font-size:10px!important;padding:0 6px!important}
+.m221-team-meta{gap:6px!important;margin:7px 0!important}
+.m222-team-actions{margin:7px 0!important}
+.m222-resonance{padding:9px!important;margin-bottom:7px!important}
+.m222-deploy{padding:9px!important}
+.m221-roster-panel,.mf203-candidate-panel{margin-top:7px!important}
+.v218-team-title{display:none!important}
+@media(max-width:390px){
+  .m221-formation-stage{padding:9px!important}
+  .m221-team-slot{padding:6px!important}
+}
+/* v2.2.2 FIX #8c：编队候选列表最后一行被固定导航压住 —— 给候选面板补足底部留白 */
+@media(max-width:700px){
+  .v218-formation-screen .v218-roster-panel,
+  .v218-formation-screen .mf203-candidate-panel{padding-bottom:calc(var(--v220-nav-h,72px) + 34px)!important}
+  /* 配方面板与克制提示同样留白，避免后续内容被压 */
+  .v218-formation-screen .v18-presets,
+  .v218-formation-screen .mf203-counter-details{margin-bottom:16px!important}
+}
+/* v2.2.2 FIX #8d：编队候选网格被限制成 36dvh 的小滚动窗口（只装 1.5 行），
+   导致后面几张契灵卡点不到。放宽到 2.5 行左右，仍保留内部滚动以免页面过长。 */
+@media(max-width:700px){
+  .v218-formation-screen .v09-roster-grid{max-height:min(56dvh,480px)!important}
+  /* 撤销上一版加在面板上的额外底部留白（网格自身滚动，不需要） */
+  .v218-formation-screen .v218-roster-panel,
+  .v218-formation-screen .mf203-candidate-panel{padding-bottom:12px!important}
+}
+@media(min-width:701px){
+  .v218-formation-screen .v09-roster-grid{max-height:min(46dvh,520px)!important}
+}
+/* =========================================================
+   v2.2.2 FIX #9 — 设计图(6) 探索：章节列表页 + 关卡详情奖励图标格
+   ========================================================= */
+/* 探索分页支持第 4 项 */
+.v218-explore-tabs{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+/* —— 章节列表 —— */
+.m222-chapter-list .m222-chapter-row{display:grid;grid-template-columns:34px minmax(0,1fr) auto;align-items:center;gap:10px;
+  width:100%;padding:10px;margin-bottom:7px;text-align:left;border:1px solid rgba(178,192,224,.14);border-radius:13px;
+  background:linear-gradient(145deg,rgba(24,33,55,.9),rgba(12,18,33,.9));color:#eaf0fc;cursor:pointer}
+.m222-chapter-row:last-child{margin-bottom:0}
+.m222-chapter-row.done{border-color:rgba(120,200,150,.3)}
+.m222-chapter-row.active{border-color:rgba(232,199,124,.5);background:linear-gradient(145deg,rgba(232,199,124,.14),rgba(232,199,124,.03))}
+.m222-chapter-row.locked{opacity:.55}
+.m222-chapter-no{width:34px;height:34px;display:grid;place-items:center;border-radius:11px;background:rgba(255,255,255,.06);font-size:13px;font-weight:800}
+.m222-chapter-row.done .m222-chapter-no{background:rgba(120,200,150,.18);color:#8fd8a8}
+.m222-chapter-row.active .m222-chapter-no{background:rgba(232,199,124,.2);color:#f0d795}
+.m222-chapter-copy{min-width:0;display:block}
+.m222-chapter-copy b{display:block;font-size:12px}
+.m222-chapter-copy small{display:block;margin-top:2px;font-size:8px;color:#8391aa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.m222-chapter-bar{display:block;height:4px;margin:6px 0 3px;border-radius:99px;background:rgba(255,255,255,.09);overflow:hidden}
+.m222-chapter-bar>i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#9983d8,#e4c87e)}
+.m222-chapter-row.done .m222-chapter-bar>i{background:linear-gradient(90deg,#5fae7c,#9ee0b4)}
+.m222-chapter-copy em{display:block;font-style:normal;font-size:8px;color:#7f8ca5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.m222-chapter-state{font-size:9px;color:#8391aa;white-space:nowrap}
+.m222-chapter-row.done .m222-chapter-state{color:#8fd8a8}
+.m222-chapter-row.active .m222-chapter-state{color:#f0d795}
+/* —— 关卡详情：奖励图标格 —— */
+.m222-reward-grid{margin:8px 0;padding:9px;border:1px solid rgba(232,199,124,.2);border-radius:12px;background:rgba(232,199,124,.05)}
+.m222-reward-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:8px}
+.m222-reward-head b{font-size:10px;color:#f0d795}
+.m222-reward-head span{font-size:8px;color:#8391aa}
+.m222-reward-cells{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.m222-reward-cell{display:grid;justify-items:center;gap:2px;padding:7px 4px;border-radius:10px;background:rgba(255,255,255,.05)}
+.m222-reward-cell i{font-size:15px;font-style:normal;color:#efd48c;line-height:1}
+.m222-reward-cell b{font-size:11px;color:#eaf0fc;font-variant-numeric:tabular-nums}
+.m222-reward-cell small{font-size:7px;color:#8391aa;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+@media(max-width:390px){
+  .m222-chapter-row{grid-template-columns:30px minmax(0,1fr) auto;gap:8px;padding:9px}
+  .m222-chapter-no{width:30px;height:30px;font-size:12px}
+  .m222-chapter-copy b{font-size:11px}
+  .m222-reward-cells{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
+  .m222-reward-cell{padding:6px 3px}
+}
+/* =========================================================
+   v2.2.2 FIX #10 — 收尾：升级材料格 / 天赋树 / 一键穿卸 / 重复获得页 / 活动商店分类
+   ========================================================= */
+/* —— 升级材料格 + 一键最大 —— */
+.m222-mat-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:8px 0}
+.m222-mat-cell{display:grid;grid-template-columns:22px minmax(0,1fr);grid-template-rows:auto auto;align-items:center;gap:1px 7px;
+  padding:8px;border:1px solid rgba(178,192,224,.15);border-radius:11px;background:rgba(255,255,255,.04)}
+.m222-mat-cell>i{grid-row:1/3;font-size:15px;font-style:normal;text-align:center;color:#efd48c}
+.m222-mat-cell>b{font-size:12px;color:#eaf0fc;font-variant-numeric:tabular-nums}
+.m222-mat-cell>small{font-size:7px;color:#8391aa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.m222-mat-cell.lack{border-color:rgba(220,120,120,.35);background:rgba(220,120,120,.08)}
+.m222-mat-cell.lack>b{color:#e79a9a}
+.m222-mat-actions{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:7px}
+.m222-mat-actions>span{font-size:9px;color:#9eb0cf}
+.m222-mat-actions>span b{color:#f0d795;font-size:12px}
+/* —— 天赋树 —— */
+.m222-talent-track{display:flex;gap:3px;margin-bottom:8px}
+.m222-talent-track>i{flex:1 1 0;height:4px;border-radius:99px;background:rgba(255,255,255,.1)}
+.m222-talent-track>i.on{background:linear-gradient(90deg,#9983d8,#e4c87e)}
+.m222-talent-tree{display:grid;gap:7px}
+.m222-talent-node{position:relative;display:grid;gap:2px;padding:10px 11px 10px 40px;text-align:left;
+  border:1px solid rgba(178,192,224,.15);border-radius:13px;background:linear-gradient(145deg,rgba(24,33,55,.88),rgba(12,18,33,.88));color:#eaf0fc;cursor:pointer}
+.m222-talent-node.on{border-color:rgba(232,199,124,.45);background:linear-gradient(145deg,rgba(232,199,124,.14),rgba(232,199,124,.03))}
+.m222-talent-node.locked{opacity:.5}
+.m222-talent-node.nopts{border-color:rgba(220,120,120,.3)}
+.m222-talent-node>b{font-size:12px}
+.m222-talent-node>small{font-size:8px;color:#9eb0cf;line-height:1.4}
+.m222-talent-node>em{font-style:normal;font-size:8px;color:#8391aa;margin-top:2px}
+.m222-talent-node.on>em{color:#f0d795}
+.m222-talent-node.nopts>em{color:#e79a9a}
+.m222-talent-tier{position:absolute;left:9px;top:50%;transform:translateY(-50%);width:24px;height:24px;display:grid;place-items:center;
+  border-radius:8px;background:rgba(255,255,255,.06);font-size:10px;font-weight:800;color:#9eb0cf}
+.m222-talent-node.on .m222-talent-tier{background:rgba(232,199,124,.2);color:#f0d795}
+/* —— 一键穿卸 —— */
+.m222-gear-btns{display:flex;gap:5px;flex-wrap:wrap}
+.m222-gear-btns .btn{min-height:30px!important;font-size:10px!important;padding:0 9px!important}
+/* —— 重复获得独立页 —— */
+.m222-dup-layer{z-index:9500}
+.m222-dup-card{width:min(94vw,360px);max-height:calc(100dvh - 40px);overflow:auto;padding:16px;border-radius:20px;
+  border:1px solid rgba(192,204,234,.2);background:linear-gradient(160deg,rgba(24,32,55,.99),rgba(10,15,29,.99));box-shadow:0 26px 80px rgba(0,0,0,.6)}
+.m222-dup-card .kicker{font-size:8px;letter-spacing:2px;color:#a99dc2}
+.m222-dup-card h2{margin:5px 0 3px;font-size:20px;color:#f6f2fb}
+.m222-dup-note{margin:0 0 11px;font-size:10px;color:#9eb0cf}
+.m222-dup-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-bottom:11px}
+.m222-dup-cell{position:relative;display:grid;gap:2px;justify-items:center;padding:7px 5px;border:1px solid rgba(178,192,224,.16);border-radius:11px;background:rgba(255,255,255,.04);overflow:hidden}
+.m222-dup-cell .hero-portrait{width:100%;height:74px;border-radius:8px}
+.m222-dup-cell>span{position:absolute;left:6px;top:6px;font-size:8px;font-weight:800}
+.m222-dup-cell>strong{font-size:10px;color:#eaf0fc}
+.m222-dup-cell>small{font-size:7px;color:#9eb0cf;text-align:center}
+.m222-dup-cell>small b{color:#f0d795}
+.m222-dup-sum{margin-bottom:12px}
+.m222-dup-card .btnrow{display:grid;grid-template-columns:1fr 1.2fr;gap:8px}
+.m222-dup-card .btnrow .btn{width:100%;min-height:42px}
+/* gacha summary 三按钮自适应 */
+.m211-summary-actions{display:flex!important;flex-wrap:wrap!important;gap:7px!important}
+.m211-summary-actions .btn{flex:1 1 40%!important;min-height:42px}
+/* —— 活动商店分类 + 奖励详情 —— */
+.m222-shop-cats{display:flex;gap:5px;overflow-x:auto;padding:2px 1px 8px;scrollbar-width:none}
+.m222-shop-cats::-webkit-scrollbar{display:none}
+.m222-shop-cats button{flex:0 0 auto;display:inline-flex;align-items:center;gap:4px;min-height:30px;padding:0 11px;
+  border:1px solid rgba(178,192,224,.16);border-radius:999px;background:rgba(255,255,255,.04);color:#9eb0cf;font-size:10px;cursor:pointer}
+.m222-shop-cats button.active{background:linear-gradient(135deg,rgba(232,199,124,.22),rgba(232,199,124,.08));border-color:rgba(232,199,124,.45);color:#f3e0a8}
+.m207-event-good{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;align-items:center!important;gap:9px!important}
+.m207-event-good>div>span{display:inline-block;padding:1px 6px;border-radius:99px;background:rgba(232,199,124,.14);color:#f0d795;font-size:8px}
+@media(max-width:390px){
+  .m222-mat-grid{grid-template-columns:1fr 1fr;gap:5px}
+  .m222-mat-cell{padding:7px}
+  .m222-dup-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
+  .m222-dup-cell .hero-portrait{height:64px}
+  .m211-summary-actions .btn{flex:1 1 100%!important}
+}
+/* v2.2.2 FIX #10b：活动商店「奖励详情」块 */
+.m222-shop-detail{margin-top:9px;padding:9px;border:1px solid rgba(178,192,224,.14);border-radius:12px;background:rgba(255,255,255,.03)}
+.m222-shop-detail>b{display:block;font-size:10px;color:#eaf0fc}
+.m222-shop-detail>span{display:inline-block;margin:4px 0;padding:1px 7px;border-radius:99px;background:rgba(232,199,124,.14);color:#f0d795;font-size:8px}
+.m222-shop-detail>small{display:block;font-size:8px;line-height:1.55;color:#8391aa}
+/* v2.2.2 FIX #10g：夜航商店最后一个「兑换」滚到底仍被导航压住 —— 给夜航面板补底部留白 */
+@media(max-width:700px){
+  .m207-night{padding-bottom:calc(var(--v220-nav-h,72px) + 40px)!important}
+  .m207-night-rail{padding-bottom:6px!important}
+}
+/* =========================================================
+   v2.2.3 LAYER SYSTEM — 统一层级令牌（对齐提示词 10：弹层层级滚动响应式）
+   层级：内容(1) → 吸顶栏(100) → 底部导航(200) → 快捷浮层(300)
+        → Toast(400) → 遮罩(500) → 模态(600) → 模态内二级(700) → 系统级(800)
+   说明：不再为单个按钮乱加超大 z-index；所有浮层统一引用 --ly-* 令牌。
+   ========================================================= */
+:root{
+  --ly-content:1;
+  --ly-sticky:100;
+  --ly-nav:200;
+  --ly-sheet:300;
+  --ly-toast:400;
+  --ly-scrim:500;
+  --ly-modal:600;
+  --ly-modal-sub:700;
+  --ly-system:800;
+}
+/* ① 吸顶栏（顶栏 / 子页头 / 站内分段） */
+.v216-topbar,.topbar{z-index:var(--ly-sticky)!important}
+.v216-subpage-head{z-index:calc(var(--ly-sticky) - 10)!important}
+.v218-segment,.m206-slot-tabs,.m206-pool-tabs,.m206-gacha-actions,
+.m205-battle-hud,.m205-target-hint,.m205-command-dock,.m205-start-battle,
+.v218-gacha-screen .m206-gacha-actions,.v218-gear-screen .m206-slot-tabs,
+.v218-office-screen .all-reward,.selected-hero,.m205-strategy{z-index:var(--ly-sticky)!important}
+/* ② 底部主导航 */
+nav,.nav,.v216-nav,.v09-nav{z-index:var(--ly-nav)!important}
+/* ③ 快捷浮层 / 非模态面板：必须高于导航，否则面板会被导航抢点击 */
+.m204-more-layer{z-index:var(--ly-sheet)!important}
+.v216-resource-pop{z-index:calc(var(--ly-sheet) + 20)!important}
+/* ④ Toast：只展示信息，不抢点击 */
+.toast{z-index:var(--ly-toast)!important;pointer-events:none!important}
+/* ⑤ 遮罩 / 模态 / 模态内二级 */
+.v10-modal-layer,.m211-gacha-summary-layer,.v11-story-layer,.v11-boss-layer,
+.v12-result-layer,.v13-first-layer,.m209-return-layer,.m210-pwa-layer,
+.m211-result-layer,.m221-sweep-result-layer{z-index:var(--ly-modal)!important}
+.m222-confirm-layer,.m222-dup-layer{z-index:var(--ly-modal-sub)!important}
+/* ⑥ 系统级：加载 / 启动 / 更新提示（更新提示为页内横幅，不参与浮层竞争） */
+.m208-loading,.loading{z-index:var(--ly-system)!important}
+.v10-boot{z-index:calc(var(--ly-system) + 10)!important}
+.m221-update-bar{z-index:auto!important}
+/* ⑦ 根级战斗反馈（短时特效）放在模态之下，避免盖住结算 */
+.m210-fx-hit,.m210-fx-critical,.m210-fx-heal,.m210-fx-break,.m210-fx-win{z-index:calc(var(--ly-modal) - 20)!important}
+/* =========================================================
+   BUG-01/02/03 + 滚动锁：模态打开时底层不可滚动穿透，关闭后恢复位置
+   ========================================================= */
+body.modal-open{position:fixed;left:0;right:0;width:100%;overflow:hidden!important;overscroll-behavior:none!important;touch-action:none}
+body.modal-open main.app{overscroll-behavior:contain}
+/* 模态内部超长时自身滚动，关闭按钮始终可达 */
+.v10-modal-layer{overflow-y:auto;overscroll-behavior:contain}
+.v10-settings,.v10-tutorial,.v13-first-card,.v12-result-card,.v11-boss-intro,
+.m204-more-sheet,.m211-gacha-summary,.m222-dup-card,.m222-confirm-card{
+  max-height:calc(100dvh - max(16px,env(safe-area-inset-top)) - max(16px,env(safe-area-inset-bottom)))!important;
+  overflow-y:auto!important;overscroll-behavior:contain!important}
+/* 844×390 横屏矮视口：设置/弹窗必须仍可操作 */
+@media(max-height:520px){
+  .v10-modal-layer{align-items:flex-start!important;padding:6px 8px!important}
+  .v10-settings,.v10-tutorial,.v13-first-card,.v12-result-card,.v11-boss-intro,
+  .m204-more-sheet,.m211-gacha-summary,.m222-dup-card,.m222-confirm-card{max-height:calc(100dvh - 12px)!important}
+  .v10-settings .v10-close,.v10-close{position:sticky;top:0;z-index:2}
+}
+/* 快捷菜单不被底栏盖住（提示词 BUG-01） */
+.m204-more-layer{padding-bottom:calc(env(safe-area-inset-bottom) + 10px)!important}
+.m204-more-sheet{margin-bottom:0!important}
+/* v2.2.3 LAYER FIX-2：模态弹层底部必须让开固定底栏，否则设置/结算被压住
+   （提示词10 验收：弹层关闭按钮与底部操作按钮始终可达） */
+.v10-modal-layer{
+  padding-top:calc(env(safe-area-inset-top) + 10px)!important;
+  padding-bottom:calc(var(--v220-nav-h,72px) + env(safe-area-inset-bottom) + 14px)!important}
+/* 弹层内卡片自身高度按"可用高度 - 底栏"计算 */
+.v10-settings,.v10-tutorial,.v13-first-card,.v12-result-card,.v11-boss-intro,
+.m204-more-sheet,.m211-gacha-summary,.m222-dup-card,.m222-confirm-card{
+  max-height:calc(100dvh - var(--v220-nav-h,72px) - env(safe-area-inset-bottom) - 34px)!important}
+/* 快捷菜单是底部抽屉：它自己就是底部浮层，让开底栏高度但不额外留大边距 */
+.m204-more-layer{padding-bottom:calc(var(--v220-nav-h,72px) + env(safe-area-inset-bottom) + 8px)!important}
+.m204-more-sheet{max-height:calc(100dvh - var(--v220-nav-h,72px) - env(safe-area-inset-bottom) - 26px)!important}
+/* 全屏型弹层（启动/教程/剧情/战斗结算）不需要让开底栏，铺满即可 */
+.v10-boot,.v11-story-layer,.v12-result-layer,.m209-return-layer,.m209-pwa-layer{padding-bottom:0!important}
+/* 横屏矮视口：底栏不占位（提示词00 第9条：二级页可隐藏主底栏） */
+@media(max-height:520px){
+  .v10-modal-layer{padding-bottom:10px!important}
+  .v10-settings,.v10-tutorial,.v13-first-card,.v12-result-card,.v11-boss-intro,
+  .m204-more-sheet,.m211-gacha-summary,.m222-dup-card,.m222-confirm-card{max-height:calc(100dvh - 22px)!important}
+  body.modal-open nav,body.modal-open .nav,body.modal-open .v216-nav{display:none!important}
+}
+/* v2.2.3 TAP-1（提示词00 第7条）：顶栏动作按钮命中区补齐到 ≥44×44 CSS px
+   原状：设置/邮件/快捷 仅 29px 宽；资源「＋」仅 13~15px，都低于 44px 最小可点尺寸。
+   做法：视觉尺寸保持不变，用透明伪元素把可点区域外扩到 44×44，不影响观感与排版。 */
+.v216-top-actions button{position:relative!important}
+.v216-top-actions button::after{
+  content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:max(100%,44px);height:max(100%,44px);min-width:44px;min-height:44px}
+.v216-res-plus{position:relative!important}
+.v216-res-plus::after{
+  content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:44px;height:44px;min-width:44px;min-height:44px}
+/* 资源块本身也可点开面板，扩大命中区 */
+.v216-resource-drawer summary{position:relative}
+/* 底部导航按钮：保证 ≥44 高 */
+nav button,.nav button,.v216-nav button{min-height:44px!important}
+/* 站内分段/标签按钮最小高度 */
+.v218-segment button,.m207-system-tabs button,.m222-mail-cats button,
+.m222-ach-cats button,.m222-shop-cats button,.m222-team-tabs button{min-height:34px}
+/* 次级小按钮（compact）保持视觉小，但命中区不少于 40px 高 */
+.btn.compact{position:relative}
+.btn.compact::after{content:'';position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);
+  height:max(100%,40px);pointer-events:auto}
+/* v2.2.3 TAP-2：资源总览面板的「＋」命中区 28×28 → 44×44
+   原状：面板每行第三列固定 28px，按钮被压到 28×28，低于 44px 最小可点尺寸。
+   做法：列宽与按钮盒都放大到 44px（图标视觉尺寸不变），行高随之增加，观感不受影响。 */
+.v216-resource-pop>div{grid-template-columns:18px minmax(0,1fr) 44px!important;padding:4px 4px 4px 7px!important;min-height:48px}
+.v216-resource-pop>div>button{width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important;
+  font-size:15px!important;background:rgba(255,255,255,.06)!important}
+.v216-resource-pop>div>button:active{background:rgba(232,199,124,.25)!important}
+/* 顶栏资源「＋」：视觉仍小，但用伪元素把命中区撑到 44（父级允许溢出） */
+.v216-resource-drawer summary{overflow:visible!important}
+.v216-res-plus{overflow:visible!important}
+/* 顶部子页返回「‹」与「快捷」补到 44 高 */
+.v216-subpage-head button,.v216-subpage-head .m204-subpage-more{min-height:44px!important;min-width:44px!important}
+/* 云端连接按钮补到 44 高 */
+.m204-cloud-nudge button,.m208-cloud-nudge button{min-height:44px!important}
+/* 首页快捷栏按钮补到 44×44 */
+.v216-quick-rail button{min-width:44px!important;min-height:44px!important}
+@media(max-width:390px){
+  .v216-resource-pop>div{grid-template-columns:18px minmax(0,1fr) 42px!important;min-height:46px}
+  .v216-resource-pop>div>button{width:42px!important;height:42px!important;min-width:42px!important;min-height:42px!important}
+}
+/* v2.2.3 TAP-3（提示词00 第7条）：统一补齐所有主要可点元素到 ≥44×44
+   实测来源：子页返回/快捷 44×34、站内标签 44×34、活动挑战 226×38、登录卡 97×62、
+             顶栏邮件/快捷 29×29、云端连接 38×38 —— 都是"宽够高差"或整体偏小。 */
+/* 子页头按钮 */
+.v216-subpage-head button,.v216-subpage-head .m204-subpage-more,
+.v216-subpage-head [data-action],.m208-subpage-head button{min-height:44px!important}
+/* 站内分段 / 标签 / 队伍预设 */
+.v218-segment button,.m207-system-tabs button,.m222-team-tabs button,
+.m222-mail-cats button,.m222-ach-cats button,.m222-shop-cats button,
+.v218-explore-tabs button,.v218-hero-tabs button,.m206-pool-tabs button,
+.m206-slot-tabs button,.v18-preset-grid button,.v18-preset .btnrow .btn{min-height:44px!important}
+/* 活动/夜航/事务 主要动作按钮 */
+.m207-event-good .btn,.m207-night-rail .btn,.m207-event-stage .btn,
+.m207-office-stack .btn,.m213-daily-panel .btn,.v18-talent-node,
+.achievement .btn,.task .btn,.m207-bond-center .btn,.v18-counter-panel .btn{min-height:44px!important}
+/* 关卡/章节/奖励行 */
+.m221-stage-list .btn,.m222-chapter-row,.m221-stage-row,.m222-reward-cell,
+.m208-lobby-dock button,.m221-roster-card{min-height:44px!important}
+/* 顶栏图标按钮 29 → 44（图标字号不变，仅盒变大） */
+.v216-top-actions button{width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important;font-size:15px!important}
+/* 云端连接 */
+.m204-cloud-nudge button,.m208-cloud-nudge button,.m204-cloud-nudge .btn{min-height:44px!important;min-width:44px!important}
+/* 登录奖励卡 */
+.login-reward,.m207-login-card,.login-card{min-height:44px!important}
+/* 顶栏在 390 宽下给动作按钮腾位置：压缩资源块内边距 */
+@media(max-width:430px){
+  .v216-top-actions{gap:1px!important}
+  .v216-res{padding:2px 2px 2px 4px!important}
+  .v216-player-avatar{width:26px!important;height:26px!important}
+}
+/* =========================================================
+   v2.2.3 TAP-NORMALIZE（提示词00 第7条 · 最终归一化）
+   根因：项目里 70+ 条 min-height 规则互相冲突，其中不少带 !important
+         （.v218-app .btn.compact=38px!、.v218-app .btn=46px!、
+           .v221-team-slot .btn=30px!、.m222-*-cats=28~34px 等），
+         导致"同一种按钮在不同页面高度不同"，且部分低于 44px 最小可点尺寸。
+   做法：在本文件末尾做一次收敛——所有主要可点元素统一到 min 44×44。
+         只改命中区尺寸，不改配色/圆角/字号/排布层级。
+   ========================================================= */
+/* ① 通用按钮（覆盖所有 .btn / .v218-* / .v216-* 变体，含 compact） */
+.btn,.btn.compact,.v216-app .btn,.v218-app .btn,.v218-app .btn.compact,
+.m221-team-slot .btn,.m222-gear-btns .btn,.m211-summary-actions .btn,
+.m222-confirm-card .btnrow .btn,.m222-dup-card .btnrow .btn,
+.m206-gacha-actions .btn,.m206-enhance,.m221-resource-route,
+.m204-growth-card .btn,.v09-stage-card .btn,.m209-install-nudge .btn,
+.m204-cloud-nudge .btn,.m208-cloud-nudge .btn,.task .btn,.achievement .btn,
+.m207-event-good .btn,.m207-night-rail .btn,.m207-event-stage .btn,
+.m207-office-stack .btn,.m213-daily-panel .btn,.v18-counter-panel .btn,
+.text-btn,.m204-more-actions .btn,.battle-controls .btn{min-height:44px!important}
+/* ② 只有"必须保持小体积"的例外：页内更新横幅（不承载关键操作） */
+.m221-update-bar .btn{min-height:30px!important}
+/* ③ 站内分段 / 标签 / 队伍预设 / 分类 */
+.v218-segment button,.v218-hero-tabs button,.v218-explore-tabs button,
+.m206-pool-tabs button,.m206-slot-tabs button,.m207-system-tabs button,
+.m207-event-tabs button,.m207-office-tabs button,.m222-team-tabs button,
+.m222-mail-cats button,.m222-ach-cats button,.m222-shop-cats button,
+.v18-preset-grid .btn,.v18-preset .btnrow .btn{min-height:44px!important}
+/* ④ 子页头 / 返回 / 快捷 / 图标按钮 */
+.v216-subpage-head button,.m204-subpage-head button,.m204-back-home,
+.m204-subpage-more,.m205-icon-btn,.v10-close,.m205-icon-btn,.v216-top-actions button,
+.v216-quick-rail button,.v218-app .v216-quick-rail button{min-height:44px!important;min-width:44px!important}
+/* ⑤ 行式可点元素：关卡 / 章节 / 奖励格 / 大厅入口 / 候选卡 / 天赋 / 邮件 */
+.m221-stage-row,.m221-stage-list .btn,.m222-chapter-row,.m222-reward-cell,
+.m208-lobby-dock button,.v218-app .m208-lobby-dock button,.m221-roster-card,
+.v18-talent-node,.m222-talent-node,.mail-card .btn,.achievement,.task,
+.login-reward,.m207-login-card,.login-card,.v11-login-day{min-height:44px!important}
+/* ⑥ 顶栏资源「＋」：命中区由伪元素撑到 44（保留 44px 视觉盒时不影响观感） */
+.v216-res-plus{min-width:44px!important;min-height:44px!important}
+/* ⑦ 底部导航 */
+nav button,.nav button,.v216-nav button,.v218-nav button{min-height:44px!important}
+/* ⑧ 补救：若某容器 overflow:hidden 会裁掉外扩命中区，改为 visible（仅这些容器） */
+.v216-subpage-head,.m204-subpage-head,.m207-event-good,.m221-team-slot{overflow:visible}
+/* v2.2.3 LAYER FIX-3：二级弹层必须严格高于普通模态。
+   实测问题：.m222-confirm-layer 与 .v10-modal-layer 同为 600/700、同优先级，
+   后定义者获胜，导致「召唤二次确认」层级不确定。
+   做法：提高选择器优先级（:root 前缀）并拉开数值，保证严格递增。 */
+:root .v10-modal-layer,
+:root .m211-gacha-summary-layer,
+:root .v221-sweep-result-layer,
+:root .v12-result-layer,
+:root .v13-first-layer,
+:root .v11-story-layer,
+:root .v11-boss-layer,
+:root .m209-return-layer,
+:root .m210-pwa-layer{z-index:var(--ly-modal)!important}
+:root .m222-confirm-layer,
+:root .m222-dup-layer{z-index:calc(var(--ly-modal) + 40)!important}
+:root .m208-loading,
+:root .v10-boot{z-index:var(--ly-system)!important}
+/* v2.2.3 LAYER FIX-4：二级弹层元素实际同时带 .v10-modal-layer 与 .m222-*-layer 两个类，
+   因此两条规则都命中同一元素。用复合选择器（更高优先级）确保二级层严格更高。 */
+.m222-confirm-layer.v10-modal-layer,
+.m222-dup-layer.v10-modal-layer,
+:root .m222-confirm-layer.v10-modal-layer,
+:root .m222-dup-layer.v10-modal-layer{z-index:calc(var(--ly-modal) + 40)!important}
+/* =========================================================
+   v2.2.3 JUMP-1（提示词11：点击跳动与布局稳定性）
+   根因：body.modal-open 用 position:fixed + top:-scrollY 锁滚动。
+        但 modalActive() 里包含 busy（加载遮罩），而 action() 在每次数据操作时
+        都会短暂置 busy=true。于是"点击 → 加 fixed + top:-Y → 撤销 + scrollTo(Y)"
+        在每一次点击时跑一遍，表现为界面抖动/回顶。
+   修复：① 滚动锁只对真正的会话型弹层生效（scrollLockTarget()）
+         ② busy 走独立类 busy-lock —— 只禁滚动交互，绝不动 position/top
+   ========================================================= */
+body.busy-lock{overflow:hidden;overscroll-behavior:none;touch-action:none}
+body.busy-lock main.app{pointer-events:none}
+/* modal-open 仍保留原语义（真模态） */
+body.modal-open{position:fixed;left:0;right:0;width:100%;overflow:hidden!important;
+  overscroll-behavior:none!important;touch-action:none}
+/* =========================================================
+   v2.2.3 JUMP-2（提示词11）：切卡池造成 54px 布局位移
+   实测：限定池 stage=574px（立绘 330px + 文案 133px）
+         常驻池 stage=520px（图标 190px + 文案 146px）
+   两个卡池画面高度不同 → 切换时下方"保底/契灵印/按钮"整体上下跳。
+   修复：给 stage 预留最小高度，两种卡池占据一致空间。
+   ========================================================= */
+.m206-gacha-stage{min-height:min(574px,64dvh)}
+@media(max-height:520px){
+  .m206-gacha-stage{min-height:auto}
+}
+/* 立绘/图标区预留高度，避免图片加载完成前塌陷（提示词00 第10条：预留尺寸） */
+.m206-gacha-art{aspect-ratio:3/4;min-height:240px}
+.m206-standard-orbit{min-height:190px}
+/* 首页主立绘容器预留高度，避免首次加载造成位移 */
+.v216-hero-art{aspect-ratio:4/5;min-height:300px}
+/* 角色卡立绘预留高度（列表/编队/养成通用） */
+.v09-roster-card .hero-portrait.roster,.m221-team-slot .m221-slot-art,
+.v09-detail-art .hero-portrait.profile,.m221-slot-art{min-height:120px}
+/* v2.2.3 JUMP-2b：上一条设成 520px 正好等于常驻池高度，没起到预留作用。
+   实测限定池 stage=574px、常驻池=520px，故预留值取 580px。 */
+.m206-gacha-stage{min-height:min(580px,68dvh)!important}
+@media(max-height:520px){.m206-gacha-stage{min-height:auto!important}}
+/* v2.2.3 JUMP-2c：min() 函数在该属性上未生效（实测 min-height 仍为 520px），
+   改用朴素像素值，并用媒体查询处理矮视口。 */
+.m206-gacha-stage{min-height:580px!important}
+@media(max-height:700px){.m206-gacha-stage{min-height:540px!important}}
+@media(max-height:520px){.m206-gacha-stage{min-height:auto!important}}
+/* v2.2.3 JUMP-2d（重试，此时测试服务器已修复不再截断 CSS）：
+   实测限定池 stage 高 574px（立绘330+文案133），常驻池 520px（图标190+文案146），
+   切换卡池时下方内容整体位移 54px。给 stage 预留 580px 最小高度。 */
+#app .v218-gacha-screen .m206-gacha-stage{min-height:580px!important}
+@media(max-height:700px){#app .v218-gacha-screen .m206-gacha-stage{min-height:545px!important}}
+@media(max-height:520px){#app .v218-gacha-screen .m206-gacha-stage{min-height:0!important}}
+/* =========================================================
+   v2.2.3 P01-1（提示词01 顶部资源栏）：
+   原实现 @media(max-width:400px){.v216-player>div:last-child{display:none!important}}
+   与 @media(max-width:360px) 同类规则把「昵称 + 等级 + 模式」整块隐藏，
+   而提示词明确要求顶栏显示「玩家头像、昵称、等级、当前模式」。
+   改为：窄屏保留昵称与等级（紧凑排版），只把较长的模式串收窄；不再 display:none。
+   ========================================================= */
+@media(max-width:700px){
+  .v216-topbar{gap:3px!important}
+  .v216-topbar>.v216-player{max-width:none!important;flex:0 1 auto!important;min-width:0!important}
+  .v216-player{gap:5px!important;min-width:0!important;overflow:visible!important}
+  .v216-player-avatar{width:26px!important;height:26px!important;flex:0 0 auto!important}
+  .v216-player>div:last-child{display:block!important;min-width:0!important;
+    max-width:64px;overflow:hidden}
+  .v216-player strong{display:block;font-size:10px!important;line-height:1.15;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:64px}
+  .v216-player small{display:block;font-size:7px!important;line-height:1.15;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:64px}
+}
+@media(max-width:360px){
+  .v216-topbar>.v216-player{max-width:none!important}
+  .v216-player>div:last-child{display:block!important;max-width:54px}
+  .v216-player strong,.v216-player small{max-width:54px}
+  .v216-player strong{font-size:9.5px!important}
+}
+/* 为昵称腾出空间：窄屏资源块与动作按钮收紧（仍保持 44px 命中区，见 TAP-* 规则） */
+@media(max-width:430px){
+  .v216-res{padding:2px 1px 2px 3px!important}
+  .v216-res b{font-size:8.5px!important}
+  .v216-top-actions{gap:0!important}
+  .v216-top-actions button{width:44px!important;min-width:44px!important}
+}
+@media(max-width:370px){
+  .v216-res b{font-size:8px!important}
+  .v216-top-actions button{width:42px!important;min-width:42px!important}
+}
+/* =========================================================
+   v2.2.3 LAYER-CLEANUP（提示词00 统一弹层规则第5条：不要给单个按钮乱加超大 z-index）
+   收尾：把仍残留在旧规则里的 9999 / 9500 / 9300 统一收敛到 --ly-* 令牌。
+   （这些旧声明已被令牌规则覆盖，此处显式覆盖以保持层级体系单一可信源）
+   ========================================================= */
+.v10-boot{z-index:calc(var(--ly-system) + 10)!important}
+.m221-update-bar{z-index:auto!important}
+.m222-confirm-layer,.m222-dup-layer{z-index:calc(var(--ly-modal) + 40)!important}
+.m222-confirm-layer.v10-modal-layer,.m222-dup-layer.v10-modal-layer{z-index:calc(var(--ly-modal) + 40)!important}
+.m209-pwa-layer,.m209-return-layer{z-index:var(--ly-modal)!important}
+.m208-loading,.loading{z-index:var(--ly-system)!important}
+/* 战斗根级反馈统一到模态之下 */
+.m210-fx-hit,.m210-fx-crit,.m210-fx-heal,.m210-fx-shield,
+[class*="m210-fx-"]{z-index:calc(var(--ly-modal) - 20)!important}
+/* =========================================================
+   v2.2.3 P01-2（提示词01 + 12 验收：360×640 与矮视口）
+   问题：首页大厅为「一屏构图」采用了绝对定位（星轨卡 bottom:126px、停靠栏 bottom:84px、
+         立绘固定高度）。在 360×640 这类矮视口下，进度行、星轨卡、停靠栏互相重叠。
+   修复：矮视口（高度 ≤ 700px）切换为自然流式排布，不再绝对定位，
+         内容按顺序堆叠并可滚动；保证不重叠、按钮可达。
+   ========================================================= */
+@media(max-width:700px) and (max-height:700px){
+  .v218-app .v216-lobby{min-height:0!important;padding-bottom:0!important;display:block!important;height:auto!important}
+  .v218-app .v216-hero-art{position:relative!important;inset:auto!important;height:210px!important;width:100%!important;
+    right:auto!important;left:auto!important;order:1}
+  .v218-app .v216-lobby-copy{position:relative!important;inset:auto!important;margin:8px 0 4px!important;padding:0 2px}
+  .v218-app .v216-hero-art{display:none!important}
+  .v218-app .v216-lobby-copy{display:block!important}
+  .v218-app .v216-star-route{position:relative!important;inset:auto!important;left:auto!important;right:auto!important;
+    bottom:auto!important;top:auto!important;margin:8px 0!important;width:auto!important}
+  .v218-app .m208-lobby-dock{position:relative!important;inset:auto!important;bottom:auto!important;left:auto!important;
+    right:auto!important;margin:8px 0 0!important}
+  /* 快捷栏改为横向一排，不再是右侧竖栏 */
+  .v218-app .v216-quick-rail{position:relative!important;inset:auto!important;top:auto!important;right:auto!important;
+    display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:6px!important;
+    width:auto!important;margin:8px 0 0!important;padding:6px!important}
+  .v218-app .v216-quick-rail button{width:auto!important;min-height:48px!important}
+  .v218-app .v216-quick-rail span{font-size:8px!important}
+}
+/* 顶栏在窄屏：昵称与状态各占一行，避免被压扁 */
+@media(max-width:700px){
+  .v216-player strong{font-size:10.5px!important;letter-spacing:0}
+  .v216-player small{font-size:7px!important}
+  .v216-topbar>.v216-player{overflow:visible!important}
+}
+/* v2.2.3 P01-3（提示词01 顶部资源栏）：昵称列在窄屏被压到 50px，文字被挤出容器
+   实测 360/390 下 .v216-player 宽 77px，其中头像 26px + gap，昵称列仅约 46~50px，
+   导致「昵称/等级」互相挤压且视觉上被头像盖住。
+   修复：给玩家块与文本列设定可靠的最小宽度，并允许顶栏为它让出空间。
+   ========================================================= */
+@media(max-width:700px){
+  .v216-topbar{grid-template-columns:minmax(96px,auto) minmax(0,1fr) auto!important;
+    padding-left:max(9px,env(safe-area-inset-left))!important;padding-right:max(9px,env(safe-area-inset-right))!important}
+  .v216-topbar>.v216-player{min-width:96px!important;flex:0 0 auto!important}
+  .v216-player{min-width:96px!important;gap:6px!important}
+  .v216-player-avatar{width:28px!important;height:28px!important;flex:0 0 28px!important}
+  .v216-player>div:last-child{max-width:none!important;flex:1 1 auto!important;min-width:0!important;overflow:visible!important}
+  .v216-player strong{display:block!important;font-size:11px!important;line-height:1.2!important;
+    max-width:none!important;white-space:nowrap;overflow:visible!important;text-overflow:clip!important}
+  .v216-player small{display:block!important;font-size:7.5px!important;line-height:1.2!important;
+    max-width:none!important;white-space:nowrap;overflow:hidden!important;text-overflow:ellipsis!important}
+  /* 资源块让出空间：数值缩写已足够，进一步收紧内边距 */
+  .v216-res{padding:2px 1px 2px 3px!important;gap:0!important}
+  .v216-res b{font-size:8.5px!important;letter-spacing:-.2px}
+}
+@media(max-width:370px){
+  .v216-topbar{grid-template-columns:minmax(88px,auto) minmax(0,1fr) auto!important}
+  .v216-topbar>.v216-player{min-width:88px!important}
+  .v216-player{min-width:88px!important}
+  .v216-player-avatar{width:26px!important;height:26px!important;flex:0 0 26px!important}
+  .v216-player strong{font-size:10px!important}
+  .v216-res b{font-size:8px!important}
+}
+/* =========================================================
+   v2.2.3 P01-4（提示词01 顶部资源栏）根因修复：
+   实测 .v216-player-avatar 为 26×26 圆形裁剪盒，但其内部
+   .hero-portrait.selected 实际渲染 58×24、<img> 绝对定位且 z-index:8，
+   头像图片横向溢出裁剪盒并压到昵称文字上（截图中昵称被头像盖住）。
+   修复：强制头像内的 portrait 与 img 严格等于容器尺寸。
+   ========================================================= */
+.v216-player-avatar{overflow:hidden!important;border-radius:50%!important;position:relative!important;
+  display:block!important;flex:0 0 auto!important}
+.v216-player-avatar .hero-portrait,
+.v216-player-avatar .hero-portrait.selected,
+.v216-player-avatar .hero-portrait.card{position:absolute!important;inset:0!important;
+  width:100%!important;height:100%!important;min-width:0!important;min-height:0!important;max-width:100%!important;max-height:100%!important;
+  border-radius:0!important;flex:none!important}
+.v216-player-avatar .hero-portrait img{position:absolute!important;inset:0!important;
+  width:100%!important;height:100%!important;max-width:100%!important;max-height:100%!important;
+  object-fit:cover!important;object-position:50% 14%!important;z-index:auto!important}
+.v216-player-avatar .hero-portrait .portrait-aura,
+.v216-player-avatar .hero-portrait .portrait-halo,
+.v216-player-avatar .hero-portrait .portrait-sigil{display:none!important}
+/* v2.2.3 P01-5：360px 视口下资源总览面板左边界溢出 1px（实测 l:-1）
+   改为以顶栏内边距为基准贴右，并限制最大宽度确保两侧留白。 */
+.v216-resource-pop{right:max(9px,env(safe-area-inset-right))!important;
+  width:min(calc(100vw - 18px),300px)!important;max-width:calc(100vw - 18px)!important}
+@media(max-width:380px){
+  .v216-resource-pop{right:6px!important;width:calc(100vw - 12px)!important;max-width:calc(100vw - 12px)!important}
+}
+/* v2.2.3 P01-6（修正 P01-5 的基准错误）：
+   资源面板绝对定位的基准是 .v216-topbar，而顶栏带负外边距（margin:0 -9px），
+   宽度比内容区大，导致右对齐后面板左侧溢出。
+   改为直接用"相对顶栏宽度"计算，保证两侧始终留白。 */
+.v216-resource-pop{right:8px!important;left:auto!important;
+  width:min(300px,calc(100% - 16px))!important;max-width:calc(100% - 16px)!important}
+/* =========================================================
+   v2.2.3 P02-1（提示词02 第4条：关卡详情）
+   原状：点击关卡行没有详情可看 —— 当前关直接进战斗，已通关关静默跳到"记录"页。
+   新增 .m222-stage-detail：关卡名 / 敌方信息 / Boss 标签与阶段 / 战力对比
+   （明确标注"参考值·非硬门槛"）/ 克制提示 / 通关奖励 / 首通奖励 / 开始挑战。
+   ========================================================= */
+.m222-stage-detail{margin-top:9px;padding:11px;border:1px solid rgba(178,192,224,.16);border-radius:14px;
+  background:linear-gradient(150deg,rgba(26,36,60,.9),rgba(12,18,33,.9))}
+.m222-stage-detail.is-current{border-color:rgba(232,199,124,.42);background:linear-gradient(150deg,rgba(232,199,124,.1),rgba(232,199,124,.02))}
+.m222-stage-detail.is-cleared{border-color:rgba(120,200,150,.3)}
+.m222-stage-detail.is-locked{opacity:.72}
+.m222-sd-head{display:flex;align-items:flex-start;justify-content:space-between;gap:9px;margin-bottom:9px}
+.m222-sd-head .kicker{font-size:7px;letter-spacing:1.4px;color:#a99dc2}
+.m222-sd-head h4{margin:2px 0 2px;font-size:16px;color:#f2eef8}
+.m222-sd-head small{font-size:8px;color:#9eb0cf}
+.m222-sd-state{flex:0 0 auto;padding:3px 8px;border-radius:99px;font-size:8px;font-weight:700}
+.m222-sd-state.done{background:rgba(120,200,150,.18);color:#8fd8a8}
+.m222-sd-state.current{background:rgba(232,199,124,.2);color:#f0d795}
+.m222-sd-state.locked{background:rgba(255,255,255,.08);color:#8391aa}
+.m222-sd-sec{margin-bottom:9px}
+.m222-sd-sec>b{display:block;margin-bottom:5px;font-size:9px;color:#9eb0cf;letter-spacing:.5px}
+.m222-sd-foes{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:5px}
+.m222-sd-foes>span{display:grid;grid-template-columns:16px minmax(0,1fr);grid-template-rows:auto auto;gap:0 5px;
+  padding:6px 7px;border:1px solid rgba(178,192,224,.14);border-radius:10px;background:rgba(255,255,255,.04)}
+.m222-sd-foes>span.boss{border-color:rgba(220,120,120,.4);background:rgba(220,120,120,.08)}
+.m222-sd-foes i{grid-row:1/3;font-style:normal;font-size:12px;text-align:center;color:#cbd7ef}
+.m222-sd-foes>span.boss i{color:#e79a9a}
+.m222-sd-foes b{font-size:9px;color:#eaf0fc;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.m222-sd-foes small{font-size:7px;color:#8391aa;font-variant-numeric:tabular-nums}
+.m222-sd-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.m222-sd-tags em{font-style:normal;padding:2px 7px;border-radius:99px;background:rgba(255,255,255,.07);color:#9eb0cf;font-size:8px}
+.m222-sd-tags em.boss{background:rgba(220,120,120,.2);color:#e79a9a;font-weight:700}
+.m222-sd-phases{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.m222-sd-phases>span{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:99px;
+  background:rgba(167,139,250,.14);color:#c9b6ff;font-size:8px}
+.m222-sd-phases i{font-style:normal;width:13px;height:13px;display:grid;place-items:center;border-radius:50%;
+  background:rgba(255,255,255,.12);font-size:7px}
+.m222-sd-note{margin:5px 0 0;font-size:8px;line-height:1.55;color:#8391aa}
+.m222-sd-power{display:flex;flex-wrap:wrap;gap:6px}
+.m222-sd-power>span{flex:1 1 46%;padding:7px 8px;border-radius:10px;background:rgba(255,255,255,.04);font-size:9px;color:#9eb0cf}
+.m222-sd-power b{display:block;margin-top:2px;font-size:13px;color:#eaf0fc;font-variant-numeric:tabular-nums}
+.m222-sd-power i{display:block;margin-top:1px;font-style:normal;font-size:7px;color:#8391aa}
+.m222-sd-chain{display:flex;flex-wrap:wrap;align-items:center;gap:3px;margin-top:5px}
+.m222-sd-chain span{padding:2px 6px;border-radius:7px;background:rgba(255,255,255,.06);color:#cbd7ef;font-size:8px}
+.m222-sd-chain b{color:#7f8ca5;font-size:8px}
+.m222-sd-chain em{font-style:normal;margin-left:2px;color:#8391aa;font-size:8px}
+.m222-sd-actions{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:7px;margin-top:10px}
+.m222-sd-actions .btn{width:100%;min-height:44px}
+.m222-stage-row.is-selected,.m221-stage-row.is-selected{border-color:rgba(232,199,124,.55)!important;
+  background:linear-gradient(145deg,rgba(232,199,124,.14),rgba(232,199,124,.03))!important}
+@media(max-width:390px){
+  .m222-sd-foes{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .m222-sd-power>span{flex:1 1 100%}
+}
+/* =========================================================
+   v2.2.3 P03-1（提示词03 第5条 + 交互）
+   ① 队位卡补齐 稀有度角标 / 星级 / 战力
+   ② 满员换位：候选卡可点 → 进入"选择要替换的队位"态（点击换位，不做拖拽）
+   ========================================================= */
+.m221-team-slot{position:relative;display:flex;flex-direction:column;gap:2px;align-items:center;text-align:center}
+.m221-slot-art{position:relative;width:100%}
+.m221-slot-rarity{position:absolute;right:4px;top:4px;font-style:normal;font-size:8px;font-weight:800;
+  padding:1px 5px;border-radius:99px;background:rgba(8,12,22,.82);letter-spacing:.4px}
+.m221-slot-stars{font-size:8px;letter-spacing:.5px;color:#f0d795;line-height:1}
+.m221-slot-power{font-size:8px!important;color:#9eb0cf!important}
+.m221-slot-power b{color:#f0d795;font-size:10px;font-variant-numeric:tabular-nums}
+/* 换位态：队位高亮可点 */
+.m221-team-slot.m222-replace-target{cursor:pointer;border-color:rgba(232,199,124,.6)!important;
+  box-shadow:0 0 0 2px rgba(232,199,124,.22),0 10px 26px rgba(0,0,0,.4)}
+.m221-team-slot.m222-replace-target:active{transform:scale(.97)}
+.m222-replace-hint{display:block;margin-top:2px;padding:3px 6px;border-radius:8px;background:rgba(232,199,124,.18);
+  color:#f0d795;font-size:8px;font-weight:700}
+.m222-replace-bar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:7px 0 0;
+  padding:8px 10px;border:1px solid rgba(232,199,124,.42);border-radius:12px;
+  background:linear-gradient(145deg,rgba(232,199,124,.14),rgba(232,199,124,.03))}
+.m222-replace-bar>span{font-size:9px;color:#eaf0fc}
+.m222-replace-bar>span b{color:#f0d795}
+.m222-replace-bar .btn{min-height:34px!important;font-size:10px!important}
+/* 候选卡：换位态可点 + 选中态 */
+.v09-roster-card.formation-full{cursor:pointer;opacity:.62;filter:saturate(.6)}
+.v09-roster-card.formation-full:active{transform:translateY(-2px);opacity:.85;filter:none}
+.v09-roster-card.m222-replace-picked{border-color:rgba(232,199,124,.75)!important;opacity:1!important;filter:none!important;
+  box-shadow:0 0 0 2px rgba(232,199,124,.3),0 10px 28px rgba(62,37,101,.3)}
+.v09-roster-card.m222-replace-picked .v09-roster-meta em{color:#f0d795!important}
+/* 队位卡更紧凑，保证五人同屏 + 新增信息不挤压 */
+.m221-team-slot{padding:6px 4px!important;gap:1px!important}
+.m221-team-slot strong{font-size:11px!important;line-height:1.2}
+.m221-team-slot>span,.m221-team-slot>small{font-size:8px!important;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.m221-team-slot .btn{min-height:30px!important;font-size:9px!important;padding:0 5px!important;margin-top:2px}
+@media(max-width:390px){
+  .m221-team-slot{padding:5px 3px!important}
+  .m221-team-slot strong{font-size:10px!important}
+  .m221-team-slot>span,.m221-team-slot>small{font-size:7.5px!important}
+  .m221-slot-rarity{font-size:7px;padding:1px 4px;right:2px;top:2px}
+}
+/* =========================================================
+   v2.2.3 P04-1（提示词04 稳定性 + Tab 结构）
+   问题：点「装备」进入整备页后，契灵页的 Tab 栏（属性/升级/天赋/羁绊）整体消失，
+        没有任何入口能回到其他 Tab（羁绊完全进不去）。
+   修复：整备页顶部补一条同一套角色 Tab 栏，保持 5 个 Tab 始终可达与高亮一致。
+   ========================================================= */
+.v218-hero-context-tabs{margin:0 0 9px!important;position:sticky;top:0;z-index:20}
+.v218-gear-screen .v218-hero-context-tabs{position:relative;top:auto}
+/* 提示词04 稳定性：不同 Tab 高度差过大时，滚动位置会被浏览器强制 clamp。
+   给内容区一个统一的最小高度，减少切换时的视觉跳动与 clamp。 */
+.v218-heroes-screen .v218-hero-focus,
+.v218-heroes-screen .v218-page-stack{min-height:min(560px,calc(100dvh - 240px))}
+/* 属性页：详细属性折叠区 */
+.m222-stat-extra{margin:8px 0 0}
+.m222-stat-extra>summary{cursor:pointer;font-size:9px;color:#9eb0cf;padding:7px 9px;border:1px solid rgba(178,192,224,.14);
+  border-radius:10px;background:rgba(255,255,255,.03)}
+.m222-stat-extra[open]>summary{border-radius:10px 10px 0 0}
+.m222-stat-extra-rows{display:grid;gap:4px;padding:9px;border:1px solid rgba(178,192,224,.14);border-top:0;
+  border-radius:0 0 10px 10px;background:rgba(255,255,255,.02)}
+.m222-stat-extra-rows>div{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:9px;color:#9eb0cf}
+.m222-stat-extra-rows>div>b{color:#eaf0fc;font-variant-numeric:tabular-nums}
+.m222-stat-extra-rows>div>i{font-style:normal;font-size:7px;color:#8391aa}
+/* 资源不足提示（提示词04：不能只把按钮置灰） */
+.m222-lack-note{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:7px;
+  padding:8px 10px;border:1px solid rgba(220,120,120,.35);border-radius:11px;background:rgba(220,120,120,.09)}
+.m222-lack-note>span{font-size:9px;color:#e7a9a9;line-height:1.45}
+.m222-lack-note>span b{color:#f3c0c0}
+.m222-lack-note .btn{min-height:34px!important;font-size:10px!important;flex:0 0 auto}
+/* =========================================================
+   v2.2.3 P05-1（提示词05 卡池 Tab / 保底表达 / 首契视觉）
+   ① 卡池 Tab 由 2 个扩为 3 个：首契 / 常驻 / 限定
+   ② 保底文案改为"距保底还差 N 抽"并补 N/上限 进度数值
+   ③ 首契主题区：SSR 保障视觉 + "首次常驻十连必得 SSR"
+   ========================================================= */
+.m222-pool-tabs-3{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+.m222-pool-tabs-3 button{min-height:56px!important;padding:7px 6px!important}
+.m222-pool-tabs-3 button span{font-size:9px!important}
+.m222-pool-tabs-3 button b{font-size:10px!important}
+.m222-pool-tabs-3 button small{font-size:7px!important}
+/* 保底进度数值 */
+.m206-pity small{display:block;margin-top:1px;font-size:7px;color:#8391aa;font-variant-numeric:tabular-nums}
+.m206-pity b{font-size:12px}
+/* 首契主题区 */
+.m222-newbie-art{display:grid;place-items:center;background:
+  radial-gradient(circle at 50% 45%,rgba(232,199,124,.2),transparent 62%),
+  linear-gradient(160deg,#141c33,#0a1020)}
+.m222-newbie-ring{display:grid;justify-items:center;gap:2px;width:150px;height:150px;border-radius:50%;
+  border:2px solid rgba(232,199,124,.45);place-content:center;
+  background:radial-gradient(circle,rgba(232,199,124,.18),rgba(232,199,124,.02));
+  box-shadow:0 0 40px rgba(232,199,124,.18) inset,0 0 30px rgba(232,199,124,.12)}
+.m222-newbie-ring>i{font-style:normal;font-size:26px;color:#f0d795;line-height:1}
+.m222-newbie-ring>b{font-size:20px;letter-spacing:1px;color:#f6e6b8}
+.m222-newbie-ring>small{font-size:8px;color:#c9b6ff}
+/* 首契卡池 stage 高亮 */
+.m206-gacha-stage.newbie{border-color:rgba(232,199,124,.42)!important}
+@media(max-width:390px){
+  .m222-pool-tabs-3 button{min-height:52px!important;padding:6px 4px!important}
+  .m222-pool-tabs-3 button b{font-size:9px!important}
+  .m222-newbie-ring{width:124px;height:124px}
+  .m222-newbie-ring>b{font-size:17px}
+}
+/* =========================================================
+   v2.2.3 P06-1（提示词06 活动 Tab）
+   根因：活动 Tab 容器是横向滚动栏（overflow-x:auto + flex:0 0 auto），
+        第 4 个 Tab「契灵羁绊」中心点落在视口之外，elementFromPoint 命中
+        v11-reveal-bg（视口外元素），导致**鼠标永远点不到该 Tab**，只有 JS
+        点击才能切换。第 5 个及以后同理。
+   修复：4 个 Tab 改为等分网格铺满一行，不依赖横向滚动。
+   ========================================================= */
+.m207-event-tabs{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:5px!important;overflow:visible!important}
+.m207-event-tabs button{flex:none!important;min-width:0!important;min-height:56px!important;
+  padding:7px 4px!important;display:grid!important;justify-items:center!important;align-content:center!important;gap:1px!important}
+.m207-event-tabs button b{font-size:13px!important}
+.m207-event-tabs button span{font-size:9px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.m207-event-tabs button em{font-size:8px!important;font-style:normal}
+@media(max-width:360px){
+  .m207-event-tabs button{min-height:52px!important;padding:6px 2px!important}
+  .m207-event-tabs button span{font-size:8px!important}
+}
+/* 事务所 5 个 Tab 同理等分铺满（原来也是横向滚动） */
+.m207-office-tabs{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  gap:4px!important;overflow:visible!important}
+.m207-office-tabs button{flex:none!important;min-width:0!important;padding:7px 2px!important}
+.m207-office-tabs button span{font-size:8.5px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+/* =========================================================
+   v2.2.3 P07-1（提示词07 邮件页）
+   引擎邮件结构为 {id,title,body,reward,claimed,claimedAt,createdAt}，无分类字段，
+   故移除分类 Tab；补上真实时间与附件展示，并把空态做完整。
+   ========================================================= */
+.mail-top{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.mail-top>strong{flex:1 1 auto;min-width:0}
+.mail-top>time{flex:0 0 auto;font-size:7px;color:#7f8ca5;font-variant-numeric:tabular-nums}
+.mail-attach{color:#c9b6ff!important}
+.mail-empty{display:grid;justify-items:center;gap:4px;padding:26px 14px;text-align:center}
+.mail-empty-icon{width:46px;height:46px;display:grid;place-items:center;border-radius:50%;
+  background:rgba(232,199,124,.1);color:#efd48c;font-size:20px;margin-bottom:4px}
+.mail-empty>b{font-size:12px;color:#eaf0fc}
+.mail-empty>span{font-size:9px;color:#9eb0cf;line-height:1.5}
+.mail-empty>small{font-size:8px;color:#7f8ca5}
+/* 无分类 Tab 后，邮件列表上移，间距收紧 */
+.mail-panel .mail-list{margin-top:2px}
+/* =========================================================
+   v2.2.3 P12-1（提示词12 逐页检查项"文字过小" + 提示词00 第14条
+   "360×640 不要靠极小字体解决"）
+   实测仍有 6px 文字：底部大厅入口的角标与说明、探索分段 Tab 的 small、
+   资源裂境的推荐理由。统一提升到 ≥7.5px，确保小屏可读。
+   ========================================================= */
+/* ① 底部大厅入口（事务所/限时活动/云存档）的角标与说明 */
+.m208-lobby-dock button>em,
+.m208-lobby-dock button>i,
+.m208-lobby-dock button>span{font-size:7.5px!important;line-height:1.2!important}
+.m208-lobby-dock button>b{font-size:13px!important}
+/* ② 探索分段 Tab / 活动与事务所 Tab 的小字 */
+.v218-explore-tabs small,.v218-explore-tabs button small,
+.v218-segment button small,.m207-system-tabs button em,
+.m207-event-tabs button em,.m207-office-tabs button em,
+.v218-hero-tabs button small{font-size:7.5px!important;line-height:1.15!important}
+/* ③ 资源裂境推荐理由 */
+.m213-resource-reason{font-size:7.5px!important;line-height:1.4!important}
+/* ④ 全局兜底：任何仍小于 7.5px 的可见文本抬到 7.5px。
+      用 :where() 降低优先级，避免压过有意设计的大字号规则。 */
+:where(#app) :where(span,small,em,i,b,strong,p,time){min-font-size:7.5px}
+@media(max-width:400px){
+  .m208-lobby-dock button>em,.m208-lobby-dock button>i,.m208-lobby-dock button>span{font-size:7px!important}
+  .v218-explore-tabs small,.v218-segment button small{font-size:7px!important}
+  .m213-resource-reason{font-size:7px!important}
+}
+/* v2.2.3 P12-2（提示词12"文字过小"）：上一条规则优先级不足，被
+   .v218-app .m208-lobby-dock button>em{font-size:6px!important}（0,3,2）压制。
+   这里用同级/更高优先级选择器覆盖，并补齐其余 <7.5px 规则。 */
+.v218-app .m208-lobby-dock button>em,
+.v218-app .m208-page-home .m208-lobby-dock em,
+.v218-app .m208-lobby-dock button>span,
+.v218-app .m208-lobby-dock button>i{font-size:7.5px!important;line-height:1.2!important}
+.v218-app .m208-lobby-dock button>b{font-size:13px!important}
+/* 其余 6px 规则一并抬到 7.5px（同级选择器） */
+.v218-app .v218-segment button small,
+.v218-app .v213-resource-reason,
+.v218-app .m213-resource-reason,
+.v218-app .m213-attempt-strip>button small,
+.v218-app .m213-attempt-mini small,
+.v218-app .m212-route-steps em,
+.v218-app .m213-drop em,
+.v218-app .m213-primary small{font-size:7.5px!important;line-height:1.35!important}
+@media(max-width:400px){
+  .v218-app .m208-lobby-dock button>em,
+  .v218-app .m208-page-home .m208-lobby-dock em{font-size:7px!important}
+  .v218-app .v218-segment button small,
+  .v218-app .m213-resource-reason,
+  .v218-app .m213-attempt-strip>button small{font-size:7px!important}
+}
+/* v2.2.3 P12-3：最后 2 个 6px 元素 —— 首页快捷栏按钮的角标 <i> */
+.v216-quick-rail button>i,.v218-app .v216-quick-rail button>i,
+.v216-quick-rail button em{font-size:7.5px!important;line-height:1.15!important}
+@media(max-width:400px){
+  .v216-quick-rail button>i,.v218-app .v216-quick-rail button>i{font-size:7px!important}
+}
