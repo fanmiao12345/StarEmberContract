@@ -1929,3 +1929,326 @@ body.modal-open{position:fixed;left:0;right:0;width:100%;overflow:hidden!importa
 @media(max-width:400px){
   .v216-quick-rail button>i,.v218-app .v216-quick-rail button>i{font-size:7px!important}
 }
+
+/* =========================================================================
+   v2.2.4 QC-1（真机实测 P0-1）：「全勤契约」横幅 sticky 叠压最后一个任务行
+   根因：.v218-office-screen .all-reward 在第 672 行被设为 position:sticky;bottom:76px，
+         z-index:12。只要页面还能滚动、横幅尚未滚到停靠位之前，它就浮在
+         列表上方，把最后一个任务行（如"契灵成长"）的说明文字和按钮盖住。
+         按钮上半截仍能点、下半截点不到 —— 纯视觉层级/占位问题。
+   做法：让横幅回到正常文档流（position:static），用 margin-top 与上方任务行
+         拉开间距。不再有叠压，也就不需要 z-index / 背景模糊遮罩。
+   同时 @media 让容器在底部多留 6px，保证窄屏下按钮与分隔线不贴边。
+   ========================================================================= */
+.v218-app .v218-office-screen .all-reward,
+.v218-office-screen .all-reward,
+.all-reward{
+  position:static!important;
+  bottom:auto!important;
+  z-index:auto!important;
+  margin:12px 0 6px!important;
+  box-shadow:none!important}
+/* 任务/邮件/成就列表在横幅之上要有确定的下边界，避免最后一行与横幅贴死 */
+.v218-office-screen .m207-office-stack>.panel>.task:last-of-type,
+.v218-office-screen .m207-office-stack>.panel>.achievement:last-of-type,
+.v218-office-screen .m207-office-stack>.panel>.mail-card:last-of-type{
+  padding-bottom:12px!important;margin-bottom:0!important}
+/* 返回顶部不影响：横幅不再是 sticky，滚到底部时它就在最后一行下方 */
+@media(max-width:400px){
+  .all-reward{margin:10px 0 4px!important}
+}
+
+/* =========================================================================
+   v2.2.4 QC-3（真机实测 P1-3）：弹层内容溢出 → 出现系统原生滚动条
+   复现：① 新手引导第 2/5 步卡片右侧出现滚动条
+         ② 十连契约结果弹窗右侧滚动条 + 底部"培养契灵/重复获得"被裁在滚动区边缘
+   根因：卡片 max-height 生效后 overflow-y:auto，Windows Chrome 会绘制
+         17px 宽的原生滚动条（与暗色星空 UI 完全不搭）。
+   做法：① 保留滚动能力，但滚动条宽度归零（Firefox: scrollbar-width:none，
+           WebKit/Blink: ::-webkit-scrollbar 宽度 0），视觉上不再出现原生条；
+         ② 底部操作按钮 sticky 吸底并补背景，滚动时始终完整可见；
+         ③ 顶部关闭按钮同样吸顶，长内容下不会滚出视野。
+   ========================================================================= */
+.v10-settings,.v10-tutorial,.v13-first-card,.v12-result-card,.v11-boss-intro,
+.m204-more-sheet,.m211-gacha-summary,.m222-dup-card,.m222-confirm-card,
+.v10-modal-layer,.m211-gacha-summary-layer{
+  scrollbar-width:none!important;
+  -ms-overflow-style:none!important}
+.v10-settings::-webkit-scrollbar,.v10-tutorial::-webkit-scrollbar,
+.v13-first-card::-webkit-scrollbar,.v12-result-card::-webkit-scrollbar,
+.v11-boss-intro::-webkit-scrollbar,.m204-more-sheet::-webkit-scrollbar,
+.m211-gacha-summary::-webkit-scrollbar,.m222-dup-card::-webkit-scrollbar,
+.m222-confirm-card::-webkit-scrollbar,
+.v10-modal-layer::-webkit-scrollbar,.m211-gacha-summary-layer::-webkit-scrollbar{
+  width:0!important;height:0!important;display:none!important;background:transparent!important}
+/* 底部操作区吸底：内容再长也不会被裁在滚动区边缘 */
+.v10-tutorial .btnrow,.v13-first-card .btnrow,.m222-confirm-card .btnrow,
+.v12-result-card .m211-result-actions,.m221-sweep-result .m211-result-actions{
+  position:sticky!important;bottom:0!important;z-index:3!important;
+  padding-top:10px!important;padding-bottom:2px!important;
+  background:linear-gradient(180deg,rgba(11,15,30,0),rgba(9,12,25,.94) 38%)}
+.m211-gacha-summary .m211-summary-actions{
+  position:sticky!important;bottom:0!important;z-index:3!important;
+  padding-top:10px!important;padding-bottom:2px!important;
+  background:linear-gradient(180deg,rgba(14,17,37,0),rgba(11,14,31,.96) 40%)}
+/* 顶部关闭按钮吸顶，长内容下始终可达 */
+.m211-gacha-summary .m211-summary-head .v10-close{
+  position:sticky!important;top:0!important;z-index:4!important;
+  background:rgba(10,13,28,.86)!important;backdrop-filter:blur(8px)}
+/* 内容到底的渐隐提示（替代被去掉的原生滚动条） */
+.v10-tutorial::after{
+  content:"";display:block;height:0;pointer-events:none}
+/* ── v2.2.4 QC-3b：治本 —— 让这些弹窗在常见视口下根本不需要滚动 ──
+   真机 1280×720：引导卡片内容 451px，可用高度只有 356px（720 - 顶栏让位 - 底栏让位
+   - 卡片 padding），必然溢出 → 才会出现滚动条。
+   做法：压缩卡片内边距/标题字号/轨道装饰高度，把内容高度降到可用高度以内；
+   桌面矮视口与手机窄屏分别收紧一档。这样"无滚动条"是算出来的，不是遮出来的。 */
+.v10-tutorial{padding:22px 24px!important}
+.v10-tutorial h2{font-size:26px!important;letter-spacing:2px!important;margin:6px 0!important}
+.v10-tutorial p{margin:6px 0!important;line-height:1.65!important}
+.v10-tutorial-orbit{height:74px!important;font-size:26px!important;margin:4px 0!important}
+.v13-first-card{padding:22px 24px!important}
+/* 顶部先让位再算高度：桌面 720 高时给弹层多留一点可用空间 */
+@media(min-width:700px){
+  .v10-modal-layer{padding-top:10px!important;
+    padding-bottom:calc(var(--v220-nav-h,72px) + env(safe-area-inset-bottom) + 10px)!important}
+}
+@media(max-height:760px){
+  .v10-tutorial{padding:16px 20px!important}
+  .v10-tutorial h2{font-size:22px!important}
+  .v10-tutorial p{font-size:12.5px!important;line-height:1.58!important}
+  .v10-tutorial-orbit{height:56px!important;font-size:21px!important;margin:2px 0!important}
+}
+@media(max-width:430px){
+  .v10-tutorial{padding:15px 16px!important}
+  .v10-tutorial h2{font-size:21px!important;letter-spacing:1px!important}
+  .v10-tutorial p{font-size:12px!important;line-height:1.6!important}
+  .v10-tutorial-orbit{height:48px!important;font-size:19px!important}
+  .v13-first-card{padding:16px 16px!important}
+}
+/* 矮视口（横屏 / 桌面矮窗）下按钮吸底同样生效 */
+@media(max-height:620px){
+  .m211-gacha-summary .m211-ten-card .hero-portrait.result{height:86px}
+  .m211-gacha-summary .m211-summary-stats{margin:9px 0}
+}
+/* 确认框底部小字（直接升满 / 召唤确认共用） */
+.m222-confirm-card .m222-confirm-note{
+  display:block;margin:0 0 12px;color:#98a2b8;font-size:10px;line-height:1.55;text-align:left}
+.m222-confirm-card .btnrow .btn[disabled]{opacity:.45}
+
+/* =========================================================================
+   v2.2.4 QC-6（真机实测 P2-6）：桌面宽屏下游戏列右缘与背景立绘生硬直切
+   根因：#app 画布宽 1280 且 overflow:visible，游戏列只有 460px 居中，
+        左右两条空白槽露出 body 背景图（home-main-v20.jpg，cover + fixed）。
+         列有底的边界 vs 槽里的人物立绘 = 一条硬边。
+   做法：用列自身的两个伪元素，在列外侧各铺一条 240px 渐变阴影
+         （近列处最暗，向外淡出到透明），把硬边变成柔和过渡。
+         不改竖屏主结构；窄屏（<940px，无空白槽）自动关闭。
+   ========================================================================= */
+@media(min-width:940px){
+  /* 注意：.v218-app::before / ::after 已被 .v11-app:before（第 133 行）等既有规则占用
+     （列内辉光），不能再借用。改用 .m208-page —— 它就是列内容本身，且没有伪元素。
+     渐变从列边缘开始由深到浅向外淡出，把"列有底 / 槽里是立绘"的硬边换成柔和过渡。 */
+  .m208-page{position:relative}
+  .m208-page::before,.m208-page::after{
+    content:"";position:absolute;top:0;bottom:0;width:300px;pointer-events:none;
+    z-index:0}
+  .m208-page::before{
+    right:100%;
+    background:linear-gradient(90deg,rgba(3,6,14,0),rgba(3,6,14,.3) 18%,rgba(3,6,14,.68) 48%,rgba(3,6,14,.9) 82%,rgba(3,6,14,.97))}
+  .m208-page::after{
+    left:100%;
+    background:linear-gradient(270deg,rgba(3,6,14,0),rgba(3,6,14,.3) 18%,rgba(3,6,14,.68) 48%,rgba(3,6,14,.9) 82%,rgba(3,6,14,.97))}
+  /* 列边缘加一层柔光，避免"深色描边直接切断立绘"的生硬感 */
+  .m208-page>section:first-child,.m208-page>div:first-child{
+    position:relative;z-index:1}
+}
+/* 列在极宽屏下略微抬头，减少"贴在左侧"的观感误差（保持居中，仅加高光边） */
+@media(min-width:1180px){
+  .v218-app{box-shadow:0 0 0 1px rgba(210,220,244,.12),0 30px 110px rgba(0,0,0,.66)!important}
+}
+
+/* ==========================================================================
+   v2.2.5 动态编阵战斗界面 + 打斗特效（主游戏内嵌版）
+   来源：battle-preview.html 原型，样式全部以 .se- 前缀 / .se-scene 作用域限定，
+   不覆盖游戏里既有的 .unit / .battle-visual 等旧战斗样式。
+   ========================================================================== */
+/* ---- 舞台与 HUD ---- */
+.se-battle-hud{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.se-power{display:flex;flex-direction:column;align-items:flex-end;gap:1px;padding:3px 8px;border-radius:10px;
+  border:1px solid rgba(234,213,154,.32);background:linear-gradient(160deg,rgba(30,26,54,.9),rgba(12,14,28,.92))}
+.se-power small{font-size:7.5px;letter-spacing:1.6px;color:#9b91b5}
+.se-power b{font:700 13px/1.1 Georgia,serif;color:#f0d795;font-variant-numeric:tabular-nums}
+.se-bond{display:flex;align-items:center;gap:5px;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none}
+.se-bond::-webkit-scrollbar{display:none}
+.se-bond .chip{flex:0 0 auto;display:flex;align-items:center;gap:4px;padding:3px 7px;border-radius:999px;
+  border:1px solid rgba(255,255,255,.1);background:rgba(20,24,44,.7);font-size:8px;color:#aab3c8;white-space:nowrap}
+.se-bond .chip i{font-style:normal;font-size:8px;opacity:.85}
+.se-bond .chip b{color:#dfe5f2;font-weight:600}
+.se-bond .chip em{font-style:normal;font-size:7.5px;color:#8b94a9}
+.se-bond .chip.on{border-color:rgba(240,209,138,.5);background:linear-gradient(160deg,rgba(62,50,26,.72),rgba(24,22,40,.8));color:#f2e3b8}
+.se-bond .chip.on i,.se-bond .chip.on em{color:#f0d18a}
+.se-bond .chip.on b{color:#fbeec4}
+.se-sub{font-size:8px;color:#8b94a9;letter-spacing:.6px;white-space:nowrap}
+
+.se-scene{position:relative;height:620px;padding:8px 8px 6px;overflow:hidden;border-radius:18px;
+  border:1px solid rgba(151,123,209,.26);
+  background:radial-gradient(ellipse at 50% 50%,rgba(140,104,220,.14),transparent 66%),linear-gradient(180deg,#070d1b,#04060f 62%,#03050c)}
+.se-lane-head{position:relative;z-index:6;margin:0 auto 6px;width:min(94%,420px);padding:4px 8px;border-radius:9px;
+  text-align:center;font-size:8.5px;color:#f2dfb0;background:linear-gradient(90deg,transparent,rgba(88,64,130,.55),transparent);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.se-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:20}
+.se-fx{position:absolute;inset:0;z-index:24;pointer-events:none}
+.se-scene .side{position:relative;z-index:2}
+.se-scene #side-enemy{margin-bottom:auto}
+.se-scene #side-ally{margin-top:auto}
+.se-scene .row{display:flex;justify-content:center;align-items:flex-start;gap:10px}
+.se-scene .row+.row{margin-top:var(--rowgap,6px)}
+.se-scene .team-label{display:flex;align-items:center;gap:6px;margin:0 0 4px;font-size:8px;letter-spacing:2px;color:#7d879e}
+.se-scene .team-label b{color:#c9b27e;font-weight:600;letter-spacing:1px}
+.se-scene .team-label::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(200,178,126,.32),transparent)}
+.se-scene #side-ally .team-label{justify-content:flex-end;margin:6px 0 0}
+.se-scene #side-ally .team-label::after{display:none}
+.se-scene #side-ally .team-label::before{content:"";flex:1;height:1px;background:linear-gradient(270deg,rgba(200,178,126,.32),transparent)}
+
+/* ---- 卡牌（作用域限定，避免与旧 .unit 冲突） ---- */
+.se-scene .unit{position:relative;display:block;width:var(--cw,106px);flex:0 0 auto;animation:none}
+.se-scene .u-pos{position:absolute;left:-3px;top:-3px;z-index:5;display:flex;align-items:center;gap:2px;padding:1px 5px;
+  border-radius:8px;font-size:7.5px;background:rgba(6,9,20,.86);border:1px solid rgba(255,255,255,.14);color:#b9c3d8;white-space:nowrap}
+.se-scene .u-pos b{font-weight:700;color:#f0d18a;font-size:8px}
+.se-scene .unit.enemy .u-pos{left:auto;right:-3px;border-color:rgba(255,120,120,.34)}
+.se-scene .unit.enemy .u-pos b{color:#ff9b9b}
+.se-scene .u-art{position:relative;width:100%;height:var(--artH);overflow:hidden;border-radius:12px 12px 5px 5px;
+  background:linear-gradient(180deg,rgba(24,28,52,.9),rgba(9,12,24,.96));box-shadow:inset 0 0 0 1px rgba(255,255,255,.07)}
+.se-scene .art-slot{position:absolute;inset:0}
+.se-scene .art-slot svg,.se-scene .art-slot img{width:100%;height:100%;display:block;object-fit:cover;object-position:50% 16%}
+.se-scene .u-art::after{content:"";position:absolute;left:0;right:0;bottom:0;height:34%;
+  background:linear-gradient(180deg,transparent,rgba(6,9,20,.88));pointer-events:none}
+.se-scene .rar-SSR .u-art{box-shadow:inset 0 0 0 1px rgba(240,209,138,.72),0 0 14px rgba(240,209,138,.2)}
+.se-scene .rar-SR .u-art{box-shadow:inset 0 0 0 1px rgba(178,140,240,.6)}
+.se-scene .rar-R .u-art{box-shadow:inset 0 0 0 1px rgba(214,224,242,.42)}
+.se-scene .rar-ELITE .u-art{box-shadow:inset 0 0 0 1px rgba(255,110,110,.66),0 0 14px rgba(255,90,90,.18)}
+.se-scene .rar-GRUNT .u-art{box-shadow:inset 0 0 0 1px rgba(150,160,180,.34)}
+.se-scene .rar-SSR .u-plate{background:linear-gradient(180deg,rgba(40,33,20,.96),rgba(14,12,24,.98));border-color:rgba(240,209,138,.42)}
+.se-scene .rar-SR .u-plate{background:linear-gradient(180deg,rgba(32,25,52,.96),rgba(12,11,24,.98));border-color:rgba(178,140,240,.38)}
+.se-scene .rar-R .u-plate{background:linear-gradient(180deg,rgba(24,28,44,.96),rgba(10,12,22,.98));border-color:rgba(214,224,242,.26)}
+.se-scene .rar-ELITE .u-plate,.se-scene .rar-GRUNT .u-plate{background:linear-gradient(180deg,rgba(42,20,24,.96),rgba(14,10,14,.98));border-color:rgba(255,110,110,.36)}
+.se-scene .u-plate{position:relative;z-index:2;padding:3px 4px 4px;border-radius:0 0 9px 9px;
+  border:1px solid rgba(255,255,255,.1);border-top:0;text-align:center}
+.se-scene .u-plate b{display:block;font-size:clamp(7.5px,calc(var(--cwq,106) * .105),11px);line-height:1.12;color:#f2f5fc;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.se-scene .u-plate small{display:block;font-size:clamp(6.5px,calc(var(--cwq,106) * .078),9px);line-height:1.16;
+  color:#98a3ba;white-space:normal;word-break:break-word}
+.se-scene .u-hp{height:5px;margin:3px 0 0;border-radius:99px;background:#1d2337;overflow:hidden}
+.se-scene .u-hp i{display:block;height:100%;width:100%;border-radius:99px;
+  background:linear-gradient(90deg,#4ade80,#a3e635);transform-origin:0 50%;transition:transform .26s ease-out}
+.se-scene .unit.enemy .u-hp i{background:linear-gradient(90deg,#f87171,#fb923c)}
+.se-scene .u-hp.low i{background:linear-gradient(90deg,#ef4444,#f59e0b)}
+.se-scene .u-out{margin-top:3px;text-align:center;min-height:12px}
+.se-scene .u-num{display:block;font:700 clamp(8px,calc(var(--cwq,106) * .093),12px)/1.1 Georgia,serif;color:#e7edf8;
+  font-variant-numeric:tabular-nums;text-shadow:0 1px 3px rgba(0,0,0,.85)}
+.se-scene .unit.enemy .u-num{color:#ffd9d9}
+.se-scene .u-st{display:block;font-size:clamp(6.5px,calc(var(--cwq,106) * .07),9px);line-height:1.2;color:#8fd4ff;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.se-scene .u-st:empty{display:none}
+/* 紧凑堆叠：仅当双方总行数 ≥4；后排向上叠进前排，被压住的一行留出铭牌 */
+.se-scene.stack .u-out{display:none}
+.se-scene.stack .unit[data-row="1"]{z-index:3}
+.se-scene.stack .unit[data-row="0"]{z-index:2}
+.se-scene.stack #side-ally .row[data-row="0"]{margin-top:calc(var(--artH) * -0.20)}
+.se-scene.stack #side-enemy .row[data-row="1"]{margin-top:calc(var(--artH) * -0.20)}
+/* 窄列（≤52px 卡宽）时进一步压字号，保证不截断 */
+.se-scene.se-tight .u-plate small{font-size:6px}
+.se-scene.se-tight .u-num{font-size:7.5px}
+/* 护盾穹顶 */
+.se-scene .u-shield{position:absolute;inset:-4px;border-radius:14px;pointer-events:none;z-index:8;opacity:0;
+  background:radial-gradient(ellipse at 50% 38%,rgba(120,200,255,.22),rgba(70,140,255,.05) 62%,transparent 74%);
+  box-shadow:inset 0 0 18px rgba(120,200,255,.5),0 0 16px rgba(90,160,255,.28);
+  border:1px solid rgba(140,210,255,.42);transition:opacity .2s}
+.se-scene .unit.has-shield .u-shield{opacity:1}
+.se-scene .u-shield.ripple{animation:shieldRipple .34s ease-out}
+.se-scene .u-shield.shatter{animation:shieldShatter .42s ease-out forwards}
+/* 命中 / 击倒 / 位移 */
+.se-scene .unit.hit-flash{animation:uFlash .32s steps(1,end)}
+.se-scene .unit.downed{filter:grayscale(1) brightness(.5);opacity:.3;transform:translateY(6px) rotate(-7deg);
+  transition:filter .45s,opacity .45s,transform .45s}
+.se-scene .unit.downed .u-art::after{opacity:0}
+.se-scene .unit.lunge{transition:transform .13s cubic-bezier(.4,0,.6,1);z-index:9}
+.se-scene .unit.lunge-back{transition:transform .19s cubic-bezier(.2,.9,.3,1.25)}
+.se-scene .unit.recoil{transition:transform .1s ease-out}
+.se-scene .unit.recoil-back{transition:transform .16s ease-out}
+
+/* ---- DOM 特效 ---- */
+.se-fx .fx{position:absolute;pointer-events:none;will-change:transform,opacity}
+.se-fx .fx-num{font:700 22px/1 Georgia,"Noto Serif SC",serif;font-variant-numeric:tabular-nums;
+  transform:translate(-50%,-50%);text-shadow:0 2px 6px rgba(0,0,0,.92);
+  animation:numFloat .86s cubic-bezier(.2,.7,.3,1) forwards}
+.se-fx .fx-num.down{--drift:-26px}
+.se-fx .fx-num.crit{font-size:29px;color:#ffe08a;-webkit-text-stroke:1.2px rgba(120,70,10,.85);
+  text-shadow:0 0 2px #7a4a06,0 0 12px rgba(255,200,80,.9),0 0 26px rgba(255,170,40,.6),0 2px 6px rgba(0,0,0,.9);
+  animation:numCrit .98s cubic-bezier(.2,.7,.3,1) forwards}
+.se-fx .fx-num.heal{color:#93f0b4;text-shadow:0 0 14px rgba(90,230,150,.7),0 2px 6px rgba(0,0,0,.9)}
+.se-fx .fx-num.skill{color:#d9b6ff;text-shadow:0 0 14px rgba(180,120,255,.75),0 2px 6px rgba(0,0,0,.9)}
+.se-fx .fx-num.absorb{color:#9fdcff;font-size:19px;text-shadow:0 0 14px rgba(110,190,255,.7),0 2px 6px rgba(0,0,0,.9)}
+.se-fx .fx-ring{width:var(--s);height:var(--s);border-radius:50%;transform:translate(-50%,-50%) scale(.28);
+  border:3px solid var(--c,#fff);box-shadow:0 0 22px var(--c,#fff),inset 0 0 18px var(--c,#fff);
+  animation:ringOut .58s cubic-bezier(.16,.8,.3,1) forwards}
+.se-fx .fx-slash{width:80px;height:80px;transform:translate(-50%,-50%);opacity:.96;
+  animation:slashSweep .34s cubic-bezier(.3,.7,.3,1) forwards}
+.se-fx .fx-slash svg{width:100%;height:100%;overflow:visible}
+.se-fx .fx-slash path{fill:none;stroke:var(--c,#fff);stroke-width:7;stroke-linecap:round;
+  filter:drop-shadow(0 0 6px var(--c,#fff))}
+.se-fx .fx-bolt{width:var(--w);height:var(--h);transform-origin:0 0;animation:boltFlash .32s ease-out forwards}
+.se-fx .fx-bolt svg{width:100%;height:100%;overflow:visible}
+.se-fx .fx-bolt path{fill:none;stroke:#ffe9a8;stroke-width:4.5;stroke-linejoin:round;stroke-linecap:round;
+  filter:drop-shadow(0 0 8px #ffd257) drop-shadow(0 0 18px rgba(255,200,80,.7));
+  stroke-dasharray:var(--len);stroke-dashoffset:var(--len);animation:boltDraw .32s ease-out forwards}
+.se-fx .fx-burst{width:var(--s);height:var(--s);border-radius:50%;transform:translate(-50%,-50%) scale(.2);
+  background:radial-gradient(circle,var(--c,#c9a3ff) 0,rgba(150,90,255,.32) 46%,transparent 72%);
+  animation:burstOut .5s ease-out forwards}
+.se-fx .fx-spark{width:3px;height:var(--len,26px);border-radius:99px;transform-origin:50% 0;
+  background:linear-gradient(180deg,var(--c,#ffe08a),transparent);animation:sparkFly .5s ease-out forwards}
+.se-fx .fx-mote{width:6px;height:6px;border-radius:50%;transform:translate(-50%,-50%);
+  background:radial-gradient(circle,var(--c,#9df0b8),transparent 70%);animation:moteRise 1s ease-out forwards}
+.se-fx .fx-dust{width:5px;height:5px;border-radius:2px;transform:translate(-50%,-50%);
+  background:#b9c0cf;animation:dustFall .7s ease-in forwards}
+.se-fx .fx-victory{position:absolute;inset:0;display:grid;place-items:center;
+  background:radial-gradient(circle at 50% 46%,rgba(120,86,20,.28),transparent 62%);
+  animation:vicIn 1.7s ease-out forwards}
+.se-fx .fx-victory span{display:block;font-size:10px;letter-spacing:8px;color:#d7bd83;margin-bottom:6px;text-align:center}
+.se-fx .fx-victory b{display:block;font:700 40px/1.1 "Noto Serif SC","Songti SC",serif;letter-spacing:10px;color:#ffe6a6;
+  text-shadow:0 0 8px rgba(255,214,120,.9),0 0 30px rgba(255,190,60,.6),0 2px 10px rgba(0,0,0,.9)}
+/* 舞台震屏（作用在整列上，避免影响 fixed 定位的弹层） */
+.v218-app.shake{animation:seShake .32s cubic-bezier(.36,.07,.19,.97)}
+
+/* ---- 关键帧 ---- */
+@keyframes twinkle1{0%,100%{opacity:.32}50%{opacity:.16}}
+@keyframes uFlash{0%{filter:brightness(2.6) saturate(.4)}22%{filter:brightness(2.6) saturate(.4)}23%{filter:brightness(1)}100%{filter:brightness(1)}}
+@keyframes shieldRipple{0%{transform:scale(1);filter:brightness(2.2)}60%{transform:scale(1.06);filter:brightness(1.2)}100%{transform:scale(1);filter:brightness(1)}}
+@keyframes shieldShatter{0%{opacity:1;transform:scale(1);filter:brightness(2.6)}45%{opacity:.7;transform:scale(1.14)}100%{opacity:0;transform:scale(1.3);filter:brightness(.4)}}
+@keyframes numFloat{0%{opacity:0;transform:translate(-50%,-50%) scale(.6)}18%{opacity:1;transform:translate(-50%,-50%) scale(1.12)}32%{transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,calc(-50% + var(--drift,28px))) scale(.96)}}
+@keyframes numCrit{0%{opacity:0;transform:translate(-50%,-50%) scale(.4) rotate(-6deg)}16%{opacity:1;transform:translate(-50%,-50%) scale(1.34) rotate(2deg)}30%{transform:translate(-50%,-50%) scale(1.02) rotate(0)}100%{opacity:0;transform:translate(-50%,calc(-50% + var(--drift,34px))) scale(1)}}
+@keyframes ringOut{0%{opacity:1;transform:translate(-50%,-50%) scale(.28)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.5)}}
+@keyframes slashSweep{0%{opacity:0;transform:translate(-50%,-50%) rotate(-72deg) scale(.62)}24%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) rotate(96deg) scale(1.2)}}
+@keyframes boltDraw{to{stroke-dashoffset:0}}
+@keyframes boltFlash{0%{opacity:.2}20%{opacity:1}100%{opacity:0}}
+@keyframes burstOut{0%{opacity:.95;transform:translate(-50%,-50%) scale(.2)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.45)}}
+@keyframes sparkFly{0%{opacity:1;transform:translate(-50%,-50%) rotate(var(--a,0deg)) scaleY(.3)}100%{opacity:0;transform:translate(-50%,-50%) rotate(var(--a,0deg)) scaleY(1.15)}}
+@keyframes moteRise{0%{opacity:0;transform:translate(-50%,-50%) scale(.5)}22%{opacity:1}100%{opacity:0;transform:translate(-50%,calc(-50% - 34px)) scale(1.1)}}
+@keyframes dustFall{0%{opacity:.9;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,calc(-50% + 26px)) scale(.4)}}
+@keyframes vicIn{0%{opacity:0;transform:scale(1.2)}14%{opacity:1;transform:scale(1)}70%{opacity:1}100%{opacity:0;transform:scale(1.04)}}
+@keyframes seShake{0%,100%{transform:translate3d(0,0,0)}12%{transform:translate3d(-5px,2px,0)}28%{transform:translate3d(5px,-2px,0)}44%{transform:translate3d(-4px,-1px,0)}60%{transform:translate3d(4px,2px,0)}78%{transform:translate3d(-2px,1px,0)}}
+
+/* ---- 窄屏 / 矮屏适配 ---- */
+@media(max-width:400px){
+  .se-scene{height:560px}
+  .se-battle-hud{gap:6px}
+  .se-sub{display:none}
+}
+@media(max-height:700px){
+  .se-scene{height:520px}
+}
+@media(prefers-reduced-motion:reduce){
+  .se-scene .unit.lunge,.se-scene .unit.lunge-back,.se-scene .unit.recoil,.se-scene .unit.recoil-back{transition:none!important}
+  .v218-app.shake{animation:none!important}
+}

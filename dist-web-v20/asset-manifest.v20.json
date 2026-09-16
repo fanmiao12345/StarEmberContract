@@ -133,7 +133,7 @@
     "30": "assets/bosses/stage-30.jpg"
   },
   "release": {
-    "version": "2.2.3",
+    "version": "2.2.5",
     "channel": "release-preview",
     "cover": "assets/release/release-cover-v20.jpg",
     "visualBoard": "assets/release/visual-board-v20.jpg",

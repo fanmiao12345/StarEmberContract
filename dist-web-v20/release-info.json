@@ -1,15 +1,16 @@
 {
-  "version": "2.2.3",
+  "version": "2.2.5",
   "configVersion": "2026.09.v21.5",
   "channel": "release-preview",
-  "builtAt": "2026-09-14T07:01:25.098Z",
+  "builtAt": "2026-09-16T05:46:00.945Z",
   "cacheStrategy": "content-hash",
   "assets": {
-    "styles.css": "styles.a071237712.css",
+    "styles.css": "styles.fedc14ae8f.css",
     "asset-loader.js": "asset-loader.78c53591d4.js",
     "game-data.js": "game-data.dfedfd181d.js",
     "cloud-config.js": "cloud-config.13f702bf7b.js",
-    "cloud-bridge.js": "cloud-bridge.49133d38a7.js",
-    "app.js": "app.dd7842ad39.js"
+    "cloud-bridge.js": "cloud-bridge.f62f35c506.js",
+    "star-ember-battle.js": "star-ember-battle.3e529a511f.js",
+    "app.js": "app.9be3fca6fa.js"
   }
 }

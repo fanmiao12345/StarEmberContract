@@ -1,6 +1,6 @@
 {
   "name": "star-ember-contract-web-minigame",
-  "version": "2.2.3",
+  "version": "2.2.5",
   "private": true,
   "scripts": {
     "check": "node deployment/check-all.mjs",

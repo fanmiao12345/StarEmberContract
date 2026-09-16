@@ -2,7 +2,7 @@ import fs from 'node:fs';import path from 'node:path';import crypto from 'node:c
 const root=path.resolve(import.meta.dirname,'..'),web=path.join(root,'web');
 const manifestPath=path.join(web,'asset-manifest.v20.json');
 const manifest=JSON.parse(fs.readFileSync(manifestPath,'utf8')),version=JSON.parse(fs.readFileSync(path.join(web,'version.json'),'utf8'));
-const required=['index.html','styles.css','app.js','game-data.js','asset-loader.js','asset-manifest.v20.json','manifest.webmanifest','sw.js','release-preview-v20.html','version.json'];
+const required=['index.html','styles.css','app.js','star-ember-battle.js','game-data.js','asset-loader.js','asset-manifest.v20.json','manifest.webmanifest','sw.js','release-preview-v20.html','version.json'];
 const assets=[];
 for(const group of ['backgrounds','status','bosses','bossSplash','frames'])Object.values(manifest[group]||{}).forEach(x=>assets.push(x));
 for(const h of Object.values(manifest.heroes||{}))assets.push(h.portrait,h.full,h.skill);
@@ -15,7 +15,7 @@ if(manifest.version!=='v20')missing.push('manifest.version != v20');
 if(manifest.release?.version!==version.version)missing.push(`release.version != ${version.version}`);
 const app=fs.readFileSync(path.join(web,'app.js'),'utf8'),sw=fs.readFileSync(path.join(web,'sw.js'),'utf8');
 if(!app.includes("starEmber.save.v20"))missing.push('app save key not v20');
-if(!/star-ember-v(?:20|21|22)/.test(sw))missing.push('service worker cache id invalid');
+if(!/star-ember-v(?:20|21|22)\d*/.test(sw))missing.push('service worker cache id invalid');
 const pkg=JSON.parse(fs.readFileSync(path.join(root,'package.json'),'utf8')),html=fs.readFileSync(path.join(web,'index.html'),'utf8'),game=fs.readFileSync(path.join(web,'game-data.js'),'utf8'),cloudGame=fs.readFileSync(path.join(root,'cloudbase','_shared','game.js'),'utf8'),cocos=fs.readFileSync(path.join(root,'cocos-project','assets','scripts','release','ReleaseConfig.ts'),'utf8');
 if(pkg.version!==version.version)missing.push(`package.version != ${version.version}`);
 if(!html.includes(`v${version.version}`))missing.push(`index metadata missing v${version.version}`);

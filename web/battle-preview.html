@@ -1,0 +1,1242 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="theme-color" content="#050711" />
+<title>星烬契约 · 动态编阵战斗 DEMO v1.0</title>
+<!--
+  ============================================================================
+  星烬契约 STAR EMBER COVENANT —— 动态编阵战斗界面 + 打斗特效（单文件版）
+  ----------------------------------------------------------------------------
+  · 零外部素材、零依赖，双击即可打开
+  · 390×844 真机铺满；桌面浏览器居中显示为手机框
+  · 数据驱动：改 HEROES / ENEMIES / FACTIONS 三张表即可换阵容，不动逻辑代码
+  · 立绘：代码绘制 SVG 半身像，DOM 结构为 <div class="u-art"><div class="art-slot">…</div></div>
+    接入真实立绘时只需把 .art-slot 里的 <svg> 换成 <img src="…">，特效系统不受影响
+  · 特效全部只动 transform / opacity / filter，不触发重排
+  · 粒子统一走单个 Canvas 图层；无粒子时 rAF 完全停止
+  ============================================================================
+-->
+<style>
+/* ===================== 基础与主题 ===================== */
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%}
+body{
+  background:radial-gradient(circle at 20% 0,#1b2340 0,transparent 42%),radial-gradient(circle at 86% 8%,#2a1f51 0,transparent 38%),linear-gradient(180deg,#070c18 0,#04060d 70%,#020306 100%);
+  color:#eef2fb;font:14px/1.5 "Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  display:flex;align-items:center;justify-content:center;overflow:hidden}
+/* 两层闪烁星空背景（纯 CSS，零成本） */
+body::before,body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:0}
+body::before{
+  opacity:.32;
+  background-image:
+    radial-gradient(circle at 12% 18%,#fff 0 1px,transparent 1.5px),
+    radial-gradient(circle at 78% 26%,#d8c8ff 0 1px,transparent 1.6px),
+    radial-gradient(circle at 44% 68%,#fff 0 .9px,transparent 1.4px),
+    radial-gradient(circle at 92% 74%,#bcd7ff 0 1px,transparent 1.5px);
+  background-size:130px 130px,190px 190px,110px 110px,230px 230px;
+  animation:twinkle1 5.5s ease-in-out infinite}
+body::after{
+  opacity:.2;
+  background-image:
+    radial-gradient(circle at 30% 42%,#fff 0 .9px,transparent 1.3px),
+    radial-gradient(circle at 66% 88%,#ffdca8 0 1px,transparent 1.5px);
+  background-size:260px 260px,320px 320px;
+  animation:twinkle2 8s ease-in-out infinite}
+@keyframes twinkle1{0%,100%{opacity:.32}50%{opacity:.16}}
+@keyframes twinkle2{0%,100%{opacity:.2}50%{opacity:.34}}
+
+/* ===================== 手机框 ===================== */
+#phone{
+  position:relative;z-index:1;
+  width:min(390px,100vw);height:min(844px,100vh);
+  display:flex;flex-direction:column;overflow:hidden;
+  background:
+    radial-gradient(circle at 62% -6%,rgba(120,84,190,.22),transparent 40%),
+    radial-gradient(circle at 14% 106%,rgba(46,120,150,.18),transparent 42%),
+    linear-gradient(180deg,#080d1b,#04060f 62%,#03050c);
+  padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
+/* 桌面宽视口：呈现居中手机框；窄视口/真机铺满（圆角只在外侧留白时才加） */
+@media(min-width:430px){
+  #phone{border-radius:26px;overflow:hidden}
+  #phone::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+    box-shadow:0 0 0 1px rgba(215,224,245,.16),0 40px 120px rgba(0,0,0,.7),0 0 90px rgba(120,84,190,.12)}
+}
+@media(max-width:429px){#phone{width:100vw;height:100dvh;border-radius:0}}
+
+/* ===================== 顶栏 ===================== */
+#top{
+  flex:0 0 auto;display:flex;align-items:center;gap:8px;
+  padding:8px 10px 7px;position:relative;z-index:6;
+  background:linear-gradient(180deg,rgba(5,8,20,.96),rgba(5,8,20,.72));
+  border-bottom:1px solid rgba(228,205,145,.18)}
+#top .mark{
+  width:30px;height:30px;flex:0 0 30px;border-radius:50%;
+  background:radial-gradient(circle at 34% 30%,#fff7cf,#caa3ff 22%,#6550aa 58%,#1c173a 100%);
+  border:1px solid rgba(235,211,150,.42);box-shadow:0 0 14px rgba(190,150,240,.3);
+  display:grid;place-items:center;font-size:13px;color:#1a1430}
+#top .who{flex:1;min-width:0}
+#top .who h1{margin:0;font:600 15px/1.15 "Noto Serif SC","Songti SC",serif;letter-spacing:2px;color:#f5e8c7;
+  text-shadow:0 0 16px rgba(225,196,122,.2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#top .who p{margin:2px 0 0;font-size:9.5px;letter-spacing:1px;color:#8f9ab2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#top .badge{
+  flex:0 0 auto;display:flex;flex-direction:column;align-items:flex-end;gap:1px;
+  padding:4px 9px;border-radius:11px;border:1px solid rgba(234,213,154,.32);
+  background:linear-gradient(160deg,rgba(30,26,54,.9),rgba(12,14,28,.92))}
+#top .badge small{font-size:8px;letter-spacing:2px;color:#9b91b5}
+#top .badge b{font:700 15px/1.1 Georgia,serif;color:#f0d795;font-variant-numeric:tabular-nums;
+  text-shadow:0 0 12px rgba(240,215,149,.28)}
+
+/* ===================== 共鸣条 ===================== */
+#bond{
+  flex:0 0 auto;display:flex;align-items:center;gap:6px;padding:6px 10px 7px;
+  overflow-x:auto;scrollbar-width:none;position:relative;z-index:6;
+  background:rgba(6,9,20,.62);border-bottom:1px solid rgba(255,255,255,.05)}
+#bond::-webkit-scrollbar{display:none}
+#bond .chip{
+  flex:0 0 auto;display:flex;align-items:center;gap:5px;padding:4px 8px;border-radius:999px;
+  border:1px solid rgba(255,255,255,.1);background:rgba(20,24,44,.7);font-size:9.5px;color:#aab3c8;white-space:nowrap}
+#bond .chip i{font-style:normal;font-size:9px;opacity:.85}
+#bond .chip b{color:#dfe5f2;font-weight:600}
+#bond .chip em{font-style:normal;font-size:8.5px;color:#8b94a9}
+#bond .chip.on{border-color:rgba(240,209,138,.5);background:linear-gradient(160deg,rgba(62,50,26,.72),rgba(24,22,40,.8));color:#f2e3b8}
+#bond .chip.on i{color:#f0d18a}
+#bond .chip.on b{color:#fbeec4}
+#bond .chip.on em{color:#f0d18a}
+#bond .chip.off{opacity:.62}
+
+/* ===================== 舞台 ===================== */
+#stage{position:relative;flex:1 1 auto;min-height:0;display:flex;flex-direction:column;
+  padding:10px 10px 6px;overflow:hidden}
+#stage::before{ /* 地平线光带 */
+  content:"";position:absolute;left:-10%;right:-10%;top:50%;height:130px;transform:translateY(-50%);
+  background:radial-gradient(ellipse at 50% 50%,rgba(140,104,220,.16),transparent 68%);
+  pointer-events:none}
+#fx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:20}
+
+.side{position:relative;z-index:2}
+#side-enemy{flex:0 0 auto}
+#side-ally{flex:0 0 auto;margin-top:auto}
+.row{display:flex;justify-content:center;align-items:flex-start;gap:10px}
+.row+.row{margin-top:var(--rowgap,6px)}
+.team-label{
+  display:flex;align-items:center;gap:6px;margin:0 0 5px;font-size:8.5px;letter-spacing:2.4px;color:#7d879e}
+.team-label b{color:#c9b27e;font-weight:600;letter-spacing:1px}
+.team-label::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(200,178,126,.32),transparent)}
+#side-ally .team-label{justify-content:flex-end}
+#side-ally .team-label::after{display:none}
+#side-ally .team-label::before{content:"";flex:1;height:1px;background:linear-gradient(270deg,rgba(200,178,126,.32),transparent)}
+
+/* ===================== 卡牌 ===================== */
+.unit{position:relative;width:var(--cw,106px);flex:0 0 auto;transition:filter .2s}
+.u-pos{
+  position:absolute;left:-3px;top:-3px;z-index:5;display:flex;align-items:center;gap:2px;
+  padding:1px 5px;border-radius:8px;font-size:8px;letter-spacing:.5px;
+  background:rgba(6,9,20,.86);border:1px solid rgba(255,255,255,.14);color:#b9c3d8;white-space:nowrap}
+.u-pos b{font-weight:700;color:#f0d18a;font-size:9px}
+.unit.enemy .u-pos{left:auto;right:-3px;border-color:rgba(255,120,120,.34)}
+.unit.enemy .u-pos b{color:#ff9b9b}
+
+.u-art{
+  position:relative;width:100%;height:var(--artH);overflow:hidden;
+  border-radius:12px 12px 5px 5px;
+  background:linear-gradient(180deg,rgba(24,28,52,.9),rgba(9,12,24,.96));
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.07)}
+.art-slot{position:absolute;inset:0}
+.art-slot svg,.art-slot img{width:100%;height:100%;display:block;object-fit:cover;object-position:50% 16%}
+.u-art::after{ /* 底部渐变，让铭牌压得住 */
+  content:"";position:absolute;left:0;right:0;bottom:0;height:34%;
+  background:linear-gradient(180deg,transparent,rgba(6,9,20,.88));pointer-events:none}
+
+.rar-SSR .u-art{box-shadow:inset 0 0 0 1px rgba(240,209,138,.72),0 0 16px rgba(240,209,138,.2)}
+.rar-SR  .u-art{box-shadow:inset 0 0 0 1px rgba(178,140,240,.6)}
+.rar-R   .u-art{box-shadow:inset 0 0 0 1px rgba(214,224,242,.42)}
+.rar-ELITE .u-art{box-shadow:inset 0 0 0 1px rgba(255,110,110,.66),0 0 16px rgba(255,90,90,.18)}
+.rar-GRUNT .u-art{box-shadow:inset 0 0 0 1px rgba(150,160,180,.34)}
+.rar-SSR .u-plate{background:linear-gradient(180deg,rgba(40,33,20,.96),rgba(14,12,24,.98));border-color:rgba(240,209,138,.42)}
+.rar-SR  .u-plate{background:linear-gradient(180deg,rgba(32,25,52,.96),rgba(12,11,24,.98));border-color:rgba(178,140,240,.38)}
+.rar-R   .u-plate{background:linear-gradient(180deg,rgba(24,28,44,.96),rgba(10,12,22,.98));border-color:rgba(214,224,242,.26)}
+.rar-ELITE .u-plate,.rar-GRUNT .u-plate{background:linear-gradient(180deg,rgba(42,20,24,.96),rgba(14,10,14,.98));border-color:rgba(255,110,110,.36)}
+
+.u-plate{
+  position:relative;z-index:2;margin-top:0;padding:3px 5px 4px;border-radius:0 0 9px 9px;
+  border:1px solid rgba(255,255,255,.1);border-top:0;text-align:center}
+.u-plate b{display:block;font-size:clamp(7.5px,calc(var(--cwq,106) * .105),11px);line-height:1.12;color:#f2f5fc;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:0}
+.u-plate small{display:block;font-size:clamp(6.5px,calc(var(--cwq,106) * .078),9px);line-height:1.16;color:#98a3ba;
+  white-space:normal;word-break:break-word;letter-spacing:0}
+.u-hp{height:5px;margin:3px 0 0;border-radius:99px;background:#1d2337;overflow:hidden;position:relative}
+.u-hp i{display:block;height:100%;width:100%;border-radius:99px;
+  background:linear-gradient(90deg,#4ade80,#a3e635);transform-origin:0 50%;transition:transform .26s ease-out}
+.unit.enemy .u-hp i{background:linear-gradient(90deg,#f87171,#fb923c)}
+.u-hp.low i{background:linear-gradient(90deg,#ef4444,#f59e0b)}
+
+.u-out{margin-top:3px;text-align:center;min-height:12px}
+.u-num{display:block;font:700 clamp(8px,calc(var(--cwq,106) * .093),12px)/1.1 Georgia,serif;color:#e7edf8;
+  font-variant-numeric:tabular-nums;text-shadow:0 1px 3px rgba(0,0,0,.85)}
+.unit.enemy .u-num{color:#ffd9d9}
+.u-st{display:block;font-size:clamp(6.5px,calc(var(--cwq,106) * .07),9px);line-height:1.2;color:#8fd4ff;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;min-height:0}
+.u-st:empty{display:none}
+
+/* 紧凑堆叠：只在双方总行数 ≥4 时由 JS 开启。
+   堆叠方向按深度关系确定——后排向上叠进前排之后，被压住的那一行留出"前两行"的铭牌，
+   保证任何一行都不会被盖住名字与血条。 */
+#stage.stack .u-out{display:none}
+#stage.stack .unit[data-row="1"]{z-index:3}
+#stage.stack .unit[data-row="0"]{z-index:2}
+#stage.stack #side-ally .row[data-row="0"]{margin-top:calc(var(--artH) * -0.20)}
+#stage.stack #side-enemy .row[data-row="1"]{margin-top:calc(var(--artH) * -0.20)}
+
+/* 护盾穹顶 */
+.u-shield{position:absolute;inset:-4px;border-radius:14px;pointer-events:none;z-index:8;opacity:0;
+  background:radial-gradient(ellipse at 50% 38%,rgba(120,200,255,.22),rgba(70,140,255,.05) 62%,transparent 74%);
+  box-shadow:inset 0 0 18px rgba(120,200,255,.5),0 0 16px rgba(90,160,255,.28);
+  border:1px solid rgba(140,210,255,.42);transition:opacity .2s}
+.unit.has-shield .u-shield{opacity:1}
+.u-shield.ripple{animation:shieldRipple .34s ease-out}
+@keyframes shieldRipple{
+  0%{transform:scale(1);filter:brightness(2.2)}
+  60%{transform:scale(1.06);filter:brightness(1.2)}
+  100%{transform:scale(1);filter:brightness(1)}}
+.u-shield.shatter{animation:shieldShatter .42s ease-out forwards}
+@keyframes shieldShatter{
+  0%{opacity:1;transform:scale(1);filter:brightness(2.6)}
+  45%{opacity:.7;transform:scale(1.14)}
+  100%{opacity:0;transform:scale(1.3);filter:brightness(.4)}}
+
+/* 命中闪白 / 击倒 */
+.unit.hit-flash{animation:uFlash .32s steps(1,end)}
+@keyframes uFlash{
+  0%{filter:brightness(2.6) saturate(.4)}
+  22%{filter:brightness(2.6) saturate(.4)}
+  23%{filter:brightness(1)}
+  100%{filter:brightness(1)}}
+.unit.downed{filter:grayscale(1) brightness(.5);opacity:.3;
+  transform:translateY(calc(var(--artH) * .1)) rotate(-7deg);transition:filter .45s,opacity .45s,transform .45s}
+.unit.downed .u-art::after{opacity:0}
+
+/* 攻击突进与目标受击位移 */
+.unit.lunge{transition:transform .13s cubic-bezier(.4,0,.6,1);z-index:9}
+.unit.lunge-back{transition:transform .19s cubic-bezier(.2,.9,.3,1.25)}
+.unit.recoil{transition:transform .1s ease-out}
+.unit.recoil-back{transition:transform .16s ease-out}
+
+/* ===================== 飘字 / 冲击环 / 斩击 / 闪电 ===================== */
+#fxLayer{position:absolute;inset:0;z-index:24;pointer-events:none}
+.fx{position:absolute;pointer-events:none;will-change:transform,opacity}
+.fx-num{
+  font:700 22px/1 Georgia,"Noto Serif SC",serif;font-variant-numeric:tabular-nums;
+  transform:translate(-50%,-50%);text-shadow:0 2px 6px rgba(0,0,0,.92);
+  animation:numFloat .86s cubic-bezier(.2,.7,.3,1) forwards}
+@keyframes numFloat{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.6)}
+  18%{opacity:1;transform:translate(-50%,-50%) scale(1.12)}
+  32%{transform:translate(-50%,-50%) scale(1)}
+  100%{opacity:0;transform:translate(-50%,calc(-50% + var(--drift,28px))) scale(.96)}}
+.fx-num.down{--drift:-26px}
+.fx-num.crit{
+  font-size:29px;color:#ffe08a;
+  text-shadow:0 0 2px #7a4a06,0 0 12px rgba(255,200,80,.9),0 0 26px rgba(255,170,40,.6),0 2px 6px rgba(0,0,0,.9);
+  -webkit-text-stroke:1.2px rgba(120,70,10,.85);
+  animation:numCrit .98s cubic-bezier(.2,.7,.3,1) forwards}
+@keyframes numCrit{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.4) rotate(-6deg)}
+  16%{opacity:1;transform:translate(-50%,-50%) scale(1.34) rotate(2deg)}
+  30%{transform:translate(-50%,-50%) scale(1.02) rotate(0)}
+  100%{opacity:0;transform:translate(-50%,calc(-50% + var(--drift,34px))) scale(1)}}
+.fx-num.heal{color:#93f0b4;text-shadow:0 0 14px rgba(90,230,150,.7),0 2px 6px rgba(0,0,0,.9)}
+.fx-num.skill{color:#d9b6ff;text-shadow:0 0 14px rgba(180,120,255,.75),0 2px 6px rgba(0,0,0,.9)}
+.fx-num.absorb{color:#9fdcff;font-size:19px;text-shadow:0 0 14px rgba(110,190,255,.7),0 2px 6px rgba(0,0,0,.9)}
+
+.fx-ring{
+  width:var(--s);height:var(--s);border-radius:50%;transform:translate(-50%,-50%) scale(.28);
+  border:3px solid var(--c,#fff);box-shadow:0 0 22px var(--c,#fff),inset 0 0 18px var(--c,#fff);
+  animation:ringOut .58s cubic-bezier(.16,.8,.3,1) forwards}
+@keyframes ringOut{
+  0%{opacity:1;transform:translate(-50%,-50%) scale(.28)}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(1.5)}}
+.fx-slash{
+  width:80px;height:80px;transform:translate(-50%,-50%);opacity:.96;
+  animation:slashSweep .34s cubic-bezier(.3,.7,.3,1) forwards}
+.fx-slash svg{width:100%;height:100%;overflow:visible}
+.fx-slash path{fill:none;stroke:var(--c,#fff);stroke-width:7;stroke-linecap:round;
+  filter:drop-shadow(0 0 6px var(--c,#fff))}
+@keyframes slashSweep{
+  0%{opacity:0;transform:translate(-50%,-50%) rotate(-72deg) scale(.62)}
+  24%{opacity:1}
+  100%{opacity:0;transform:translate(-50%,-50%) rotate(96deg) scale(1.2)}}
+.fx-bolt{width:var(--w);height:var(--h);transform-origin:0 0;animation:boltFlash .32s ease-out forwards}
+.fx-bolt svg{width:100%;height:100%;overflow:visible}
+.fx-bolt path{fill:none;stroke:#ffe9a8;stroke-width:4.5;stroke-linejoin:round;stroke-linecap:round;
+  filter:drop-shadow(0 0 8px #ffd257) drop-shadow(0 0 18px rgba(255,200,80,.7));
+  stroke-dasharray:var(--len);stroke-dashoffset:var(--len);animation:boltDraw .32s ease-out forwards}
+@keyframes boltDraw{to{stroke-dashoffset:0}}
+@keyframes boltFlash{0%{opacity:.2}20%{opacity:1}100%{opacity:0}}
+.fx-burst{
+  width:var(--s);height:var(--s);border-radius:50%;transform:translate(-50%,-50%) scale(.2);
+  background:radial-gradient(circle,var(--c,#c9a3ff) 0,rgba(150,90,255,.32) 46%,transparent 72%);
+  animation:burstOut .5s ease-out forwards}
+@keyframes burstOut{0%{opacity:.95;transform:translate(-50%,-50%) scale(.2)}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(1.45)}}
+.fx-spark{width:3px;height:var(--len,26px);border-radius:99px;transform-origin:50% 0;
+  background:linear-gradient(180deg,var(--c,#ffe08a),transparent);
+  animation:sparkFly .5s ease-out forwards}
+@keyframes sparkFly{
+  0%{opacity:1;transform:translate(-50%,-50%) rotate(var(--a)) scaleY(.3)}
+  100%{opacity:0;transform:translate(-50%,-50%) rotate(var(--a)) scaleY(1.15)}}
+.fx-mote{
+  width:6px;height:6px;border-radius:50%;transform:translate(-50%,-50%);
+  background:radial-gradient(circle,var(--c,#9df0b8),transparent 70%);
+  animation:moteRise 1s ease-out forwards}
+@keyframes moteRise{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.5)}
+  22%{opacity:1}
+  100%{opacity:0;transform:translate(calc(-50% + var(--dx,0px)),calc(-50% - 34px)) scale(1.1)}}
+.fx-dust{
+  width:5px;height:5px;border-radius:2px;transform:translate(-50%,-50%);
+  background:#b9c0cf;animation:dustFall .7s ease-in forwards}
+@keyframes dustFall{
+  0%{opacity:.9;transform:translate(-50%,-50%) scale(1)}
+  100%{opacity:0;transform:translate(calc(-50% + var(--dx,0px)),calc(-50% + 26px)) scale(.4)}}
+
+/* 震屏 */
+#phone.shake{animation:shake .32s cubic-bezier(.36,.07,.19,.97)}
+@keyframes shake{
+  0%,100%{transform:translate3d(0,0,0)}
+  12%{transform:translate3d(-5px,2px,0)}
+  28%{transform:translate3d(5px,-2px,0)}
+  44%{transform:translate3d(-4px,-1px,0)}
+  60%{transform:translate3d(4px,2px,0)}
+  78%{transform:translate3d(-2px,1px,0)}}
+
+/* 战斗胜利 */
+#victory{position:absolute;inset:0;z-index:40;display:none;place-items:center;pointer-events:none;
+  background:radial-gradient(circle at 50% 46%,rgba(120,86,20,.28),transparent 62%)}
+#victory.show{display:grid;animation:vicIn 1.7s ease-out forwards}
+#victory .vic-box{text-align:center;transform:translateY(6px)}
+#victory .vic-box span{display:block;font-size:10px;letter-spacing:8px;color:#d7bd83;margin-bottom:6px}
+#victory .vic-box b{
+  display:block;font:700 40px/1.1 "Noto Serif SC","Songti SC",serif;letter-spacing:10px;color:#ffe6a6;
+  text-shadow:0 0 8px rgba(255,214,120,.9),0 0 30px rgba(255,190,60,.6),0 2px 10px rgba(0,0,0,.9)}
+@keyframes vicIn{
+  0%{opacity:0;transform:scale(1.2)}
+  14%{opacity:1;transform:scale(1)}
+  70%{opacity:1}
+  100%{opacity:0;transform:scale(1.04)}}
+
+/* ===================== 底栏控制区 ===================== */
+#dock{
+  flex:0 0 auto;position:relative;z-index:30;padding:7px 9px calc(8px + env(safe-area-inset-bottom));
+  background:linear-gradient(180deg,rgba(6,9,20,.72),rgba(4,6,14,.98));
+  border-top:1px solid rgba(228,205,145,.16)}
+#dock .line{display:flex;gap:6px;align-items:center}
+#dock .line+.line{margin-top:6px}
+#dock .sep{flex:1}
+button{
+  font:inherit;color:#e8edfa;cursor:pointer;border:1px solid rgba(255,255,255,.12);
+  background:linear-gradient(160deg,rgba(28,33,58,.92),rgba(14,17,32,.94));
+  border-radius:10px;padding:7px 9px;font-size:10.5px;line-height:1.2;
+  transition:transform .1s,border-color .18s,background .18s;white-space:nowrap}
+button:active{transform:scale(.95)}
+button.go{border-color:rgba(240,209,138,.5);background:linear-gradient(160deg,rgba(74,58,24,.95),rgba(34,28,16,.95));color:#fbeec4;font-weight:600}
+button.on{border-color:rgba(150,220,255,.55);background:linear-gradient(160deg,rgba(26,54,74,.95),rgba(14,24,38,.95));color:#cdefff}
+button.ev{padding:7px 6px;font-size:10px;flex:1 1 0;min-width:0;text-align:center}
+button small{display:block;font-size:8px;opacity:.72;font-weight:400;margin-top:1px}
+#dock .grp{display:flex;gap:4px;flex:0 0 auto;padding:3px;border-radius:12px;background:rgba(255,255,255,.045);
+  border:1px solid rgba(255,255,255,.07);overflow-x:auto;scrollbar-width:none}
+#dock .grp::-webkit-scrollbar{display:none}
+#dock .grp button{padding:5px 8px;font-size:10px;border-color:transparent;background:transparent;flex:0 0 auto}
+#dock .grp button.sel{border-color:rgba(240,209,138,.55);background:linear-gradient(160deg,rgba(74,58,24,.9),rgba(30,26,18,.9));color:#fbeec4}
+#dock .hint{font-size:8.5px;color:#78829a;padding:5px 2px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+</style>
+</head>
+<body>
+<div id="phone">
+  <header id="top">
+    <div class="mark">✦</div>
+    <div class="who">
+      <h1 id="stageName">裂境演武 · STAGE 3</h1>
+      <p id="subtitle">阵容 · 5 v 5 · 自动战斗</p>
+    </div>
+    <div class="badge"><small>POWER</small><b id="power">0</b></div>
+  </header>
+
+  <div id="bond" aria-label="阵营共鸣"></div>
+
+  <main id="stage">
+    <section class="side" id="side-enemy">
+      <div class="team-label"><b id="lbl-enemy">敌方</b> · ENEMY</div>
+      <div class="row" data-side="enemy" data-row="1"></div>
+      <div class="row" data-side="enemy" data-row="0"></div>
+    </section>
+
+    <section class="side" id="side-ally">
+      <div class="rn" id="rows-ally"></div>
+      <div class="row" data-side="ally" data-row="0"></div>
+      <div class="row" data-side="ally" data-row="1"></div>
+      <div class="team-label" style="margin:8px 0 0"><b id="lbl-ally">我方</b> · ALLY</div>
+    </section>
+
+    <canvas id="fx" aria-hidden="true"></canvas>
+    <div id="fxLayer" aria-hidden="true"></div>
+    <div id="victory"><div class="vic-box"><span>BATTLE CLEAR</span><b>战斗胜利</b></div></div>
+  </main>
+
+  <footer id="dock">
+    <div class="line">
+      <button id="btnAuto" class="go">▶ 自动战斗<small>按拍推进</small></button>
+      <button id="btnReset">↺ 重置</button>
+      <button id="btnFx" class="on">特效：高<small>点击切低档</small></button>
+    </div>
+    <div class="line">
+      <div class="grp" id="formations" aria-label="阵型切换"></div>
+      <div class="sep"></div>
+      <button id="btnStep" class="go">单拍 ▸</button>
+    </div>
+    <div class="line" id="events"></div>
+    <div class="hint" id="hint">事件按钮：单次触发一种特效；自动战斗为通用引擎（职业定位 → 轮转 → 群攻 → 治疗/护盾 → 连携收尾）</div>
+  </footer>
+</div>
+
+<script>
+/* ==========================================================================
+   ① 数据表（改表即可换阵容，不动逻辑代码）
+   ========================================================================== */
+const CONFIG={CONFIG_VERSION:'2026.09.v21.5'};
+
+/* 角色表 —— 名字/稀有度/职业/阵营/血量/攻击/防御/速度/技能/专属攻击色/立绘配色 */
+const HEROES=[
+ {id:'h001',name:'夜岚',rarity:'SSR',faction:'曜庭',role:'强攻',skill:'断星斩',skillType:'burst',   hp:1680,atk:245,def:92, spd:108,tint:'#f6d365',pal:['#f6d365','#6a5acd','#101426'],hair:'银黑短发',weapon:'折光长刀'},
+ {id:'h002',name:'绯歌',rarity:'SSR',faction:'赤环',role:'术式',skill:'赤环坠火',skillType:'aoe',   hp:1420,atk:272,def:76, spd:101,tint:'#ff7a6b',pal:['#ff6b6b','#c2416c','#241126'],hair:'深红长发',weapon:'环刃法器'},
+ {id:'h003',name:'白砚',rarity:'SSR',faction:'镜海',role:'辅助',skill:'镜潮回响',skillType:'heal',  hp:1770,atk:178,def:112,spd:114,tint:'#9cecfb',pal:['#9cecfb','#65c7f7','#16304a'],hair:'雪白长发',weapon:'悬浮镜片'},
+ {id:'h004',name:'青禾',rarity:'SR', faction:'青原',role:'治疗',skill:'春息',   skillType:'heal',   hp:1540,atk:164,def:91, spd:105,tint:'#7ee8a2',pal:['#7ee8a2','#5fb49c','#163126'],hair:'墨绿双辫',weapon:'藤木药杖'},
+ {id:'h005',name:'司南',rarity:'SR', faction:'曜庭',role:'控制',skill:'引磁域', skillType:'stun',   hp:1450,atk:186,def:88, spd:111,tint:'#ffe08a',pal:['#ffe08a','#6d83f2','#181b3a'],hair:'蓝黑高马尾',weapon:'磁轨圆盘'},
+ {id:'h006',name:'乌澜',rarity:'SR', faction:'镜海',role:'防御',skill:'深潮壁垒',skillType:'shield',hp:1940,atk:145,def:132,spd:82, tint:'#7dd3fc',pal:['#7dd3fc','#2563eb','#10233d'],hair:'深蓝短发',weapon:'重型潮盾'},
+ {id:'h007',name:'洛弥',rarity:'SR', faction:'赤环',role:'强攻',skill:'灼羽连袭',skillType:'burst', hp:1510,atk:218,def:83, spd:106,tint:'#fb7185',pal:['#fb7185','#f59e0b','#35151c'],hair:'橙红短发',weapon:'双刃'},
+ {id:'h008',name:'逐影',rarity:'SR', faction:'灰境',role:'刺击',skill:'无灯步', skillType:'burst',  hp:1370,atk:231,def:74, spd:122,tint:'#c4b5fd',pal:['#c4b5fd','#64748b','#0f1020'],hair:'灰紫长发',weapon:'影刃'},
+ {id:'h009',name:'石钺',rarity:'R',  faction:'青原',role:'防御',skill:'岩守',   skillType:'shield', hp:1680,atk:122,def:118,spd:74, tint:'#86efac',pal:['#86efac','#6b8e5a','#252d23'],hair:'棕色寸发',weapon:'岩钺'},
+ {id:'h010',name:'明砂',rarity:'R',  faction:'赤环',role:'术式',skill:'砂焰',   skillType:'aoe',    hp:1210,atk:177,def:65, spd:95, tint:'#fdba74',pal:['#fdba74','#ef4444','#321812'],hair:'沙金短发',weapon:'砂焰瓶'},
+ {id:'h011',name:'渡鸦',rarity:'R',  faction:'灰境',role:'刺击',skill:'黑羽',   skillType:'burst',  hp:1180,atk:184,def:62, spd:112,tint:'#a78bfa',pal:['#a78bfa','#475569','#10111a'],hair:'黑灰碎发',weapon:'羽刃'},
+ {id:'h012',name:'雪芒',rarity:'R',  faction:'镜海',role:'控制',skill:'霜痕',   skillType:'stun',   hp:1280,atk:156,def:74, spd:101,tint:'#bae6fd',pal:['#bae6fd','#93c5fd','#162537'],hair:'冰蓝长发',weapon:'霜晶针'},
+ {id:'h013',name:'墨灯',rarity:'R',  faction:'曜庭',role:'辅助',skill:'引烬灯', skillType:'heal',   hp:1330,atk:142,def:78, spd:99, tint:'#fde68a',pal:['#fde68a','#8b5cf6','#21172e'],hair:'浅金卷发',weapon:'星烬提灯'},
+ {id:'h014',name:'阿洛',rarity:'R',  faction:'青原',role:'强攻',skill:'疾木突', skillType:'burst',  hp:1260,atk:172,def:71, spd:103,tint:'#bbf7d0',pal:['#bbf7d0','#4ade80','#163322'],hair:'青棕短发',weapon:'木枪'},
+ {id:'h015',name:'潮生',rarity:'R',  faction:'镜海',role:'治疗',skill:'回潮',   skillType:'healAll',hp:1400,atk:138,def:83, spd:96, tint:'#a5f3fc',pal:['#a5f3fc','#38bdf8','#102a38'],hair:'湖蓝短发',weapon:'潮汐铃'}
+];
+
+/* 敌方模板 —— 数量由阵型决定，编号 1-1 ~ 1-N 动态生成，不写死 */
+const ENEMY_TEMPLATE={name:'裂境魔物',code:'RIFT',hp:1180,atk:196,def:70,spd:98,tint:'#ff8f6b',pal:['#ff8f6b','#7c2d12','#1b0f14']};
+
+/* 阵营共鸣 —— 与游戏内 FACTION_BONUSES 一致 */
+const FACTIONS={
+ '曜庭':{two:{label:'攻击 +6%'},three:{label:'速度 +5%'}},
+ '赤环':{two:{label:'攻击 +7%'},three:{label:'生命 +6%'}},
+ '镜海':{two:{label:'生命 +8%'},three:{label:'防御 +10%'}},
+ '青原':{two:{label:'防御 +8%'},three:{label:'生命 +10%'}},
+ '灰境':{two:{label:'速度 +6%'},three:{label:'攻击 +8%'}}
+};
+
+/* 职业定位 —— 自动战斗引擎据此分工，不绑定具体角色 */
+const CLASSES={
+ assault:{name:'突击',icon:'⚔',dps:'output'},
+ arcane :{name:'术式',icon:'✧',dps:'aoe'},
+ control:{name:'控制',icon:'⌁',dps:'output'},
+ guard  :{name:'守御',icon:'◇',dps:'tank'},
+ support:{name:'支援',icon:'✦',dps:'support'}
+};
+const ROLE_CLASS={'强攻':'assault','刺击':'assault','术式':'arcane','控制':'control','防御':'guard','辅助':'support','治疗':'support'};
+const CLASS_OF=(h)=>ROLE_CLASS[h.role]||'assault';
+const IS_HEALER=(h)=>h.skillType==='heal'||h.skillType==='healAll';
+const IS_AOE=(h)=>h.skillType==='aoe';
+const IS_SHIELDER=(h)=>h.skillType==='shield';
+
+/* 阵型预设 —— 至少五种，点击即时重排 */
+const FORMATIONS=[[5,3],[5,5],[6,6],[3,5],[2,2],[5,1],[4,4]];
+
+/* 特效规格常量（与需求表一一对应，改这里即可整体调速） */
+const FX={
+ LUNGE_MS:460, LUNGE_OUT:0.13,
+ FLASH_MS:320,
+ SLASH_MS:340, SLASH_SIZE:80,
+ CRIT_MS:320,
+ SHAKE_MS:320,
+ SKILL_MS:340,
+ HEAL_MS:300,
+ SHIELD_RIPPLE_MS:340, SHIELD_SHATTER_MS:420,
+ BOLT_MS:320,
+ DOWN_MS:450,
+ VICTORY_MS:1700,
+ DPR_CAP:2
+};
+</script>
+<script>
+/* ==========================================================================
+   ② 立绘：代码绘制 SVG 半身像（每角色独立配色 + 职业化武器/饰件）
+   —— 接入真实立绘时，把 .art-slot 里的 <svg> 换成 <img src="…"> 即可，
+      特效系统只作用于 .unit 整卡，不依赖内部结构。
+   ========================================================================== */
+const RARITY_LABEL={SSR:'SSR',SR:'SR',R:'R',ELITE:'精英',GRUNT:'魔物'};
+
+function heroSVG(h,opt={}){
+  const [c1,c2,deep]=h.pal;
+  const kind=CLASS_OF(h);
+  const skin='#f0d3c0', skinShade='#d8b3a2';
+  const hair=h.hair||'';
+  const longHair=/长|辫|卷/.test(hair);
+  const weapon={
+    assault:`<g filter="url(#gw)"><path d="M70 26 L83 52 L76 54 L65 30 Z" fill="${c1}"/><rect x="62" y="50" width="7" height="16" rx="3" fill="${c2}"/></g>`,
+    arcane :`<g filter="url(#gw)"><circle cx="85" cy="40" r="14" fill="none" stroke="${c1}" stroke-width="2.4" opacity=".85"/><ellipse cx="85" cy="40" rx="19" ry="6" fill="none" stroke="${c2}" stroke-width="1.6" opacity=".7"/><circle cx="85" cy="40" r="4.5" fill="${c1}"/></g>`,
+    guard  :`<g filter="url(#gw)"><path d="M78 46 q15 -7 21 4 q5 12 -9 21 q-12 -4 -14 -12 Z" fill="${c2}" stroke="${c1}" stroke-width="1.6"/></g>`,
+    support:`<g filter="url(#gw)"><rect x="86" y="20" width="3" height="72" rx="1.5" fill="${c2}"/><circle cx="87.5" cy="18" r="7" fill="${c1}" opacity=".9"/><circle cx="87.5" cy="18" r="13" fill="${c1}" opacity=".18"/></g>`,
+    control:`<g filter="url(#gw)"><circle cx="18" cy="54" r="9" fill="none" stroke="${c1}" stroke-width="2.2"/><circle cx="18" cy="54" r="3" fill="${c1}"/><path d="M18 44 q9 -6 13 3" stroke="${c2}" stroke-width="1.5" fill="none" opacity=".8"/></g>`
+  }[kind]||'';
+  const face=`<g filter="url(#gs)">
+      <path d="M36 34 q14 -13 28 0 q2 14 -4 22 q-10 8 -20 0 q-6 -8 -4 -22 Z" fill="${skin}"/>
+      <path d="M36 34 q14 -13 28 0 q1 8 -2 12 q-12 -7 -24 0 q-3 -4 -2 -12 Z" fill="${c1}" opacity=".92"/>
+    </g>
+    <g fill="${skinShade}" opacity=".5"><circle cx="44" cy="47" r="1.6"/><circle cx="56" cy="47" r="1.6"/></g>
+    <g fill="${deep}" opacity=".55"><rect x="46" y="53" width="9" height="1.6" rx=".8"/></g>`;
+  const hairBack=longHair
+    ? `<path d="M30 32 q4 -26 20 -26 q18 0 22 26 q3 26 -3 44 h-12 q6 -24 2 -38 q-14 8 -24 0 q-4 14 2 38 h-12 q-6 -20 5 -44 Z" fill="${c2}" opacity=".95"/>`
+    : `<path d="M30 36 q2 -22 20 -22 q18 0 20 22 q-12 -8 -20 -6 q-10 -2 -20 6 Z" fill="${c2}" opacity=".95"/>`;
+  const cloak=`<path d="M14 104 q0 -44 36 -56 q36 12 36 56 Z" fill="url(#gc)"/>
+    <path d="M50 58 l-9 46 h7 l6 -34 l6 34 h7 l-9 -46 Z" fill="${c1}" opacity=".45"/>`;
+  const cloth=`<path d="M20 104 q4 -34 30 -44 q26 10 30 44 Z" fill="${deep}"/>
+    <rect x="43" y="72" width="14" height="9" rx="4" fill="${c1}" opacity=".85"/>`;
+  const motes=`<g fill="${c1}" opacity=".55"><circle cx="20" cy="78" r="1.5"/><circle cx="80" cy="66" r="1.2"/><circle cx="86" cy="92" r="1.7"/><circle cx="14" cy="96" r="1.1"/><circle cx="70" cy="100" r="1.3"/></g>`;
+  return `<svg viewBox="0 0 100 104" preserveAspectRatio="xMidYMin slice" role="img" aria-label="${h.name}">
+  <defs>
+    <linearGradient id="gb" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="${c2}" stop-opacity=".42"/><stop offset=".55" stop-color="${deep}" stop-opacity=".85"/><stop offset="1" stop-color="#05070f"/>
+    </linearGradient>
+    <linearGradient id="gc" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="${c1}" stop-opacity=".34"/><stop offset="1" stop-color="${deep}"/>
+    </linearGradient>
+    <radialGradient id="gh" cx="50%" cy="30%" r="52%">
+      <stop offset="0" stop-color="${c1}" stop-opacity=".5"/><stop offset="1" stop-color="${c1}" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="gs" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.1"/></filter>
+    <filter id="gw" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.6"/></filter>
+  </defs>
+  <rect width="100" height="104" fill="url(#gb)"/>
+  <circle cx="50" cy="38" r="44" fill="url(#gh)"/>
+  ${hairBack}
+  ${cloak}
+  ${cloth}
+  ${face}
+  ${weapon}
+  ${motes}
+</svg>`;
+}
+function enemySVG(e){
+  const [c1,c2,deep]=e.pal;
+  const spikes=[...Array(5)].map((_,i)=>`<path d="M${18+i*16} ${58-i%2*8} l7 -22 l7 22 Z" fill="${c2}" opacity=".9"/>`).join('');
+  return `<svg viewBox="0 0 100 104" preserveAspectRatio="xMidYMin slice" role="img" aria-label="${e.name}">
+  <defs>
+    <linearGradient id="eb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a1218"/><stop offset="1" stop-color="#07070d"/></linearGradient>
+    <radialGradient id="eg" cx="50%" cy="46%" r="50%"><stop offset="0" stop-color="${c1}" stop-opacity=".75"/><stop offset="1" stop-color="${c1}" stop-opacity="0"/></radialGradient>
+    <filter id="ew" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2"/></filter>
+  </defs>
+  <rect width="100" height="104" fill="url(#eb)"/>
+  <circle cx="50" cy="46" r="38" fill="url(#eg)"/>
+  ${spikes}
+  <g filter="url(#ew)"><ellipse cx="50" cy="86" rx="30" ry="32" fill="${deep}"/></g>
+  <g fill="${c1}"><ellipse cx="39" cy="82" rx="6.4" ry="4.2"/><ellipse cx="61" cy="82" rx="6.4" ry="4.2"/></g>
+  <g fill="#0a0508"><ellipse cx="39" cy="82" rx="2.1" ry="3.4"/><ellipse cx="61" cy="82" rx="2.1" ry="3.4"/></g>
+  <path d="M34 104 q16 12 32 0 q-6 16 -16 16 q-10 0 -16 -16 Z" fill="${deep}"/>
+  <g fill="${c1}" opacity=".7">${[...Array(4)].map((_,i)=>`<rect x="${30+i*13}" y="110" width="4" height="9" rx="1.4"/>`).join('')}</g>
+  <path d="M12 104 q8 -36 38 -46 q30 10 38 46 Z" fill="${deep}"/>
+  <path d="M22 104 q12 -30 28 -38 q16 8 28 38 Z" fill="${c2}" opacity=".55"/>
+</svg>`;
+}
+
+/* ==========================================================================
+   ③ 动态编阵引擎（数据驱动）
+   ========================================================================== */
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const fmt=n=>Number(n||0).toLocaleString('en-US');
+
+const stage=$('#stage'),phone=$('#phone'),fxLayer=$('#fxLayer'),canvas=$('#fx');
+let layout={artH:96,cw:106,stack:false,totalRows:2,perSide:2};
+
+/* 行数规则 rowsOf(n)：n≤4 单行；5~6 两行前排 ceil(n/2)；n≥7 两行前排 ceil(2n/3) */
+function rowsOf(n){
+  n=Math.max(0,Math.round(n));
+  if(n<=4)return[Math.max(1,n)];
+  if(n<=6)return[Math.ceil(n/2),n-Math.ceil(n/2)];
+  const f=Math.ceil(2*n/3);return[f,n-f];
+}
+const totalRowsOf=(n,m)=>rowsOf(n).length+rowsOf(m).length;
+
+/* 卡牌尺寸自适应：宽度按舞台宽算，高度按"每行可用 = (舞台高-24)/总行数 - 34"反推 */
+function computeLayout(nAlly,nEnemy){
+  const stageW=stage.clientWidth||358, stageH=stage.clientHeight||600;
+  const rowsA=rowsOf(nAlly), rowsE=rowsOf(nEnemy);
+  const totalRows=rowsA.length+rowsE.length;
+  const perRow=Math.max(1,...rowsA,...rowsE);
+  /* 宽度按公式；高度先给基准，随后由 fitStage() 按实测结果收缩 */
+  let cw=Math.min(106,(stageW-30-10*(perRow-1))/perRow);
+  let artH=96;
+  const avail=(stageH-24)/totalRows-34;                   // 需求给定的预算式
+  if(avail<artH+46){ artH=clamp(avail-46,56,artH); cw=Math.min(cw,artH*(106/96)); }
+  cw=Math.max(34,cw);
+  return {artH:Math.round(artH),cw:Math.round(cw),stack:totalRows>=4,totalRows,rowsA,rowsE,perRow};
+}
+function applyLayout(L){
+  stage.style.setProperty('--artH',L.artH+'px');
+  stage.style.setProperty('--cw',L.cw+'px');
+  stage.style.setProperty('--cwq',L.cw);
+  stage.style.setProperty('--rowgap',L.stack?'2px':'6px');
+  stage.classList.toggle('stack',L.stack);
+}
+
+/* ==========================================================================
+   ④ 战斗状态
+   ========================================================================== */
+const state={ally:[],enemy:[],round:0,acted:null,auto:false,over:false,fxHigh:true,seq:new Map()};
+const lowMotion=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function makeUnit(cfg,side,index){
+  const s=1;                                   // 阵营加成在本 DEMO 中不做数值堆叠，只做展示
+  const hp=Math.round(cfg.hp*s);
+  return {
+    uid:side+'-'+cfg.id+'-'+index, id:cfg.id, side, index,
+    name:cfg.name, rarity:cfg.rarity, role:cfg.role||'', faction:cfg.faction||'裂境',
+    tint:cfg.tint||'#ffb27a', pal:cfg.pal, skill:cfg.skill||'裂境撕咬', skillType:cfg.skillType||'burst',
+    hp, maxHp:hp, atk:cfg.atk, def:cfg.def, spd:cfg.spd,
+    shield:0, down:false, hpPct:1, alive:true, own:hp,
+    cls:cfg.cls||CLASS_OF(cfg), isEnemy:side==='enemy'
+  };
+}
+function buildTeams(nAlly,nEnemy){
+  state.ally=HEROES.slice(0,clamp(nAlly,1,HEROES.length)).map((h,i)=>makeUnit(h,'ally',i));
+  state.enemy=[...Array(clamp(nEnemy,1,12))].map((_,i)=>makeUnit({
+    id:'e'+String(i+1).padStart(2,'0'),
+    name:`魔物 1-${i+1}`,
+    rarity:i===0?'ELITE':'GRUNT', role:'', faction:'裂境',
+    tint:ENEMY_TEMPLATE.tint, pal:ENEMY_TEMPLATE.pal,
+    skill:'裂境撕咬', skillType:'burst',
+    hp:ENEMY_TEMPLATE.hp, atk:ENEMY_TEMPLATE.atk, def:ENEMY_TEMPLATE.def, spd:ENEMY_TEMPLATE.spd,
+    cls:'assault'
+  },'enemy',i));
+  state.round=0; state.over=false; state.acted=null; state.seq=new Map();
+  state.ally.forEach(u=>state.seq.set(u.uid,0)); state.enemy.forEach(u=>state.seq.set(u.uid,0));
+}
+
+/* ==========================================================================
+   ⑤ 渲染
+   ========================================================================== */
+function rowsFor(side){ const n=(side==='ally'?state.ally:state.enemy).length; return rowsOf(n); }
+function teamsFor(side){ return side==='ally'?state.ally:state.enemy; }
+
+/* 深度关系：敌方后排在上、前排在下（贴近我方）；我方前排在上（贴近敌方）、后排在下 */
+function visualOrder(side){
+  const r=rowsFor(side);
+  return side==='enemy' ? r.map((_,i)=>r.length-1-i) : r.map((_,i)=>i);
+}
+function chunk(units,rows){
+  const out=[]; let k=0;
+  rows.forEach(n=>{ out.push(units.slice(k,k+n)); k+=n; });
+  return out;
+}
+
+function unitHTML(u,rowIdx,slotIdx,rowCount){
+  const posTag=rowIdx===0?'前':'后';
+  const num=(u.hpPct*100).toFixed(0);
+  return `<article class="unit rar-${u.rarity}" data-uid="${u.uid}" data-side="${u.side}" data-row="${rowIdx}"
+      style="z-index:${rowIdx===0?3:2}">
+    <div class="u-pos"><b>${posTag}</b>${slotIdx+1}</div>
+    <div class="u-art"><div class="art-slot">${u.isEnemy?enemySVG(u):heroSVG(u)}</div></div>
+    <div class="u-plate">
+      <b>${u.name}</b>
+      <small>${u.isEnemy?(u.rarity==='ELITE'?'精英 · 魔物':'魔物 · 游荡'):`${u.rarity} · ${u.role}`}</small>
+      <div class="u-hp"><i style="transform:scaleX(${u.hpPct.toFixed(4)})"></i></div>
+    </div>
+    <div class="u-shield"></div>
+    <div class="u-out"><span class="u-num">${fmt(u.hp)}</span><span class="u-st"></span></div>
+  </article>`;
+}
+function renderTeam(side){
+  const units=teamsFor(side), rows=chunk(units,rowsFor(side)), order=visualOrder(side);
+  const host=$(`#side-${side}`);
+  /* 关键：本阵型用不到的行必须清空，否则上一阵型的卡片会残留叠在舞台里 */
+  $$('.row',host).forEach(rowEl=>{ rowEl.innerHTML=''; });
+  order.forEach((rowIdx)=>{
+    const rowEl=host.querySelector(`.row[data-row="${rowIdx}"]`);
+    const members=rows[rowIdx]||[];
+    rowEl.innerHTML=members.map((u,i)=>unitHTML(u,rowIdx,i,rows.length)).join('');
+  });
+}
+function renderBond(){
+  const count={}; state.ally.forEach(u=>count[u.faction]=(count[u.faction]||0)+1);
+  const host=$('#bond');
+  host.innerHTML=Object.entries(count).map(([f,n])=>{
+    const conf=FACTIONS[f]||{};
+    const on=n>=2, tier=n>=3?conf.three:conf.two;
+    const label=n>=3?'×3':n>=2?'×2':'×1';
+    return `<span class="chip ${on?'on':'off'}"><i>✦</i><b>${f}${label}</b><em>${on?(tier?tier.label:'已激活'):'未激活'}</em></span>`;
+  }).join('');
+}
+function renderTop(){
+  const power=state.ally.reduce((n,u)=>n+Math.round((u.atk*1.8+u.def*2.4+u.maxHp*0.34)*(1+u.spd/900)),0);
+  $('#power').textContent=fmt(power);
+  $('#subtitle').textContent=`阵容 · ${state.ally.length} v ${state.enemy.length} · 自动战斗`;
+  $('#lbl-enemy').textContent=`敌方 · ${state.enemy.length}`;
+  $('#lbl-ally').textContent=`我方 · ${state.ally.length}`;
+  $('#stageName').textContent=`裂境演武 · STAGE ${clamp(state.ally.length+state.enemy.length,3,12)}`;
+}
+function renderAll(){
+  layout=computeLayout(state.ally.length,state.enemy.length);
+  applyLayout(layout);
+  renderTop(); renderBond(); renderTeam('enemy'); renderTeam('ally');
+  measureAndGuard();
+  $$('.unit').forEach(el=>{ const u=byUid(el.dataset.uid); if(u&&u.down)el.classList.add('downed'); if(u&&u.shield>0)el.classList.add('has-shield'); });
+}
+
+/* 兜底：按实测高度迭代收缩，直到双方都装进舞台（最多 6 轮，只在换阵型/缩放时跑） */
+function measureAndGuard(){
+  for(let i=0;i<6;i++){
+    const need=$('#side-enemy').offsetHeight+$('#side-ally').offsetHeight;
+    const gaps=Math.max(0,layout.totalRows-2)*(layout.stack?2:6);   // 行间距（不堆叠时另加区块间距）
+    const labels=layout.stack?16:36;                                 // 队伍标签 + 上下留白
+    const have=stage.clientHeight*0.985-gaps-labels;
+    if(need<=have)return;
+    const k=clamp(have/need,.74,.98);
+    const nextArt=Math.max(48,Math.floor(layout.artH*k));
+    const nextCw=Math.max(32,Math.floor(layout.cw*k));
+    if(nextArt===layout.artH&&nextCw===layout.cw)return;
+    layout={...layout,artH:nextArt,cw:nextCw};
+    applyLayout(layout);
+    renderTeam('enemy'); renderTeam('ally');
+  }
+}
+const byUid=(uid)=>[...state.ally,...state.enemy].find(u=>u.uid===uid);
+const elOf=(uid)=>document.querySelector(`.unit[data-uid="${uid}"]`);
+const aliveOf=(side)=>teamsFor(side).filter(u=>!u.down);
+
+/* ==========================================================================
+   ⑥ 粒子系统：单个 Canvas 图层 + 按需 rAF（无粒子即完全停止）
+   ========================================================================== */
+const ctx=canvas.getContext('2d');
+let parts=[],rafId=0,dpr=1,cw=0,ch=0;
+const MAX_PARTS=()=>state.fxHigh?(lowMotion?0:320):0;
+
+function sizeCanvas(){
+  dpr=Math.min(window.devicePixelRatio||1,FX.DPR_CAP);
+  cw=stage.clientWidth; ch=stage.clientHeight;
+  canvas.width=Math.round(cw*dpr); canvas.height=Math.round(ch*dpr);
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+}
+function stagePoint(uid){
+  const el=elOf(uid); if(!el)return{x:cw/2,y:ch/2};
+  const r=el.getBoundingClientRect(), s=stage.getBoundingClientRect();
+  return {x:r.left-s.left+r.width/2,y:r.top-s.top+r.height/2};
+}
+function spawn(uid,kind,n,opt={}){
+  const cap=MAX_PARTS(); if(cap<=0)return;
+  const p=stagePoint(uid), tint=opt.tint||'#ffe08a';
+  for(let i=0;i<n;i++){
+    if(parts.length>=cap)break;
+    const a=opt.angle!=null?opt.angle+(Math.random()-.5)*(opt.spread||1.6):Math.random()*Math.PI*2;
+    const sp=opt.speed||(60+Math.random()*110);
+    parts.push({
+      kind, x:p.x+(Math.random()-.5)*14, y:p.y+(Math.random()-.5)*14,
+      vx:Math.cos(a)*sp, vy:Math.sin(a)*sp*(opt.grav?-Math.abs(1):1),
+      life:1, decay:opt.decay||(1.5+Math.random()), tint,
+      rot:a, len:opt.len||(18+Math.random()*20), grav:opt.grav||0, dx:(Math.random()-.5)*26
+    });
+  }
+  kick();
+}
+function stepParts(dt){
+  for(let i=parts.length-1;i>=0;i--){
+    const q=parts[i];
+    q.life-=q.decay*dt;
+    if(q.life<=0){ parts.splice(i,1); continue; }
+    q.vy+=(q.grav||0)*dt*420;
+    q.x+=q.vx*dt; q.y+=q.vy*dt;
+    q.vx*=(1-1.6*dt); q.vy*=(1-1.2*dt);
+  }
+}
+function drawParts(){
+  ctx.clearRect(0,0,cw,ch);
+  for(const q of parts){
+    const a=clamp(q.life,0,1);
+    ctx.globalAlpha=a;
+    if(q.kind==='spark'){
+      ctx.save(); ctx.translate(q.x,q.y); ctx.rotate(q.rot);
+      const g=ctx.createLinearGradient(0,0,0,-q.len);
+      g.addColorStop(0,q.tint); g.addColorStop(1,'rgba(255,255,255,0)');
+      ctx.strokeStyle=g; ctx.lineWidth=2.1; ctx.lineCap='round';
+      ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(0,-q.len); ctx.stroke(); ctx.restore();
+    }else if(q.kind==='dust'){
+      ctx.fillStyle='#aeb6c6';
+      ctx.fillRect(q.x-2,q.y-2,4,4);
+    }else if(q.kind==='mote'){
+      ctx.fillStyle=q.tint; ctx.beginPath(); ctx.arc(q.x,q.y,2.6,0,6.284); ctx.fill();
+    }else{
+      ctx.fillStyle=q.tint; ctx.beginPath(); ctx.arc(q.x,q.y,2.2,0,6.284); ctx.fill();
+    }
+  }
+  ctx.globalAlpha=1;
+}
+let lastT=0;
+function loop(t){
+  const dt=Math.min(.05,(t-lastT)/1000||.016); lastT=t;
+  stepParts(dt); drawParts();
+  if(parts.length){ rafId=requestAnimationFrame(loop); }
+  else { rafId=0; ctx.clearRect(0,0,cw,ch); }        // 无粒子 → 循环彻底停止
+}
+function kick(){ if(!rafId&&parts.length){ lastT=performance.now(); rafId=requestAnimationFrame(loop); } }
+function clearParts(){ parts=[]; if(rafId){cancelAnimationFrame(rafId);rafId=0} ctx.clearRect(0,0,cw,ch); }
+
+/* ==========================================================================
+   ⑦ DOM 特效（飘字 / 环 / 斩击 / 闪电），动画结束即移除
+   ========================================================================== */
+function addFx(html,ms){
+  const w=document.createElement('div');
+  w.innerHTML=html.trim();
+  const el=w.firstElementChild;
+  fxLayer.appendChild(el);
+  setTimeout(()=>el.remove(),ms);
+  return el;
+}
+function numFx(uid,text,kind='normal',drift){
+  const p=stagePoint(uid);
+  /* 上方单位的伤害数字向下飘，避免被屏幕边缘裁切 */
+  const dir=(drift!=null)?drift:(p.y<ch*0.52?1:-1);
+  const cls=['fx-num',kind==='crit'?'crit':kind==='heal'?'heal':kind==='skill'?'skill':kind==='absorb'?'absorb':''].join(' ').trim();
+  return addFx(`<span class="fx ${cls} ${dir>0?'down':''}" style="left:${p.x}px;top:${p.y}px">${text}</span>`,1200);
+}
+function ringFx(uid,color,size){
+  const p=stagePoint(uid);
+  return addFx(`<span class="fx fx-ring" style="left:${p.x}px;top:${p.y}px;--s:${size||76}px;--c:${color}"></span>`,700);
+}
+function burstFx(uid,color,size){
+  const p=stagePoint(uid);
+  return addFx(`<span class="fx fx-burst" style="left:${p.x}px;top:${p.y}px;--s:${size||90}px;--c:${color}"></span>`,640);
+}
+function slashFx(uid,color){
+  const p=stagePoint(uid);
+  return addFx(`<span class="fx fx-slash" style="left:${p.x}px;top:${p.y}px;--c:${color}">
+    <svg viewBox="0 0 100 100"><path d="M8 74 A52 52 0 0 1 92 26"/></svg></span>`,FX.SLASH_MS+120);
+}
+function boltFx(aUid,bUid){
+  const a=stagePoint(aUid), b=stagePoint(bUid);
+  const segs=7, dx=b.x-a.x, dy=b.y-a.y, len=Math.hypot(dx,dy);
+  let d=`M0 0`; const pts=[];
+  for(let i=1;i<=segs;i++){
+    const t=i/segs, jx=(i===segs?0:(Math.random()-.5)*len*0.16), jy=(i===segs?0:(Math.random()-.5)*len*0.16);
+    pts.push([dx*t+jx,dy*t+jy]);
+  }
+  d+=' '+pts.map(p=>`L${p[0].toFixed(1)} ${p[1].toFixed(1)}`).join(' ');
+  return addFx(`<span class="fx fx-bolt" style="left:${a.x}px;top:${a.y}px;--w:${Math.abs(dx)+2}px;--h:${Math.abs(dy)+2}px;--len:${Math.round(len*1.5)}">
+    <svg viewBox="${Math.min(0,dx)-2} ${Math.min(0,dy)-2} ${Math.abs(dx)+4} ${Math.abs(dy)+4}" preserveAspectRatio="none">
+      <path d="${d}"/></svg></span>`.replace('style="left','data-x="1" style="left'),FX.BOLT_MS+120);
+}
+const flashUnit=(uid)=>{ const el=elOf(uid); if(!el)return; el.classList.remove('hit-flash'); void el.offsetWidth; el.classList.add('hit-flash'); setTimeout(()=>el.classList.remove('hit-flash'),FX.FLASH_MS); };
+const shakeStage=(ms=FX.SHAKE_MS)=>{
+  if(!state.fxHigh||lowMotion)return;
+  phone.classList.remove('shake'); void phone.offsetWidth; phone.classList.add('shake');
+  setTimeout(()=>phone.classList.remove('shake'),ms);
+};
+function syncUnit(uid){
+  const u=byUid(uid), el=elOf(uid); if(!u||!el)return;
+  const pct=clamp(u.hp/u.maxHp,0,1); u.hpPct=pct;
+  el.querySelector('.u-hp i').style.transform=`scaleX(${pct.toFixed(4)})`;
+  el.querySelector('.u-hp').classList.toggle('low',pct<=.3);
+  el.querySelector('.u-num').textContent=fmt(Math.max(0,Math.round(u.hp)));
+  el.querySelector('.u-st').textContent=u.shield>0?`◈ 护盾 ${Math.round(u.shield)}`:(u.down?'已击倒':'');
+  el.classList.toggle('has-shield',u.shield>0);
+  el.classList.toggle('downed',u.down);
+}
+</script>
+<script>
+/* ==========================================================================
+   ⑧ 事件驱动特效（普攻 / 暴击 / 术式 / 治疗 / 护盾 / 连携 / 击倒）
+   ========================================================================== */
+const rnd=(a,b)=>a+Math.random()*(b-a);
+const sleep=(ms)=>new Promise(r=>setTimeout(r,ms));
+
+/* 突进：攻击方卡牌位移到目标的 55% 处再弹回 */
+async function lungeTo(attackerUid,targetUid,ms=FX.LUNGE_MS){
+  const a=elOf(attackerUid), t=elOf(targetUid);
+  if(!a||!t)return;
+  const ar=a.getBoundingClientRect(), tr=t.getBoundingClientRect();
+  const dx=(tr.left+tr.width/2-(ar.left+ar.width/2))*0.55;
+  const dy=(tr.top+tr.height/2-(ar.top+ar.height/2))*0.55;
+  a.classList.add('lunge'); a.classList.remove('lunge-back');
+  a.style.transform=`translate3d(${dx.toFixed(1)}px,${dy.toFixed(1)}px,0)`;
+  await sleep(ms*FX.LUNGE_OUT*1000/460*1.0);
+  a.classList.remove('lunge'); a.classList.add('lunge-back');
+  a.style.transform='translate3d(0,0,0)';
+  await sleep(ms-ms*FX.LUNGE_OUT*1000/460);
+  a.classList.remove('lunge-back'); a.style.transform='';
+}
+function recoil(uid,dir=1){
+  const el=elOf(uid); if(!el||!state.fxHigh||lowMotion)return;
+  el.classList.add('recoil'); el.style.transform=`translate3d(${dir*5}px,2px,0)`;
+  setTimeout(()=>{ el.classList.remove('recoil'); el.classList.add('recoil-back'); el.style.transform='translate3d(0,0,0)';
+    setTimeout(()=>{el.classList.remove('recoil-back'); el.style.transform='';},180); },100);
+}
+/* 伤害结算：护盾先吃伤害；终结一击按剩余血量过量击杀 */
+function applyDamage(target,amount,{overwhelm=false,kind='normal'}={}){
+  const t=byUid(target); if(!t||t.down)return {dealt:0,absorbed:0,broke:false,killed:false};
+  let dmg=overwhelm?Math.max(amount,Math.round(t.hp*3+50)):amount;
+  let absorbed=0;
+  if(t.shield>0){
+    absorbed=Math.min(t.shield,dmg); t.shield-=absorbed; dmg-=absorbed;
+    const sh=elOf(t.uid)?.querySelector('.u-shield');
+    if(t.shield<=0&&sh){ sh.classList.remove('ripple'); sh.classList.add('shatter');
+      burstFx(t.uid,'#8fd4ff',86); spawn(t.uid,'mote',state.fxHigh?10:0,{tint:'#9fdcff',speed:96,decay:2});
+      setTimeout(()=>sh.classList.remove('shatter'),FX.SHIELD_SHATTER_MS+80);
+    } else if(sh){ sh.classList.remove('ripple'); void sh.offsetWidth; sh.classList.add('ripple');
+      setTimeout(()=>sh.classList.remove('ripple'),FX.SHIELD_RIPPLE_MS+60); }
+    if(absorbed>0)numFx(t.uid,'吸收 '+absorbed,'absorb');
+  }
+  const dealt=Math.min(t.hp,Math.max(0,dmg));
+  t.hp=Math.max(0,t.hp-dmg);
+  t.own=t.hp;
+  if(absorbed>0&&dealt<=0){ syncUnit(t.uid); return {dealt:0,absorbed,broke:t.shield<=0&&absorbed>0,killed:false}; }
+  flashUnit(t.uid);
+  recoil(t.uid,t.isEnemy?1:-1);
+  syncUnit(t.uid);
+  if(t.hp<=0&&!t.down) knockDown(t.uid);
+  return {dealt,absorbed,broke:false,killed:t.hp<=0};
+}
+function calcDamage(from,to,{crit=false}={}){
+  const base=from.atk*1.05;
+  const mit=1-(to.def/(to.def+520));
+  const critMul=crit?1.9:1;
+  return Math.max(1,Math.round(base*mit*rnd(.94,1.06)*critMul));
+}
+function pickCrit(){ return Math.random()<0.28; }
+
+/* 普攻：突进 → 斩击弧光（颜色随攻击者）→ 命中闪白 → 伤害数字 */
+async function fxBasic(attackerUid,targetUid){
+  const a=byUid(attackerUid), t=byUid(targetUid); if(!a||!t||a.down||t.down)return 0;
+  await lungeTo(a.uid,t.uid);
+  slashFx(t.uid,a.tint);
+  if(state.fxHigh&&!lowMotion)spawn(t.uid,'spark',10,{tint:a.tint,speed:150,decay:2.4});
+  const crit=pickCrit();
+  const dmg=calcDamage(a,t,{crit});
+  const r=applyDamage(t.uid,dmg);
+  if(r.dealt>0)numFx(t.uid,(crit?'':'')+r.dealt,crit?'crit':'normal');
+  if(crit){ burstFx(t.uid,'#ffd257',104); if(state.fxHigh&&!lowMotion)spawn(t.uid,'spark',18,{tint:'#ffe08a',speed:210,decay:2.2}); shakeStage(); }
+  await sleep(crit?FX.CRIT_MS:150);
+  return r.dealt;
+}
+/* 暴击：金色大号数字 + 金色冲击环 + 放射火花 + 震屏 */
+async function fxCrit(attackerUid,targetUid){
+  const a=byUid(attackerUid), t=byUid(targetUid); if(!a||!t||a.down||t.down)return 0;
+  await lungeTo(a.uid,t.uid,400);
+  slashFx(t.uid,'#ffe08a');
+  ringFx(t.uid,'#ffd257',118);
+  burstFx(t.uid,'#ffd257',120);
+  if(state.fxHigh&&!lowMotion)spawn(t.uid,'spark',26,{tint:'#ffe08a',speed:260,decay:2.1,angle:-Math.PI/2,spread:6.28});
+  const dmg=calcDamage(a,t,{crit:true});
+  const r=applyDamage(t.uid,dmg);
+  flashUnit(t.uid); numFx(t.uid,r.dealt,'crit');
+  shakeStage();
+  await sleep(FX.CRIT_MS+120);
+  return r.dealt;
+}
+/* 术式：紫色能量环 + 紫色粒子爆发 + 紫色数字；群体对每个目标各播一套 */
+async function fxSkill(attackerUid,targetUids){
+  const a=byUid(attackerUid); if(!a||a.down)return 0;
+  const list=(Array.isArray(targetUids)?targetUids:[targetUids]).filter(id=>{const u=byUid(id);return u&&!u.down});
+  if(!list.length)return 0;
+  const first=elOf(list[0]), ar=elOf(a.uid)?.getBoundingClientRect();
+  if(first) burstFx(a.uid,'#c9a3ff',72);
+  await sleep(180);
+  let total=0;
+  for(const id of list){
+    burstFx(id,'#c9a3ff',104); ringFx(id,'#d9b6ff',92);
+    if(state.fxHigh&&!lowMotion)spawn(id,'spark',16,{tint:'#d9b6ff',speed:190,decay:2.2});
+    const t=byUid(id);
+    const dmg=Math.max(1,Math.round(calcDamage(a,t)*0.86));
+    const r=applyDamage(id,dmg);
+    numFx(id,r.dealt,'skill');
+    total+=r.dealt;
+    await sleep(120);
+  }
+  await sleep(FX.SKILL_MS-120);
+  return total;
+}
+/* 治疗：绿色 +N + 治疗环 + 上升飘光 */
+async function fxHeal(healerUid,targetUid,amount){
+  const t=byUid(targetUid), h=byUid(healerUid); if(!t)return 0;
+  const heal=amount!=null?amount:Math.round((h?h.atk:150)*2.1);
+  const real=Math.min(heal,t.maxHp-t.hp);
+  t.hp=Math.min(t.maxHp,t.hp+heal); t.own=t.hp;
+  ringFx(t.uid,'#7ee8a2',94);
+  if(state.fxHigh&&!lowMotion)spawn(t.uid,'mote',12,{tint:'#9df0b8',speed:70,grav:0,decay:1.2,angle:-Math.PI/2,spread:1.4});
+  numFx(t.uid,'+'+Math.max(real,1),'heal');
+  syncUnit(t.uid);
+  await sleep(FX.HEAL_MS);
+  return Math.max(real,1);
+}
+/* 护盾：蓝色穹顶 + 状态栏文字 */
+async function fxShield(casterUid,targetUid,amount){
+  const t=byUid(targetUid), c=byUid(casterUid); if(!t)return 0;
+  const val=amount!=null?amount:Math.round((c?c.def:90)*2.6+120);
+  t.shield=Math.max(t.shield,val);
+  syncUnit(t.uid);
+  ringFx(t.uid,'#8fd4ff',100);
+  burstFx(t.uid,'#8fd4ff',86);
+  if(state.fxHigh&&!lowMotion)spawn(t.uid,'mote',10,{tint:'#9fdcff',speed:60,grav:0,decay:1.3,angle:-Math.PI/2,spread:1.6});
+  numFx(t.uid,'护盾 '+val,'absorb',-26);
+  await sleep(FX.SHIELD_RIPPLE_MS);
+  return val;
+}
+/* 连携：两名队友间闪电 → 落点金色暴击数字 */
+async function fxCombo(aUid,bUid,targetUid){
+  const a=byUid(aUid), b=byUid(bUid), t=byUid(targetUid);
+  if(!a||!b||!t||t.down)return 0;
+  boltFx(a.uid,b.uid);
+  await sleep(120);
+  boltFx(b.uid,a.uid);
+  await sleep(FX.BOLT_MS-120);
+  await lungeTo(b.uid,t.uid,420);
+  slashFx(t.uid,'#ffe08a');
+  ringFx(t.uid,'#ffd257',126);
+  if(state.fxHigh&&!lowMotion)spawn(t.uid,'spark',24,{tint:'#ffe9a8',speed:250,decay:2.1});
+  const dmg=Math.max(1,Math.round((calcDamage(a,t)+calcDamage(b,t))*1.25));
+  const r=applyDamage(t.uid,dmg);
+  numFx(t.uid,r.dealt,'crit');
+  flashUnit(t.uid); shakeStage();
+  await sleep(FX.CRIT_MS+140);
+  return r.dealt;
+}
+/* 击倒：灰化下沉 + 灰色粒子散落 */
+function knockDown(uid){
+  const u=byUid(uid), el=elOf(uid); if(!u||!el)return;
+  u.down=true; u.alive=false; u.shield=0; u.hp=0;
+  el.classList.remove('has-shield');
+  el.classList.add('downed');
+  el.querySelector('.u-st').textContent='已击倒';
+  if(state.fxHigh&&!lowMotion)spawn(uid,'dust',14,{tint:'#b9c0cf',speed:110,grav:.6,decay:1.6});
+}
+function victory(){
+  if(state.over)return;
+  state.over=true; stopAuto();
+  const v=$('#victory'); v.classList.remove('show'); void v.offsetWidth; v.classList.add('show');
+  if(state.fxHigh&&!lowMotion){
+    state.enemy.forEach(u=>spawn(u.uid,'mote',6,{tint:'#ffe6a6',speed:80,grav:0,decay:1.4,angle:-Math.PI/2,spread:1.8}));
+  }
+  setTimeout(()=>v.classList.remove('show'),FX.VICTORY_MS+60);
+}
+
+/* ==========================================================================
+   ⑨ 自动战斗引擎（通用：按职业定位，不绑定固定角色）
+   ========================================================================== */
+const HITS_CAP=160;
+const bestHealTarget=(side)=>aliveOf(side).filter(u=>u.hp/u.maxHp<0.66).sort((a,b)=>a.hp/a.maxHp-b.hp/b.maxHp)[0];
+const weakestEnemy=(side)=>aliveOf(side).slice().sort((a,b)=>a.hp-b.hp||a.index-b.index)[0];
+const frontOf=(side)=>{ const al=aliveOf(side); return al.find(u=>u.row===0)||al[0]; };
+
+function assignRows(){
+  ['ally','enemy'].forEach(side=>{
+    const rows=visualOrder(side).map(i=>i);               // 视觉序 → 行索引序
+    const r=rowsFor(side), units=teamsFor(side);
+    let k=0;
+    r.forEach((n,rowIdx)=>{ units.slice(k,k+n).forEach(u=>{ u.row=rowIdx; }); k+=n; });
+  });
+}
+
+async function sideAction(side){
+  const me=aliveOf(side), foe=side==='ally'?'enemy':'ally';
+  if(!me.length||!aliveOf(foe).length)return false;
+  const healer=me.find(u=>IS_HEALER(u));
+  const wounded=bestHealTarget(side);
+
+  /* 1) 队友血量 <66% → 治疗；治疗时前排无盾则上盾 */
+  if(healer&&wounded){
+    await fxHeal(healer.uid,wounded.uid);
+    const front=frontOf(side);
+    const shielder=me.find(u=>IS_SHIELDER(u))||healer;
+    if(front&&front.shield<=0&&shielder) await fxShield(shielder.uid,front.uid);
+    return true;
+  }
+  /* 2) 每 5 拍群攻（敌方≥2） */
+  const aoe=me.find(u=>IS_AOE(u));
+  if(aoe&&state.round%5===0&&aliveOf(foe).length>=2){
+    await fxSkill(aoe.uid,aliveOf(foe).map(u=>u.uid));
+    return true;
+  }
+  /* 3) 收尾：场上只剩 2 名存活队友 → 连携 + 过量击杀终结一击 */
+  const survivors=me.filter(u=>!u.down);
+  const foeAlive=aliveOf(foe);
+  if(side==='ally'&&survivors.length<=2&&foeAlive.length&&state.round>=3){
+    const t=weakestEnemy(foe);
+    const dmg=await fxCombo(survivors[0].uid,survivors[survivors.length-1].uid,t.uid);
+    if(!t.down){
+      const kill=Math.max(t.hp*3+80,1);
+      const r=applyDamage(t.uid,kill,{overwhelm:true});
+      numFx(t.uid,r.dealt,'crit');
+      shakeStage();
+      await sleep(320);
+    }
+    return true;
+  }
+  /* 4) 输出轮转攻击残血目标 */
+  const out=me.find(u=>!IS_HEALER(u))||me[0];
+  const t=weakestEnemy(foe);
+  if(!t)return false;
+  if(out.skillType==='aoe'&&aliveOf(foe).length>=2){ await fxSkill(out.uid,aliveOf(foe).map(u=>u.uid)); return true; }
+  await fxBasic(out.uid,t.uid);
+  return true;
+}
+async function enemyAction(){
+  const me=aliveOf('enemy'), foe='ally';
+  if(!me.length||!aliveOf(foe).length)return false;
+  const healer=me.find(u=>IS_HEALER(u)), wounded=bestHealTarget('enemy');
+  if(healer&&wounded){ await fxHeal(healer.uid,wounded.uid); return true; }
+  const t=frontOf(foe);                     // 敌人反击我方前排
+  const out=me[state.round%me.length]||me[0];
+  if(!t)return false;
+  if(state.round%5===0&&aliveOf(foe).length>=2&&me.length>=2){ await fxSkill(out.uid,aliveOf(foe).map(u=>u.uid)); return true; }
+  await fxBasic(out.uid,t.uid);
+  return true;
+}
+function checkEnd(){
+  if(!aliveOf('enemy').length){ victory(); return true; }
+  if(!aliveOf('ally').length){
+    if(!state.over){ state.over=true; stopAuto(); addFx(`<span class="fx fx-num crit" style="left:50%;top:46%">战斗失败</span>`,1600); }
+    return true;
+  }
+  return false;
+}
+async function autoStep(){
+  if(state.over||state.busy)return;
+  state.busy=true;
+  state.round++;
+  try{
+    assignRows();
+    await sideAction('ally');
+    if(checkEnd())return;
+    await enemyAction();
+    checkEnd();
+    if(state.round>HITS_CAP){ stopAuto(); addFx(`<span class="fx fx-num" style="left:50%;top:46%">已达拍数上限</span>`,1600); }
+  }finally{ state.busy=false; }
+}
+let autoTimer=0;
+function startAuto(){
+  if(state.auto)return;
+  state.auto=true; $('#btnAuto').classList.add('on'); $('#btnAuto').innerHTML='⏸ 暂停<small>自动推进中</small>';
+  const tick=async()=>{
+    if(!state.auto)return;
+    await autoStep();
+    if(state.auto&&!state.over) autoTimer=setTimeout(tick,180);
+  };
+  tick();
+}
+function stopAuto(){
+  state.auto=false; clearTimeout(autoTimer);
+  const b=$('#btnAuto'); if(b){ b.classList.remove('on'); b.innerHTML='▶ 自动战斗<small>按拍推进</small>'; }
+}
+
+/* ==========================================================================
+   ⑩ 控制区
+   ========================================================================== */
+const EVENTS=[
+  ['basic','普攻','突进+斩击'],['crit','暴击','金环+火花'],['skill','术式','紫环群攻'],
+  ['heal','治疗','绿环飘光'],['shield','护盾','蓝色穹顶'],['combo','连携','闪电+终结'],['down','击倒','灰化下沉']
+];
+function buildControls(){
+  $('#formations').innerHTML=FORMATIONS.map(([a,b])=>
+    `<button data-form="${a},${b}">${a}v${b}</button>`).join('');
+  $('#events').innerHTML=EVENTS.map(([k,label,sub])=>
+    `<button class="ev" data-ev="${k}">${label}<small>${sub}</small></button>`).join('');
+}
+function setFormation(a,b,{silent=false}={}){
+  stopAuto(); clearParts(); fxLayer.innerHTML='';
+  const A=clamp(a,1,HEROES.length), B=clamp(b,1,12);
+  buildTeams(A,B);
+  renderAll();
+  $$('#formations button').forEach(x=>x.classList.toggle('sel',x.dataset.form===`${A},${B}`));
+  if(!silent)$('#hint').textContent=`已切换阵型 ${A} v ${B} · 行数 我方 ${rowsOf(A).join('+')} / 敌方 ${rowsOf(B).join('+')} · ${layout.stack?'紧凑堆叠':'常规展开'}`;
+}
+function resetBattle(){
+  stopAuto(); clearParts(); fxLayer.innerHTML='';
+  const cur=$$('#formations button.sel')[0]?.dataset.form||'5,5';
+  const [a,b]=cur.split(',').map(Number);
+  setFormation(a,b,{silent:true});
+  $('#hint').textContent='已重置 · 全员满血复位';
+}
+function toggleFx(){
+  state.fxHigh=!state.fxHigh;
+  if(!state.fxHigh)clearParts();
+  const b=$('#btnFx');
+  b.classList.toggle('on',state.fxHigh);
+  b.innerHTML=`特效：${state.fxHigh?'高':'低'}<small>${state.fxHigh?'点击切低档':'无粒子/无震屏'}</small>`;
+  $('#hint').textContent=state.fxHigh?'特效高档：粒子 + 震屏 + 全部光效':'特效低档：保留数字与闪烁，关闭粒子与震屏';
+}
+
+/* 手动单事件触发：取当前阵容里真实存在的单位，通用不写死 */
+async function fireEvent(kind){
+  if(state.over&&kind!=='down'){ /* 允许在结算后继续单测特效 */ }
+  const A=aliveOf('ally'), E=aliveOf('enemy');
+  const t=E[0]||state.enemy[0], a=A[0]||state.ally[0];
+  if(!a||!t)return;
+  switch(kind){
+    case 'basic': await fxBasic(a.uid,t.uid); break;
+    case 'crit':  await fxCrit(a.uid,t.uid); break;
+    case 'skill': await fxSkill(a.uid,E.length?E.map(u=>u.uid):[t.uid]); break;
+    case 'heal':  await fxHeal(A.find(u=>IS_HEALER(u))?.uid||a.uid, a.uid); break;
+    case 'shield':await fxShield(A.find(u=>IS_SHIELDER(u))?.uid||a.uid, a.uid); break;
+    case 'combo': {
+      const two=A.length>=2?[A[0],A[1]]:[state.ally[0],state.ally[1]].filter(Boolean);
+      if(two.length>=2) await fxCombo(two[0].uid,two[1].uid,t.uid); break;
+    }
+    case 'down':  if(!t.down) knockDown(t.uid); break;
+  }
+  checkEnd();
+}
+
+/* ==========================================================================
+   ⑪ 事件绑定 / hash 入口 / 初始化
+   ========================================================================== */
+function bind(){
+  $('#btnAuto').onclick=()=>state.auto?stopAuto():startAuto();
+  $('#btnReset').onclick=resetBattle;
+  $('#btnFx').onclick=toggleFx;
+  $('#btnStep').onclick=()=>{ stopAuto(); autoStep(); };
+  $('#formations').onclick=(e)=>{ const b=e.target.closest('button[data-form]'); if(!b)return;
+    const [a,c]=b.dataset.form.split(',').map(Number); setFormation(a,c); };
+  $('#events').onclick=(e)=>{ const b=e.target.closest('button[data-ev]'); if(!b)return; fireEvent(b.dataset.ev); };
+  window.addEventListener('resize',()=>{ sizeCanvas(); renderAll(); });
+  window.addEventListener('orientationchange',()=>setTimeout(()=>{ sizeCanvas(); renderAll(); },240));
+  window.addEventListener('hashchange',applyHash);
+}
+/* #5,5 打开即切阵型；#5,5-auto 加载后自动开战 */
+function parseHash(){
+  const m=(location.hash||'').replace(/^#/,'').match(/^(\d+)\s*,\s*(\d+)(-auto)?$/i);
+  if(!m)return null;
+  return {a:Number(m[1]),b:Number(m[2]),auto:!!m[3]};
+}
+function applyHash(){
+  const h=parseHash(); if(!h)return;
+  setFormation(h.a,h.b);
+  if(h.auto) setTimeout(()=>startAuto(),260);
+}
+
+sizeCanvas();
+buildControls();
+const initial=parseHash()||{a:5,b:5,auto:false};
+setFormation(initial.a,initial.b);
+if(lowMotion){ state.fxHigh=false; const b=$('#btnFx'); b.classList.remove('on');
+  b.innerHTML='特效：低<small>已按系统偏好降档</small>';
+  $('#hint').textContent='检测到系统 prefers-reduced-motion，已自动切到低档特效'; }
+bind();
+if(initial.auto) setTimeout(()=>startAuto(),260);
+/* 暴露给自测脚本 */
+window.__battle={state,layout:()=>layout,setFormation,fireEvent,autoStep,startAuto,stopAuto,resetBattle,
+  rowsOf,totalRowsOf,computeLayout,parts:()=>parts,spawnCount:()=>parts.length,
+  rafRunning:()=>!!rafId,toggleFx,victory};
+</script>
+</body>
+</html>

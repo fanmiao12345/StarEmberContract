@@ -3,7 +3,7 @@ const root=path.resolve(import.meta.dirname,'..'),src=path.join(root,'web'),dst=
 execFileSync(process.execPath,[path.join(root,'deployment','release-v20.mjs')],{stdio:'inherit'});
 fs.rmSync(dst,{recursive:true,force:true});fs.cpSync(src,dst,{recursive:true});
 const version=JSON.parse(fs.readFileSync(path.join(src,'version.json'),'utf8'));
-const core=['styles.css','asset-loader.js','game-data.js','cloud-config.js','cloud-bridge.js','app.js'];
+const core=['styles.css','asset-loader.js','game-data.js','cloud-config.js','cloud-bridge.js','star-ember-battle.js','app.js'];
 const mapped={};
 for(const rel of core){const p=path.join(dst,rel),buf=fs.readFileSync(p),hash=crypto.createHash('sha256').update(buf).digest('hex').slice(0,10),ext=path.extname(rel),base=rel.slice(0,-ext.length),out=`${base}.${hash}${ext}`;fs.copyFileSync(p,path.join(dst,out));mapped[rel]=out;}
 let html=fs.readFileSync(path.join(dst,'index.html'),'utf8');

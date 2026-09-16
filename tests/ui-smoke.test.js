@@ -122,7 +122,7 @@ assert.ok(appEl.innerHTML.includes('v216-star-route')&&appEl.innerHTML.includes(
 vm.runInThisContext("lastGacha=[{hero:STAR_EMBER_GAME.byId('h001'),featured:true,duplicate:false,fragmentsGained:0},{hero:STAR_EMBER_GAME.byId('h004'),featured:false,duplicate:true,fragmentsGained:10}];revealOpen=true;revealIndex=0;render();");
 assert.ok(appEl.innerHTML.includes('m210-reveal-progress')&&appEl.innerHTML.includes('跳过全部'),'v2.1.0 contract reveal presentation should render');
 vm.runInThisContext("revealOpen=false;settingsOpen=true;render();");
-assert.ok(appEl.innerHTML.includes('触感反馈')&&appEl.innerHTML.includes('契约演出')&&appEl.innerHTML.includes('v2.2.3'),'v2.1.0 feedback settings should render');
+assert.ok(appEl.innerHTML.includes('触感反馈')&&appEl.innerHTML.includes('契约演出')&&appEl.innerHTML.includes('v2.2.5'),'v2.1.0 feedback settings should render');
 console.log('v2.1.0 release polish regression passed');
 
 
